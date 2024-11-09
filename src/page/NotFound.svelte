@@ -1,17 +1,21 @@
 <script>
-    import Icon from "$lib/shared/Icon.svelte";
+    import Button from "$lib/form/Button.svelte";
+import Icon from "$lib/shared/Icon.svelte";
 
 </script>
 
 <main>
     <Icon icon="bot" size={100} />
-    <h2>Vous vous êtes égaré</h2>
-    <p>Erreur 404</p>
+    <h2>Rien à voir par ici</h2>
+    <p>Erreur 404 : page non trouvée</p>
 
     <a href="#/">
-        <Icon icon="house" size={20} />
-        Retourner à l'accueil
+        <Button center variant="primary">
+            <Icon icon="house" size={18} />
+            Retourner à l'accueil
+        </Button>
     </a>
+
 </main>
 
 <style>

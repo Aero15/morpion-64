@@ -14,7 +14,23 @@
     "allowJs": true,
     "checkJs": true,
     "isolatedModules": true,
-    "moduleDetection": "force"
+    "moduleDetection": "force",
+    "paths": {
+      "$lib": ["./src/lib"],
+      "$lib/*": ["./src/lib/*"],
+
+      "$page": ["./src/page"],
+      "$page/*": ["./src/page/*"],
+
+      "$core": ["./src/core"],
+      "$core/*": ["./src/core/*"],
+
+      "$css": ["./src/assets/css"],
+      "$css/*": ["./src/assets/css/*"],
+
+      "$svg": ["./src/assets/svg"],
+      "$svg/*": ["./src/assets/svg/*"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte"],
   "references": [{ "path": "./tsconfig.node.json" }]

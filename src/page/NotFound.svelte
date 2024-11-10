@@ -1,7 +1,6 @@
 <script>
     import Button from "$lib/form/Button.svelte";
-import Icon from "$lib/shared/Icon.svelte";
-
+    import Icon from "$lib/shared/Icon.svelte";
 </script>
 
 <main>
@@ -15,7 +14,6 @@ import Icon from "$lib/shared/Icon.svelte";
             Retourner à l'accueil
         </Button>
     </a>
-
 </main>
 
 <style>

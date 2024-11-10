@@ -1,9 +1,10 @@
 <script>
     import Button from "$lib/form/Button.svelte";
     import Icon from "$lib/shared/Icon.svelte";
+    import { fade } from "svelte/transition";
 </script>
 
-<main>
+<main in:fade>
     <Icon icon="bot" size={100} />
     <h2>Rien à voir par ici</h2>
     <p>Erreur 404 : page non trouvée</p>

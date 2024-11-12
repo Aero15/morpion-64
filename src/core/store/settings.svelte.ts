@@ -1,4 +1,4 @@
-import Point from "$core/entity/game/Point.svelte"
+import Point from "$core/entity/board/Point.svelte"
 import { BotDelay } from "$core/enums/Bot"
 import { writable } from "svelte/store"
 

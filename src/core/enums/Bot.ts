@@ -1,4 +1,4 @@
-import Point from "$core/entity/game/Point.svelte"
+import Point from "$core/entity/board/Point.svelte"
 
 // Delai de réponse des bots
 export enum BotDelay {

@@ -1,4 +1,4 @@
-import type Point from "$core/entity/game/Point.svelte";
+import type Point from "$core/entity/board/Point.svelte";
 
 // Calcul du nombre de cases à partir de la taille de la grille
 export function countCellsFor(

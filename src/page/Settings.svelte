@@ -16,7 +16,7 @@
     import Slider from "$lib/form/Slider.svelte";
     import Section from "$lib/shared/Section.svelte";
     import { calcAvg } from "$core/helpers/Math.svelte";
-    import type Point from "$core/entity/game/Point.svelte";
+    import type Point from "$core/entity/board/Point.svelte";
 
 
 

@@ -48,7 +48,7 @@ export default class PlayerList {
         return this.getCurrentPlayer();
     }
   
-    // Optionnel : méthode pour obtenir la liste des joueurs
+    // Obtenir la liste des joueurs
     list(): Player[] {
         return this._players;
     }

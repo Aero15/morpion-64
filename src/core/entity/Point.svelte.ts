@@ -29,4 +29,8 @@ export default class Point {
     set y(value: number) {
         this._y = value;
     }
+
+    toArray(): number[] {
+        return [this._x, this._y];
+    }
 }

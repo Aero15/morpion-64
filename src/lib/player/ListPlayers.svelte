@@ -13,7 +13,7 @@
     }: Props = $props();
 </script>
 
-<div class="grid grid-cols-4">
+<div class="grid">
     {#each players as { id, name, color, symbol, type } }
         <ItemPlayer
             { id } { name } { color } { symbol } { type }

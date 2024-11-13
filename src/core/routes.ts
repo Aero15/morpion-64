@@ -15,9 +15,9 @@ function createAsyncRoute (
 export const routes = {
     ...createAsyncRoute('/',            () => import('$page/Home.svelte')),
     ...createAsyncRoute('/players',     () => import('$page/Players.svelte')),
+    ...createAsyncRoute('/opponents',   () => import('$page/Opponents.svelte')),
     ...createAsyncRoute('/settings',    () => import('$page/Settings.svelte')),
-    /*...createAsyncRoute('/opponents',   () => import('$page/Opponents.svelte')),
-    ...createAsyncRoute('/game',        () => import('$page/Game.svelte')),
+    /*...createAsyncRoute('/game',        () => import('$page/Game.svelte')),
     ...createAsyncRoute('/about',       () => import('$page/About.svelte'))*/
     ...createAsyncRoute('*',            () => import('$page/NotFound.svelte')),
 };

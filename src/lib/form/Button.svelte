@@ -44,7 +44,7 @@
         border: 1px solid transparent;
         background: rgb(215, 215, 215);
         border-radius: 10px;
-        padding: .5em .8em;
+        padding: 8px .8em;
         font-weight: 500;
         font-size: .9em;
         cursor: pointer;

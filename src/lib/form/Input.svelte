@@ -23,7 +23,7 @@
         background: transparent;
         box-sizing: content-box;
         border-radius: 10px;
-        padding: 6px 10px;
+        padding: 9px 13px;
         font-size: 14px;
         color: black;
         min-width: 200px;

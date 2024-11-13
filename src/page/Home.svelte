@@ -1,8 +1,9 @@
 <script lang="ts">
     import Button from '$lib/form/Button.svelte';
+    import Halo from '$lib/shared/Halo.svelte';
     import Icon from '$lib/shared/Icon.svelte';
     import { push } from 'svelte-spa-router';
-    import { fade } from 'svelte/transition';
+    import { fade, slide } from 'svelte/transition';
 
     interface Link {
         icon: string,
@@ -12,7 +13,6 @@
         iconSize?: number
     }
     let links: Link[] = [
-        {icon: 'dice', label: 'Nouvelle partie', path: '/opponents', variant: 'primary', iconSize: 100},
         {icon: 'user', label: 'Gérer les joueurs', path: '/players'},
         {icon: 'podium', label: 'Podium', path: '/podium'},
         {icon: 'config', label: 'Paramètres', path: '/settings'},
@@ -32,7 +32,7 @@
 {/snippet}
 
 <main in:fade>
-    <div class="ident">
+    <div class="ident" in:slide={{delay: 150, duration: 500}}>
         <Icon icon="joystick" size={200} />
         <h1>Morpion <span>64</span></h1>
         <p>
@@ -41,7 +41,18 @@
             ou joue contre des bots sur des grilles de 3x3 à 8x8.
         </p>
     </div>
-    <div class="tiles grid grid-cols-3">
+
+    <div class="tiles grid grid-cols-3" in:fade>
+        <Halo>
+            <Button variant="primary" onclick={ () => push('/opponents') }>
+                <div class="text">
+                    <strong>Jouer !</strong>
+                    <p>Lancer une nouvelle partie entre amis ou des bots</p>
+                </div>
+                <Icon icon="play" size={100} />
+            </Button>
+        </Halo>
+        
         {#each links as {icon, label, path, variant, iconSize}}
             {@render link(icon, label, path, variant, iconSize)}
         {/each}
@@ -93,6 +104,12 @@
         flex: 1 1 0;
 
         :global {
+            .halo {
+                grid-column: 1/4;
+                aspect-ratio: 16/9;
+                display: grid;
+            }
+
             button {
                 &:first-child {
                     grid-column: 1/4;
@@ -100,12 +117,26 @@
 
                     .icon,
                     .icon::before {
-                        font-size: clamp(4rem, 10vw, 7rem);
+                        font-size: clamp(4rem, 10vw, 8rem);
+                    }
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 1.5rem;
+
+                    .text {
+                        text-align: end;
+                    }
+
+                    strong {
+                        font-size: 3rem;
                     }
 
                     p {
                         margin: .5rem 0;
-                        font-size: clamp(1rem, 4vw, 2rem);
+                        font-size: .9rem;
+                        max-width: 200px;
                     }
                 }
 

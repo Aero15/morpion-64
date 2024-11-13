@@ -2,6 +2,7 @@ import type { Color } from "$core/enums/Color";
 import { PlayerType } from "$core/enums/PlayerType";
 import { Symbol } from "$core/enums/Symbol";
 import type IPlayer from "$core/interface/IPlayer";
+import type GameEngine from "$core/entity/engine/GameEngine.svelte";
 
 export default abstract class Player implements IPlayer {
     private static id: number = 0;
@@ -64,4 +65,7 @@ export default abstract class Player implements IPlayer {
     set type(type: PlayerType) {
         this._type = type;
     }
+  
+    // Méthode abstraite que les classes dérivées devront implémenter
+    abstract play(game: GameEngine): void;
 }

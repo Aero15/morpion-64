@@ -112,6 +112,10 @@
     .toolbar {
         display: grid;
         gap: .5rem;
+
+        :global(button:first-child) {
+            padding-block: 1rem;
+        }
     }
 
     .selects {

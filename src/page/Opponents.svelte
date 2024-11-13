@@ -105,7 +105,7 @@
 
                     {#if listPlayers.length == 0}
                         <Button center variant="primary"
-                            onclick={() => push('/players')}
+                            onclick={() => push('/players/0')}
                         >
                             <Icon icon="settings" size={16} />
                             Gestion des joueurs

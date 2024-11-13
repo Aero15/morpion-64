@@ -1,8 +1,6 @@
 <script lang="ts">
     import type Player from "$core/entity/player/Player.svelte";
-    import { randomColor } from "$core/helpers/Colors.svelte";
     import { filterPlayerWith } from "$core/helpers/Players.svelte";
-    import { randomSymbol } from "$core/helpers/Symbols.svelte";
     import { listPlayers } from "$core/store/players.svelte";
     import ListPlayers from "$lib/player/ListPlayers.svelte";
     import Button from "$lib/form/Button.svelte";
@@ -10,11 +8,7 @@
     import Hero from "$lib/shared/Hero.svelte";
     import { fade } from "svelte/transition";
     import Icon from "$lib/shared/Icon.svelte";
-
-    let editPlayerId: number = $state(0)
-    let editPlayerName: string = $state('')
-    let editPlayerColor: string = $state(randomColor())
-    let editPlayerSymbol: string = $state(randomSymbol())
+    import { push } from "svelte-spa-router";
 
     let searchValue: string = $state('')
     let isSearching: boolean = $derived(searchValue.length > 0)
@@ -23,24 +17,11 @@
     let subtitle: string = $derived(isSearching ? `${countPlayers} joueurs trouvés` : `${countPlayers} joueurs`)
 
     function openEditor() {
-        //dialogForm?.showModal()
+        push('/players/0')
     }
 
     function onPlayerClick(id: number) {
-        editPlayerId = id
-        let p = players.find(p => p.id === id)!
-        editPlayerName = p.name
-        editPlayerColor = p.color
-        editPlayerSymbol = p.symbol
-
-        openEditor()
-    }
-
-    function resetForm() {
-        editPlayerId = 0
-        editPlayerName = ''
-        editPlayerColor = randomColor()
-        editPlayerSymbol = randomSymbol()
+        push('/players/' + id)
     }
 </script>
 <main>
@@ -98,6 +79,5 @@
         main {
             grid-template-columns: 350px 1fr;
         }
-        
     }
 </style>

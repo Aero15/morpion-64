@@ -32,6 +32,15 @@
 {/snippet}
 
 <main in:fade>
+    <div class="ident">
+        <Icon icon="joystick" size={200} />
+        <h1>Morpion <span>64</span></h1>
+        <p>
+            <strong>Un jeu de morpion sans limites !</strong>
+            Choisis ta couleur, ton symbole et défie tes amis,
+            ou joue contre des bots sur des grilles de 3x3 à 8x8.
+        </p>
+    </div>
     <div class="tiles grid grid-cols-3">
         {#each links as {icon, label, path, variant, iconSize}}
             {@render link(icon, label, path, variant, iconSize)}
@@ -44,7 +53,37 @@
         display: flex;
         justify-content: center;
         padding: clamp(1rem, 4vw, 3rem);
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
     }
+
+    .ident {
+        display: grid;
+        gap: 0rem;
+        place-content: center;
+        place-items: end;
+        text-align: end;
+
+        h1 {
+            margin: 0;
+            background: linear-gradient(to right, #00FFFF, #0099FF, #FF00FF);
+            background-clip: text;
+            color: transparent;
+            font-size: 5rem;
+            margin-top: 2rem;
+
+            span {
+                font-family: Marianne-Light, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+            }
+        }
+
+        p {
+            max-width: 400px;
+        }
+    }
+
     .tiles {
         place-content: center;
         display: grid;
@@ -87,6 +126,13 @@
                     font-size: .9rem;
                 }
             }
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        .ident h1 {
+            background: linear-gradient(to right, #04d3d3, #0098ff, #f0f);
+            background-clip: text;
         }
     }
 </style>

@@ -46,7 +46,7 @@
         }
 
         &.clickable {
-            cursor: pointer;
+            cursor: crosshair;
             border-radius: 1rem;
             padding: 1rem;
             border: 4px solid transparent;

@@ -84,7 +84,7 @@
             <p>TODO: Lister les Fonctionnalités</p>
         </Section>
     
-        <Section icon="info" title="Stack technique" delay={3}>
+        <Section icon="info" title="Stack technique" delay={4}>
             <p>TODO: Lister les techno utilisés (Svelte, Vite, Typescript)</p>
         </Section>
     </div>

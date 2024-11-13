@@ -6,3 +6,15 @@ export function calcAvg(
         (a, b) => a + b, 0
     ) / values.length
 }
+
+// Nombre aleatoire entre deux nombres
+export function randomBetween(
+    min: number,
+    max: number
+) {
+    return Math.floor(
+        Math.random()
+        * (max - min + 1)
+        + min
+    )
+}

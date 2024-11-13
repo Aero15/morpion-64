@@ -87,9 +87,9 @@
                     </label>
                 {/snippet}
 
-                {@render radio_botSpeed('Lent', BotDelay.Slow, slowBotSpeedDelay)}
-                {@render radio_botSpeed('Normal', BotDelay.Default, defaultBotSpeedDelay)}
                 {@render radio_botSpeed('Rapide', BotDelay.Fast, fastBotSpeedDelay)}
+                {@render radio_botSpeed('Normal', BotDelay.Default, defaultBotSpeedDelay)}
+                {@render radio_botSpeed('Lent', BotDelay.Slow, slowBotSpeedDelay)}
             </div>
         </Section>
     </div>

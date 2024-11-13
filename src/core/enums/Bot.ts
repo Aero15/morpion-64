@@ -10,4 +10,4 @@ export enum BotDelay {
 // Configuration du temps de réponse des bots
 export let slowBotSpeedDelay: Point = new Point(1800, 4000)
 export let defaultBotSpeedDelay: Point = new Point(1500, 3000)
-export let fastBotSpeedDelay: Point = new Point(1000, 2300)
+export let fastBotSpeedDelay: Point = new Point(300, 1500)

@@ -12,6 +12,7 @@
     import { selectedPlayers } from "$core/store/players.svelte";
     import AvatarPlayer from "$lib/player/AvatarPlayer.svelte";
     import { gridSize } from "$core/store/settings.svelte";
+    import { onMount } from "svelte";
 
     let game: GameEngine = $state(undefined);
 
@@ -41,6 +42,15 @@
     function abandon() {
         push('/')
     }
+
+    onMount(() => {
+        document.body.classList.add('extended');
+    
+        // enlever la classe lorsque le composant est démonté
+        return () => {
+            document.body.classList.remove('extended');
+        };
+    })
 </script>
 
 <main>
@@ -141,6 +151,7 @@
         grid-template-columns: 350px 1fr 350px;
         align-items: start;
         gap: 2rem;
+        padding-top: 3rem;
     }
 
     .flex {

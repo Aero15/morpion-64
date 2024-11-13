@@ -1,6 +1,6 @@
+import type Player from "$core/entity/player/Player.svelte"
 import Bot from "$core/entity/player/Bot.svelte"
 import Human from "$core/entity/player/Human.svelte"
-import type Player from "$core/entity/player/Player.svelte"
 import { Color } from "$core/enums/Color"
 import { Difficulty } from "$core/enums/Difficulty"
 import { Symbol } from "$core/enums/Symbol"

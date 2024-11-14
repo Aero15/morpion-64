@@ -1,5 +1,6 @@
 import type { Color } from "$core/enums/Color";
 import type { Symbol } from "$core/enums/Symbol";
+import type IWinnerInfo from "$core/interface/IWInnerInfo";
 import { maxGridSize, minGridSize } from "$core/store/settings.svelte";
 import Cell from "./Cell.svelte";
 import Point from "./Point.svelte";
@@ -125,7 +126,7 @@ export default class GameBoard {
         }
     }
 
-    findWinner(): string | null {
+    findWinner(): IWinnerInfo | undefined {
         // Vérification des lignes
         for (let row = 0; row < this.rows; row++) {
             for (let col = 0; col <= this.cols - this.nbSymbolsInRow; col++) {
@@ -159,7 +160,7 @@ export default class GameBoard {
         }
 
         // Aucun gagnant
-        return null;
+        return undefined;
     }
 
     findWinnerByDirection(
@@ -167,28 +168,32 @@ export default class GameBoard {
         startCol: number,
         rowIncrement: number,
         colIncrement: number
-    ): string | null { // TODO: Retourner l'id du joueur plutot que le symbole
-        // Récupère le premier symbole/couleur à la position spécifiée
-        const firstSymbol = this.getSymbolAt(new Point(startRow, startCol));
-        const firstColor = this.getColorAt(new Point(startRow, startCol));
-
-        // Ne pas continuer si le premier symbole est vide
-        if (firstSymbol === undefined || firstColor === undefined) {
-            return null;
-        }
-
-        // Vérifie si le symbole est présent dans les autres cellules de la direction spécifiée
+    ): IWinnerInfo | null {
+        // Récupère le symbole et la couleur de la première case
+        const firstCell = this.getCellAt(new Point(startRow, startCol))!;
+        if (!firstCell.symbol || !firstCell.color) return null;  // Vérifie si la case est vide
+    
+        const { symbol, color } = firstCell;
+        const winningPositions: { x: number; y: number }[] = [{ x: startRow, y: startCol }];
+    
+        // Vérifie les autres cases dans la direction spécifiée
         for (let i = 1; i < this.nbSymbolsInRow; i++) {
             const row = startRow + i * rowIncrement;
             const col = startCol + i * colIncrement;
-            if (
-                firstSymbol !== this.grid[row][col].symbol ||
-                firstColor !== this.grid[row][col].color
-            ) {
-                return null;
+            const cell = this.grid[row][col];
+    
+            if (cell.symbol !== symbol || cell.color !== color) {
+                return null;  // Si une case ne correspond pas, on arrête
             }
+    
+            winningPositions.push({ x: row, y: col });  // Ajoute la position à la liste des gagnants
         }
-        return firstSymbol;
-    };
+    
+        return { symbol, color, positions: winningPositions };
+    }
+
+    setHighlightedAt(x: number, y: number, highlight: boolean = true): void {
+        this._grid[x][y].highlighted = highlight
+    }
     
 }

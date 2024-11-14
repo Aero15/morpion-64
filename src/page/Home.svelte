@@ -37,7 +37,7 @@
         <img src={favicon} alt="Logo de Morpion 64" />
         <h1>Morpion <span>64</span></h1>
         <p>
-            <strong>Un jeu de morpion sans limites !</strong>
+            <strong>Plus grand, plus fun, plus stratégique !</strong>
             Choisis ta couleur, ton symbole et défie tes amis,
             ou joue contre des bots sur des grilles de 3x3 à 8x8.
         </p>

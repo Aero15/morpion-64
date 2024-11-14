@@ -27,10 +27,11 @@
 >
     {#each grid as row}
         <div class="row" class:lock style="grid-template-columns: repeat({ row.length }, 1fr);">
-            {#each row as { position, symbol, color }}
+            {#each row as { position, symbol, color, highlighted }}
                 <CellView
                     { position } { symbol }
                     { color } { lock }
+                    highlight={ highlighted }
                     bind:eraserEnabled
                     onClick={ onCellClick }
                 />
@@ -113,12 +114,6 @@
             position: relative;
             z-index: 1;
         }
-    }
-
-    canvas {
-        position: absolute;
-        inset: 0 0 0 0;
-        z-index: 1;
     }
 
     @media (prefers-color-scheme: dark) {

@@ -3,6 +3,7 @@ import GameBoard from "$core/entity/board/GameBoard.svelte";
 import type Point from "$core/entity/board/Point.svelte";
 import type Player from "$core/entity/player/Player.svelte";
 import PlayerList from "./PlayerList.svelte"
+import type IWinnerInfo from "$core/interface/IWInnerInfo";
 
 export default class GameEngine {
     private _board: GameBoard;
@@ -10,7 +11,7 @@ export default class GameEngine {
     private _startTime: Date;
     private _endTime?: Date = $state(undefined);
     private _eraserEnabled: boolean = $state(false);
-    private _winnerSymbol: string | null = $state(null);
+    private _winnerInfo: IWinnerInfo | undefined = $state(undefined);
   
     constructor(
         playerList: Player[],
@@ -69,8 +70,8 @@ export default class GameEngine {
         this._eraserEnabled = enabled;
     }
 
-    get winnerSymbol(): string | null {
-        return this._winnerSymbol;
+    get winnerInfo(): IWinnerInfo | undefined {
+        return this._winnerInfo;
     }
 
     playMoveAt(position: Point): void {
@@ -102,13 +103,20 @@ export default class GameEngine {
 
     private afterPlayerMove(position: Point): void {
         // Vérifier si la position a permis de gagner la partie
-        this._winnerSymbol = this.board.findWinner();
+        this._winnerInfo = this.board.findWinner();
 
         // S'il y a un gagnant ou si il n'y a plus de cellules vides, on arrete le jeu
-        if (this.winnerSymbol || this.board.getEmptyPositions().length === 0) {
+        if (this.winnerInfo || this.board.getEmptyPositions().length === 0) {
             this._endTime = new Date();
 
-            // TODO: Récupérer les positions à mettre en surbrillance
+            if (this.winnerInfo) {
+                // Mettre en surbrillance les positions gagnantes
+                const { positions } = this.winnerInfo;
+                for (const position of positions) {
+                    const { x, y } = position;
+                    this.board.setHighlightedAt(x, y, true);
+                }
+            }
             
             return
         }

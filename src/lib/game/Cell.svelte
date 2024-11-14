@@ -8,7 +8,8 @@
         position: Point,
         symbol?: string,
         color?: string,
-        lock: boolean
+        lock: boolean,
+        highlight: boolean,
         onClick?: (position: Point) => void
     }
 
@@ -16,6 +17,7 @@
         eraserEnabled = $bindable(false),
         position = $bindable(new Point(0, 0)),
         symbol = $bindable(undefined),
+        highlight = $bindable(false),
         color = $bindable(undefined),
         lock = $bindable(false),
         onClick = () => {},
@@ -30,7 +32,7 @@
 </script>
 
 <button
-    class="cell"
+    class="cell" class:highlight
     onclick={() => onClick(position)}
     {disabled}
 >
@@ -60,6 +62,10 @@
             color: inherit;
         }
 
+        &.highlight {
+            background: #fff;
+        }
+
         &:not(:disabled) {
             cursor: pointer;
             background: transparent;
@@ -67,6 +73,12 @@
             &:hover {
                 background: var(--main_color);
             }
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        .cell.highlight {
+            background: rgba(0,0,0,1);
         }
     }
 </style>

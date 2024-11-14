@@ -54,7 +54,7 @@
 </script>
 
 <main>
-    <Hero icon="dice" title="Morpion" subtitle={game.winnerSymbol === null ? "C'est parti !" : "Partie terminée !"}>
+    <Hero icon="dice" title="Morpion" subtitle={game.winnerInfo === undefined ? "C'est parti !" : "Partie terminée !"}>
         <div class="actions" in:fade>
             <Button onclick={initGame} center variant="primary">
                 <Icon icon="rotate" size={18} />
@@ -96,7 +96,7 @@
             {/if}
 
             {#if game.endTime !== undefined}
-                {#if game.winnerSymbol !== null && game.players.getCurrentPlayer() !== null}
+                {#if game.winnerInfo !== undefined && game.players.getCurrentPlayer() !== null}
                     {@const player = game.players.getCurrentPlayer()}
                     <div class="winner" transition:slide>
                         <h3>Bravo !</h3>
@@ -113,7 +113,7 @@
                     </div>
                 {/if}
 
-                {#if game.winnerSymbol === null}
+                {#if game.winnerInfo === undefined}
                     <div class="winner" transition:slide>
                         <h3>Match nul !</h3>
                         <div class="ident">
@@ -128,7 +128,7 @@
 
     <div class="flex" in:scale>
         <Grid
-            lock={botIsPlaying || game.winnerSymbol !== null}
+            lock={botIsPlaying || game.winnerInfo !== undefined}
             displayHalo={game.endTime === undefined && botIsPlaying}
             bind:grid={game.board.grid}
             bind:eraserEnabled={game.eraserEnabled}

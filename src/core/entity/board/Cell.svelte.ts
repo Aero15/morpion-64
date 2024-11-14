@@ -6,6 +6,7 @@ export default class Cell {
     private _position: Point;
     private _symbol?: Symbol = $state(undefined);
     private _color?: Color | string = $state(undefined);
+    private _highlighted: boolean = $state(false);
     private _filledAt?: Date = $state(undefined);
   
     constructor(
@@ -46,6 +47,15 @@ export default class Cell {
     set color(value: Color | string | undefined) {
       this._color = value;
     }
+
+    // Getter et Setter pour highlighted
+    get highlighted(): boolean {
+      return this._highlighted;
+    }
+  
+    set highlighted(value: boolean) {
+      this._highlighted = value;
+    }
   
     // Getter pour filledAt
     get filledAt(): Date | undefined {
@@ -60,6 +70,7 @@ export default class Cell {
     clear(): void {
         this._symbol = undefined;
         this._color = undefined;
+        this._highlighted = false;
         this._filledAt = undefined;
     }
 }

@@ -5,13 +5,14 @@
         license_name, license_url,
         organisation_name, organisation_url
     } from "$core/store/application";
+    import logo from "/favicon.svg";
     import { push } from "svelte-spa-router";
     import Hero from "$lib/shared/Hero.svelte";
     import Icon from "$lib/shared/Icon.svelte";
     import Button from "$lib/form/Button.svelte";
     import Section from "$lib/shared/Section.svelte";
     import { ProjectStatus } from "$core/enums/ProjectStatus";
-    import { slide } from "svelte/transition";
+    import { scale, slide } from "svelte/transition";
 
     const date_format_options = {
         //weekday: 'long',
@@ -49,6 +50,8 @@
     <div>
         <div class="intro" in:slide={{delay: 200, duration: 300}}>
             <div class="ident">
+                <img src={logo} alt="Logo de Morpion 64" in:scale={{delay: 500}} />
+
                 <h3>{$app_name}</h3>
                 <p class="version">Version : <strong>{$app_version}</strong></p>
 
@@ -122,6 +125,12 @@
         box-shadow:
             0 0 0 1px rgba(0,0,0,.2) inset,
             0 3px 30px rgba(0,0,0,.2);
+
+        img {
+            width: 256px;
+            float: right;
+            margin-top: -100px;
+        }
 
         .ident {
             h3 {

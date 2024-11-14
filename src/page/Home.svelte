@@ -4,6 +4,7 @@
     import Icon from '$lib/shared/Icon.svelte';
     import { push } from 'svelte-spa-router';
     import { fade, slide } from 'svelte/transition';
+    import favicon from '/favicon.svg';
 
     interface Link {
         icon: string,
@@ -33,7 +34,7 @@
 
 <main in:fade>
     <div class="ident" in:slide={{delay: 150, duration: 500}}>
-        <Icon icon="joystick" size={200} />
+        <img src={favicon} alt="Logo de Morpion 64" />
         <h1>Morpion <span>64</span></h1>
         <p>
             <strong>Un jeu de morpion sans limites !</strong>
@@ -76,6 +77,10 @@
         place-content: center;
         place-items: end;
         text-align: end;
+
+        img {
+            max-width: 200px;
+        }
 
         h1 {
             margin: 0;

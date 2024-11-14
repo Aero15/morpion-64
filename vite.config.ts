@@ -10,6 +10,7 @@ export default defineConfig({
       $page: '/src/page',
       $core: '/src/core',
       $css: '/src/assets/css',
+      $png: '/src/assets/png',
       $svg: '/src/assets/svg'
     }
   }

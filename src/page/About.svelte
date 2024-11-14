@@ -13,6 +13,10 @@
     import Section from "$lib/shared/Section.svelte";
     import { ProjectStatus } from "$core/enums/ProjectStatus";
     import { scale, slide } from "svelte/transition";
+    import svelteLogo from '$svg/logo/svelte.svg'
+    import viteLogo from '$svg/logo/vite.svg'
+    import tsLogo from '$png/typescript.png'
+    import nodeLogo from '$png/node.png'
 
     const date_format_options = {
         //weekday: 'long',
@@ -20,6 +24,13 @@
         month: 'long',
         day: 'numeric',
     };
+
+    const dev_tools = [
+        {logo: svelteLogo, name: "Svelte", url: "https://svelte.dev/"},
+        {logo: viteLogo, name: "Vite", url: "https://vitejs.dev/"},
+        {logo: tsLogo, name: "Typescript", url: "https://www.typescriptlang.org/"},
+        {logo: nodeLogo, name: "Node", url: "https://nodejs.org/"}
+    ]
 
     let projectStatus = $derived.by(() => {
         switch ($project_status) {
@@ -88,7 +99,16 @@
         </Section>
     
         <Section icon="info" title="Stack technique" delay={4}>
-            <p>TODO: Lister les techno utilisés (Svelte, Vite, Typescript)</p>
+            <ul class="tech_stack">
+                {#each dev_tools as {logo, name, url}}
+                    <li>
+                        <a href={url}>
+                            <img src={logo} alt={name} />
+                            <p>{name}</p>
+                        </a>
+                    </li>
+                {/each}
+            </ul>
         </Section>
     </div>
 </main>
@@ -178,6 +198,23 @@
                 margin: 0;
                 font-size: .9em;
             }
+        }
+    }
+
+    .tech_stack {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+            text-align: center;
+        }
+
+        img {
+            height: 100px;
         }
     }
 

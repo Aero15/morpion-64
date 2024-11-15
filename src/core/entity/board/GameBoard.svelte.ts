@@ -188,5 +188,13 @@ export default class GameBoard {
     setHighlightedAt(x: number, y: number, highlight: boolean = true): void {
         this._grid[x][y].highlighted = highlight
     }
-    
+
+    // Effacer la surbrillance des cellules
+    clearHighlight(): void {
+        for (const row of this._grid) {
+            for (const cell of row) {
+                cell.highlighted = false;
+            }
+        }
+    }
 }

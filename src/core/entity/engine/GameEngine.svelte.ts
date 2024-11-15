@@ -102,6 +102,9 @@ export default class GameEngine {
     }
 
     private afterPlayerMove(position: Point): void {
+        // Retirer la subrillance
+        this.board.clearHighlight();
+
         // Vérifier si la position a permis de gagner la partie
         this._winnerInfo = this.board.findWinner();
 

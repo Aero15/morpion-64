@@ -97,7 +97,7 @@
 
             {#if game.endTime !== undefined}
                 {#if game.winnerInfo !== undefined && game.players.getCurrentPlayer() !== null}
-                    {@const player = game.players.getCurrentPlayer()}
+                    {@const player = game.players.getCurrentPlayer()!}
                     <div class="winner" transition:slide>
                         <h3>Bravo !</h3>
                         <div class="ident">

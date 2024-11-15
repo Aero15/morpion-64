@@ -31,7 +31,7 @@
                 <CellView
                     { position } { symbol }
                     { color } { lock }
-                    highlight={ highlighted }
+                    { highlighted }
                     bind:eraserEnabled
                     onClick={ onCellClick }
                 />

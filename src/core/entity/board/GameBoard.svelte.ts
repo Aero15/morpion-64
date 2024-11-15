@@ -118,13 +118,6 @@ export default class GameBoard {
         }
         return emptyPositions;
     }
-  
-    // Méthode pour afficher le plateau (optionnelle)
-    displayGrid(): void {
-        for (const row of this._grid) {
-            console.log(row.map(cell => cell.symbol ?? '.').join(' '));
-        }
-    }
 
     findWinner(): IWinnerInfo | undefined {
         // Vérification des lignes

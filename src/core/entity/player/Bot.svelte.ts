@@ -1,4 +1,5 @@
 import type { Color } from "$core/enums/Color";
+import type { Difficulty } from "$core/enums/Difficulty";
 import { PlayerType } from "$core/enums/PlayerType";
 import type { Symbol } from "$core/enums/Symbol";
 import { getRandomFrom } from "$core/helpers/Array.svelte";
@@ -9,13 +10,13 @@ import type GameEngine from "../engine/GameEngine.svelte";
 import Player from "./Player.svelte";
 
 export default class Bot extends Player {
-    private _difficulty: string;
+    private _difficulty: Difficulty;
   
     constructor(
         name: string,
         symbol: Symbol,
         color: Color | string,
-        difficulty: string
+        difficulty: Difficulty
     ) {
         super(
             name, symbol, color,
@@ -26,11 +27,11 @@ export default class Bot extends Player {
     }
   
     // Getter et Setter pour difficulty
-    get difficulty(): string {
+    get difficulty(): Difficulty {
         return this._difficulty;
     }
   
-    set difficulty(value: string) {
+    set difficulty(value: Difficulty) {
         this._difficulty = value;
     }
   

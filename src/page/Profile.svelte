@@ -18,6 +18,7 @@
     import Bot from "$core/entity/player/Bot.svelte";
     import { Difficulty } from "$core/enums/Difficulty";
     import SelectDifficulty from "$lib/form/SelectDifficulty.svelte";
+    import SelectTypePlayer from "$lib/form/SelectTypePlayer.svelte";
 
     let { params }: { params: any } = $props();
 
@@ -41,9 +42,14 @@
         if (!p)
             p = listBots.find(p => p.id == id)
 
-        // Rediriger vers la page d'accueil si aucun joueur trouvé
-        if (!p)
-            return push('/players')
+        // Remplir les champs si aucun joueur trouvé (pour créer un nouveau joueur)
+        if (!p || id < 1) {
+            name = ''
+            type = PlayerType.Human
+            color = randomColor()
+            symbol = randomSymbol()
+            return
+        }
 
         // Remplir les champs
         name = p.name
@@ -110,6 +116,13 @@
                 </Button>
             </div>
         </Hero>
+
+        {#if id < 1}
+            <div class="type" in:fade={{delay: delay * 0, duration}}>
+                <p class="label">Type de joueur</p>
+                <SelectTypePlayer bind:value={type} />
+            </div>
+        {/if}
     </div>
 
     <div in:fade={{delay: delay * 1}}>
@@ -165,6 +178,10 @@
         :global(button:first-child) {
             padding-block: 1rem;
         }
+    }
+
+    .type {
+        margin-top: 2rem;
     }
 
     .selects {

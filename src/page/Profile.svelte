@@ -1,7 +1,7 @@
 <script lang="ts">
     import { randomColor } from "$core/helpers/Colors.svelte";
     import { randomSymbol } from "$core/helpers/Symbols.svelte";
-    import { listPlayers } from "$core/store/players.svelte";
+    import { listBots, listPlayers } from "$core/store/players.svelte";
     import Button from "$lib/form/Button.svelte";
     import Input from "$lib/form/Input.svelte";
     import Hero from "$lib/shared/Hero.svelte";
@@ -14,39 +14,75 @@
     import SelectColor from "$lib/form/SelectColor.svelte";
     import SelectSymbol from "$lib/form/SelectSymbol.svelte";
     import { onMount } from "svelte";
+    import { PlayerType } from "$core/enums/PlayerType";
+    import Bot from "$core/entity/player/Bot.svelte";
+    import { Difficulty } from "$core/enums/Difficulty";
 
     let { params }: { params: any } = $props();
 
+    // Variables réactives
     let id: number = $derived(params.id)
     let name: string = $state('')
+    let type: PlayerType = $state(PlayerType.Human)
     let color: Color|string = $state(randomColor())
     let symbol: Symbol = $state(randomSymbol())
+    let difficulty: Difficulty = $state(Difficulty.Peaceful)
 
+    // Paramètres de transition
     const duration: number = 250
     const delay: number = 100
 
     onMount(() => {
+        // Rechercher le joueur dans la liste des joueurs humains
         let p = listPlayers.find(p => p.id == id)
-        if (!p) return
 
+        // Rechercher le joueur dans la liste des joueurs bots si aucun joueur humain trouvé
+        if (!p)
+            p = listBots.find(p => p.id == id)
+
+        // Rediriger vers la page d'accueil si aucun joueur trouvé
+        if (!p)
+            return push('/players')
+
+        // Remplir les champs
         name = p.name
+        type = p.type
         color = p.color
         symbol = p.symbol
+
+        if (type == PlayerType.Bot) {
+            let bot = p as Bot
+            difficulty = bot.difficulty
+        }
     })
 
     function save() {
-        if (id > 0) {
-            let p = listPlayers.find(p => p.id == id)
-            if (!p) return
-
-            let index = listPlayers.indexOf(p)
-            listPlayers[index].name = name
-            listPlayers[index].color = color
-            listPlayers[index].symbol = symbol
+        // Créer le joueur
+        if (id < 1) {
+            if (type == PlayerType.Bot)
+                listBots.push(new Bot(name, symbol, color, difficulty))
+            if (type == PlayerType.Human)
+                listPlayers.push(new Human(name, symbol, color))
         }
 
-        if (id < 1) {
-            listPlayers.push(new Human(name, symbol, color))
+        // Modifier le joueur
+        if (id > 0) {
+            if (type == PlayerType.Human) {
+                let p = listPlayers.find(p => p.id == id)!
+                let index = listPlayers.indexOf(p)
+                listPlayers[index].name = name
+                listPlayers[index].color = color
+                listPlayers[index].symbol = symbol
+            }
+
+            if (type == PlayerType.Bot) {
+                let p = listBots.find(p => p.id == id)!
+                let index = listBots.indexOf(p)
+                listBots[index].name = name
+                listBots[index].color = color
+                listBots[index].symbol = symbol;
+                (listBots[index] as Bot).difficulty = difficulty
+            }
         }
 
         push('/players')

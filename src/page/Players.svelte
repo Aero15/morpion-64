@@ -1,7 +1,7 @@
 <script lang="ts">
     import type Player from "$core/entity/player/Player.svelte";
     import { filterPlayerWith } from "$core/helpers/Players.svelte";
-    import { listPlayers } from "$core/store/players.svelte";
+    import { listBots, listPlayers } from "$core/store/players.svelte";
     import ListPlayers from "$lib/player/ListPlayers.svelte";
     import Button from "$lib/form/Button.svelte";
     import Input from "$lib/form/Input.svelte";
@@ -12,7 +12,7 @@
 
     let searchValue: string = $state('')
     let isSearching: boolean = $derived(searchValue.length > 0)
-    let players: Player[] = $derived(isSearching ? filterPlayerWith(searchValue) : listPlayers)
+    let players: Player[] = $derived(isSearching ? filterPlayerWith(searchValue) : [...listPlayers, ...listBots])
     let countPlayers: number = $derived(players.length)
     let subtitle: string = $derived(isSearching ? `${countPlayers} joueurs trouvés` : `${countPlayers} joueurs`)
 

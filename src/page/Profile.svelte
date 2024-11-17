@@ -17,6 +17,7 @@
     import { PlayerType } from "$core/enums/PlayerType";
     import Bot from "$core/entity/player/Bot.svelte";
     import { Difficulty } from "$core/enums/Difficulty";
+    import SelectDifficulty from "$lib/form/SelectDifficulty.svelte";
 
     let { params }: { params: any } = $props();
 
@@ -29,7 +30,7 @@
     let difficulty: Difficulty = $state(Difficulty.Peaceful)
 
     // Paramètres de transition
-    const duration: number = 250
+    const duration: number = 200
     const delay: number = 100
 
     onMount(() => {
@@ -112,7 +113,12 @@
     </div>
 
     <div in:fade={{delay: delay * 1}}>
-        <h2>{id > 0 ? 'Modifier le joueur' : 'Créer un joueur'}</h2>
+        {#if type == PlayerType.Bot}
+            <h2>{id > 0 ? 'Modifier le bot' : 'Créer un bot'}</h2>
+        {/if}
+        {#if type == PlayerType.Human}
+            <h2>{id > 0 ? 'Modifier le joueur' : 'Créer un joueur'}</h2>
+        {/if}
 
         <div class="username" in:fade={{delay: delay * 2, duration}}>
             <label for="username">Nom de joueur</label>
@@ -130,6 +136,13 @@
                 <p class="label">Symbole</p>
                 <SelectSymbol bind:value={symbol} />
             </div>
+
+            {#if type == PlayerType.Bot}
+                <div class="difficulty" in:fade={{delay: delay * 5, duration}}>
+                    <p class="label">Difficulté</p>
+                    <SelectDifficulty bind:value={difficulty} />
+                </div>
+            {/if}
         </div>
     </div>
 </main>

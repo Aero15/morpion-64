@@ -5,12 +5,16 @@ import type { Symbol } from "$core/enums/Symbol";
 import { getRandomFrom } from "$core/helpers/Array.svelte";
 import { randomBetween } from "$core/helpers/Math.svelte";
 import { getBotSpeedDelay } from "$core/helpers/Players.svelte";
-import type Point from "../board/Point.svelte";
-import type GameEngine from "../engine/GameEngine.svelte";
+import type Point from "$core/entity/board/Point.svelte";
+import type GameEngine from "$core/entity/engine/GameEngine.svelte";
+import StrategyFactory from "$core/entity/strategy/StrategyFactory";
 import Player from "./Player.svelte";
+import type StrategySettings from "../strategy/StrategySettings";
+import { StrategyTask } from "$core/enums/StrategyTask";
 
 export default class Bot extends Player {
     private _difficulty: Difficulty;
+    private _strategySettings: StrategySettings;
   
     constructor(
         name: string,
@@ -24,6 +28,7 @@ export default class Bot extends Player {
         );
 
         this._difficulty = difficulty;
+        this._strategySettings = StrategyFactory.getStrategy(difficulty);
     }
   
     // Getter et Setter pour difficulty
@@ -34,36 +39,48 @@ export default class Bot extends Player {
     set difficulty(value: Difficulty) {
         this._difficulty = value;
     }
+
+    // Getter et Setter pour strategySettings
+    get strategySettings(): StrategySettings {
+        return this._strategySettings;
+    }
   
-    // Implémentation de la méthode abstraite play
+    set strategySettings(value: StrategySettings) {
+        this._strategySettings = value;
+    }
+
     play(game: GameEngine): void {
-        // Chosir une position strategique
-        let strategicPositions = game.board.findStrategicPositions(
-            this.symbol, this.color
-        );
-        let { oneSymbolPositions, twoSymbolsPositions } = strategicPositions;
-
-        // S'il y a une position strategique pour compléter un alignement de 2 symboles
-        if (twoSymbolsPositions.length > 0) {
-            let position = getRandomFrom<Point>(twoSymbolsPositions);
-            this.playMoveAfter(position, game);
-            return;
-        }
-
-        // S'il y a une position strategique pour compléter un alignement de 1 symbole
-        if (oneSymbolPositions.length > 0) {
-            let position = getRandomFrom<Point>(oneSymbolPositions);
-            this.playMoveAfter(position, game);
-            return;
-        }
-
-        // Choisir une position aleatoire
+        // Get random position (and check if the board is full)
         let position = this.getRandomPosition(game);
         if (position === null) {
             throw new Error("Le plateau est plein");
         }
 
-        this.playMoveAfter(position, game);
+        // Find strategic positions
+        let strategicPositions = game.board.findStrategicPositions(
+            this.symbol, this.color
+        );
+        let { oneSymbolPositions, twoSymbolsPositions } = strategicPositions;
+        console.log(this.symbol, strategicPositions)
+
+        // Get random strategy
+        const strategy = this.strategySettings.getRandomStrategy();
+        switch (strategy) {
+            case StrategyTask.SelectRandomCell:
+                // Do nothing
+                break;
+            case StrategyTask.ExtendAlignment:
+                if (oneSymbolPositions.length > 0)
+                    position = getRandomFrom<Point>(oneSymbolPositions);
+                break;
+            case StrategyTask.CompleteAlignment:
+                if (twoSymbolsPositions.length > 0)
+                    position = getRandomFrom<Point>(twoSymbolsPositions);
+                else if (oneSymbolPositions.length > 0)
+                    position = getRandomFrom<Point>(oneSymbolPositions);
+                break;
+        }
+        this.playMoveAfter(position!, game);
     }
 
     playMoveAfter(

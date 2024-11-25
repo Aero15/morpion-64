@@ -5,6 +5,8 @@
     import { push } from 'svelte-spa-router';
     import { fade, slide } from 'svelte/transition';
     import favicon from '/favicon.svg';
+    import Responsive from '$lib/shared/Responsive.svelte';
+    import type { BreakpointSize } from '$core/enums/BreakpointSize';
 
     interface Link {
         icon: string,
@@ -16,15 +18,19 @@
     let links: Link[] = [
         {icon: 'user', label: 'Gérer les joueurs', path: '/players'},
         {icon: 'podium', label: 'Podium', path: '/podium'},
-        {icon: 'config', label: 'Paramètres', path: '/settings'},
+        {icon: 'config', label: 'Réglages', path: '/settings'},
         {icon: 'info', label: 'Infos', path: '/about'},
     ]
+
+    let size: BreakpointSize = $state('sm');
 </script>
+
+<Responsive bind:size />
 
 {#snippet link(
     icon: string, label: string,
     path: string, variant: string = "",
-    iconSize: number = 48
+    iconSize: number = 18
 )}
     <Button onclick={() => push(path)} {variant}>
         <Icon {icon} size={iconSize} />
@@ -32,10 +38,16 @@
     </Button>
 {/snippet}
 
-<main in:fade>
-    <div class="ident" in:slide={{delay: 150, duration: 500}}>
+<main in:fade class:cols-2={['xl', '2xl'].includes(size)}>
+    <div class="ident"
+        class:align-center={['sm', 'md', 'lg'].includes(size)}
+        class:align-right={['xl', '2xl'].includes(size)}
+        in:slide={{delay: 150, duration: 500}}
+    >
         <img src={favicon} alt="Logo de Morpion 64" />
-        <h1>Morpion <span>64</span></h1>
+        {#if ['xl', '2xl'].includes(size)}
+            <h1>Morpion <span>64</span></h1>
+        {/if}
         <p>
             <strong>Plus grand, plus fun, plus stratégique !</strong>
             Choisis ta couleur, ton symbole et défie tes amis,
@@ -48,9 +60,11 @@
             <Button variant="primary" onclick={ () => push('/opponents') }>
                 <div class="text">
                     <strong>Jouer !</strong>
-                    <p>Lancer une nouvelle partie entre amis ou des bots</p>
+                    {#if ['xl', '2xl'].includes(size)}
+                        <p>Lancer une nouvelle partie entre amis ou des bots</p>
+                    {/if}
                 </div>
-                <Icon icon="play" size={100} />
+                <Icon icon="play" />
             </Button>
         </Halo>
         
@@ -67,19 +81,31 @@
         padding: clamp(1rem, 4vw, 3rem);
 
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 3rem;
+        gap: 1rem;
+
+        &.cols-2 {
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
     }
 
     .ident {
         display: grid;
         gap: 0rem;
         place-content: center;
-        place-items: end;
-        text-align: end;
+
+        &.align-center {
+            place-items: center;
+            text-align: center;
+        }
+
+        &.align-right { 
+            place-items: end;
+            text-align: end;
+        }
 
         img {
-            max-width: 200px;
+            max-width: clamp(100px, 16vw, 200px);
         }
 
         h1 {
@@ -87,7 +113,7 @@
             background: linear-gradient(to right, #00FFFF, #0099FF, #FF00FF);
             background-clip: text;
             color: transparent;
-            font-size: 5rem;
+            font-size: clamp(1.5rem, 6vw, 5rem);
             margin-top: 2rem;
 
             span {
@@ -97,6 +123,7 @@
 
         p {
             max-width: 400px;
+            font-size: clamp(.9rem, 2vw, 1rem);
         }
     }
 
@@ -135,7 +162,7 @@
                     }
 
                     strong {
-                        font-size: 3rem;
+                        font-size: clamp(1.5rem, 6vw, 3rem);
                     }
 
                     p {
@@ -150,6 +177,11 @@
                     display: grid;
                     gap: .25rem;
                     place-content: center;
+
+                    .icon,
+                    .icon::before {
+                        font-size: clamp(2rem, 6vw, 3rem);
+                    }
                 }
 
                 &:nth-child(2) {

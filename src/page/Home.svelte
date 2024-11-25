@@ -3,7 +3,7 @@
     import Halo from '$lib/shared/Halo.svelte';
     import Icon from '$lib/shared/Icon.svelte';
     import { push } from 'svelte-spa-router';
-    import { fade, slide } from 'svelte/transition';
+    import { fade, scale } from 'svelte/transition';
     import favicon from '/favicon.svg';
     import Responsive from '$lib/shared/Responsive.svelte';
     import type { BreakpointSize } from '$core/enums/BreakpointSize';
@@ -42,7 +42,7 @@
     <div class="ident"
         class:align-center={['sm', 'md', 'lg'].includes(size)}
         class:align-right={['xl', '2xl'].includes(size)}
-        in:slide={{delay: 150, duration: 500}}
+        in:scale={{delay: 150, duration: 500}}
     >
         <img src={favicon} alt="Logo de Morpion 64" />
         {#if ['xl', '2xl'].includes(size)}
@@ -93,6 +93,7 @@
         display: grid;
         gap: 0rem;
         place-content: center;
+        overflow: hidden;
 
         &.align-center {
             place-items: center;

@@ -119,7 +119,7 @@
             &:last-child {
                 opacity: .8;
                 font-size: .9em;
-                padding-bottom: 3.5rem;
+                padding-bottom: 1.5rem;
             }
         }
     }

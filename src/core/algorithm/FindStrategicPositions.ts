@@ -37,8 +37,8 @@ export function findStrategicPositions(
 
     // Supprimer les doublons dans les deux listes
     return {
-        twoSymbolsPositions: removeDuplicatePositions(board, positionsToCompleteTwoSymbols),
-        oneSymbolPositions: removeDuplicatePositions(board, positionsToCompleteOneSymbol)
+        twoSymbolsPositions: removeDuplicatePositions(positionsToCompleteTwoSymbols),
+        oneSymbolPositions: removeDuplicatePositions(positionsToCompleteOneSymbol)
     };
 }
 
@@ -82,7 +82,6 @@ function checkLine(
 
 // Méthode pour supprimer les doublons dans la liste des positions
 function removeDuplicatePositions(
-    board: GameBoard,
     positions: Point[]
 ): Point[] {
     const uniquePositions = new Set<string>(); // Utilise un Set pour éliminer les doublons

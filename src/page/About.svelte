@@ -17,6 +17,7 @@
     import viteLogo from '$svg/logo/vite.svg'
     import tsLogo from '$png/typescript.png'
     import nodeLogo from '$png/node.png'
+    import type IDevTool from "$core/interface/IDevTool";
 
     const date_format_options = {
         //weekday: 'long',
@@ -25,11 +26,33 @@
         day: 'numeric',
     };
 
-    const dev_tools = [
-        {logo: svelteLogo, name: "Svelte", url: "https://svelte.dev/"},
-        {logo: viteLogo, name: "Vite", url: "https://vitejs.dev/"},
-        {logo: tsLogo, name: "Typescript", url: "https://www.typescriptlang.org/"},
-        {logo: nodeLogo, name: "Node", url: "https://nodejs.org/"}
+    const dev_tools: IDevTool[] = [
+        {
+            logo: svelteLogo, name: "Svelte", url: "https://svelte.dev/",
+            darkTint: '#882b0c', brightTint: '#f2a58d',
+            description: "Svelte est un framework d'interface utilisateur\
+            permettant de concevoir des applications web incroyablement\
+            concis qui effectuent un travail minimal dans le navigateur."
+        },
+        {
+            logo: viteLogo, name: "Vite", url: "https://vitejs.dev/",
+            darkTint: '#936d00', brightTint: '#eace77',
+            description: "Vite est un outil de construction de projet\
+            qui offre une expérience de construction rapide et facile."
+        },
+        {
+            logo: tsLogo, name: "Typescript", url: "https://www.typescriptlang.org/",
+            darkTint: '#024775', brightTint: '#97d5ff', 
+            description: "Typescript est un langage de programmation\
+            orienté objet qui offre des fonctionnalités\
+            plus modernes et plus robustes."
+        },
+        {
+            logo: nodeLogo, name: "Node", url: "https://nodejs.org/",
+            darkTint: '#295c1a', brightTint: '#adea96', 
+            description: "Node est un environnement de travail\
+            pour le langage de programmation JavaScript."
+        }
     ]
 
     let projectStatus = $derived.by(() => {
@@ -93,20 +116,23 @@
                 {@render info('asterisk', 'Etat du projet', projectStatus)}
             </ul>
         </div>
-
-        <Section icon="info" title="Fonctionnalités" delay={3}>
-            <p>TODO: Lister les Fonctionnalités</p>
-        </Section>
     
-        <Section icon="info" title="Stack technique" delay={4}>
+        <Section icon="info" title="Stack technique" delay={3}>
             <ul class="tech_stack">
-                {#each dev_tools as {logo, name, url}}
-                    <li>
+                {#snippet tech_stack(logo: string, name: string, description: string, url?: string, darkTint?: string, brightTint?: string)}
+                    <li style:--dark-tint={darkTint} style:--bright-tint={brightTint}>
                         <a href={url}>
                             <img src={logo} alt={name} />
-                            <p>{name}</p>
+                            <div class="text">
+                                <p class="name"><strong>{name}</strong></p>
+                                <p class="description">{description}</p>
+                            </div>
                         </a>
                     </li>
+                {/snippet}
+                
+                {#each dev_tools as {logo, name, description, url, darkTint, brightTint}}
+                    {@render tech_stack(logo, name, description, url, darkTint, brightTint)}
                 {/each}
             </ul>
         </Section>
@@ -203,18 +229,47 @@
 
     .tech_stack {
         display: grid;
-        gap: 1rem;
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: .5rem;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         margin: 0;
         padding: 0;
         list-style: none;
 
         li {
-            text-align: center;
+            --bright-tint: #ddd;
+            --dark-tint: #333;
+            --logo-size: 100px;
+            background: light-dark(var(--bright-tint), var(--dark-tint));
+            padding: 2rem;
+            border-radius: 1rem;
+        }
+
+        a {
+            color: inherit;
+
+            display: grid;
+            grid-template-columns: var(--logo-size) 1fr;
+            gap: 1rem;
+        }
+
+        p {
+            margin: 0;
+
+            &.name {
+                font-size: 1.1em;
+                margin-top: -.5rem;
+                margin-bottom: .5rem;
+            }
+
+            &.description {
+                font-size: .9em;
+            }
         }
 
         img {
-            height: 100px;
+            height: var(--logo-size);
+            border-radius: .5rem;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,.2));
         }
     }
 

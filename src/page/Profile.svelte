@@ -1,28 +1,31 @@
 <script lang="ts">
-    import { randomColor } from "$core/helpers/Colors.svelte";
-    import { randomSymbol } from "$core/helpers/Symbols.svelte";
-    import { listBots, listPlayers } from "$core/store/players.svelte";
-    import Button from "$lib/form/Button.svelte";
+    import { onMount } from "svelte";
+    import { fade } from "svelte/transition";
+    import { push } from "svelte-spa-router";
+    import Icon from "$lib/shared/Icon.svelte";
     import Input from "$lib/form/Input.svelte";
     import Hero from "$lib/shared/Hero.svelte";
-    import { fade } from "svelte/transition";
-    import Icon from "$lib/shared/Icon.svelte";
+    import Button from "$lib/form/Button.svelte";
     import type { Color } from "$core/enums/Color";
+    import Bot from "$core/entity/player/Bot.svelte";
     import type { Symbol } from "$core/enums/Symbol";
-    import { push } from "svelte-spa-router";
-    import Human from "$core/entity/player/Human.svelte";
+    import { PlayerType } from "$core/enums/PlayerType";
+    import { Difficulty } from "$core/enums/Difficulty";
     import SelectColor from "$lib/form/SelectColor.svelte";
     import SelectSymbol from "$lib/form/SelectSymbol.svelte";
-    import { onMount } from "svelte";
-    import { PlayerType } from "$core/enums/PlayerType";
-    import Bot from "$core/entity/player/Bot.svelte";
-    import { Difficulty } from "$core/enums/Difficulty";
+    import { randomColor } from "$core/helpers/Colors.svelte";
+    import type Player from "$core/entity/player/Player.svelte";
+    import { randomSymbol } from "$core/helpers/Symbols.svelte";
     import SelectDifficulty from "$lib/form/SelectDifficulty.svelte";
     import SelectTypePlayer from "$lib/form/SelectTypePlayer.svelte";
+    import {
+        createBotPlayer, createHumanPlayer,
+        findPlayerById, updatePlayer
+    } from "$core/helpers/Players.svelte";
 
     let { params }: { params: any } = $props();
 
-    // Variables réactives
+    // Reactive values
     let id: number = $derived(params.id)
     let name: string = $state('')
     let type: PlayerType = $state(PlayerType.Human)
@@ -30,65 +33,57 @@
     let symbol: Symbol = $state(randomSymbol())
     let difficulty: Difficulty = $state(Difficulty.Peaceful)
 
-    // Paramètres de transition
+    // Transitions options
     const duration: number = 200
     const delay: number = 100
 
     onMount(() => {
-        // Rechercher le joueur dans la liste des joueurs humains
-        let p = listPlayers.find(p => p.id == id)
+        // Default values
+        name = ''
+        type = PlayerType.Human
+        color = randomColor()
+        symbol = randomSymbol()
 
-        // Rechercher le joueur dans la liste des joueurs bots si aucun joueur humain trouvé
-        if (!p)
-            p = listBots.find(p => p.id == id)
+        // Find a player by id
+        if (id > 0) {
+            const player = findPlayerById(id)
+            if (player) {
+                name = player.name
+                type = player.type
+                color = player.color
+                symbol = player.symbol
 
-        // Remplir les champs si aucun joueur trouvé (pour créer un nouveau joueur)
-        if (!p || id < 1) {
-            name = ''
-            type = PlayerType.Human
-            color = randomColor()
-            symbol = randomSymbol()
-            return
-        }
-
-        // Remplir les champs
-        name = p.name
-        type = p.type
-        color = p.color
-        symbol = p.symbol
-
-        if (type == PlayerType.Bot) {
-            let bot = p as Bot
-            difficulty = bot.difficulty
+                if (type == PlayerType.Bot) {
+                    let bot = player as Bot
+                    difficulty = bot.difficulty
+                }
+            } 
         }
     })
 
+    // Save player
     function save() {
-        // Créer le joueur
+        // Create a new player
         if (id < 1) {
-            if (type == PlayerType.Bot)
-                listBots.push(new Bot(name, symbol, color, difficulty))
-            if (type == PlayerType.Human)
-                listPlayers.push(new Human(name, symbol, color))
+            switch (type) {
+                case PlayerType.Bot:
+                    createBotPlayer(name, symbol, color, difficulty)
+                    break;
+                case PlayerType.Human:
+                    createHumanPlayer(name, symbol, color)
+                    break;
+            }
         }
 
-        // Modifier le joueur
+        // Update a player
         if (id > 0) {
-            if (type == PlayerType.Human) {
-                let p = listPlayers.find(p => p.id == id)!
-                let index = listPlayers.indexOf(p)
-                listPlayers[index].name = name
-                listPlayers[index].color = color
-                listPlayers[index].symbol = symbol
-            }
-
-            if (type == PlayerType.Bot) {
-                let p = listBots.find(p => p.id == id)!
-                let index = listBots.indexOf(p)
-                listBots[index].name = name
-                listBots[index].color = color
-                listBots[index].symbol = symbol;
-                (listBots[index] as Bot).difficulty = difficulty
+            switch (type) {
+                case PlayerType.Bot:
+                    updatePlayer({ id, name, symbol, color, type, difficulty } as Bot)
+                    break;
+                case PlayerType.Human:
+                    updatePlayer({ id, name, symbol, color, type } as Player)
+                    break;
             }
         }
 
@@ -100,14 +95,16 @@
     <div class="hero">
         <Hero icon="write" title="Profil">
             <div class="toolbar">
-                <Button variant="primary" center
-                    onclick={save}>
-                    {#if id > 0}
-                        <Icon icon="save" /> Enregistrer
-                    {:else}
-                        <Icon icon="plus" /> Créer le joueur
-                    {/if}
-                </Button>
+                {#if name.length > 0}
+                    <Button variant="primary" center
+                        onclick={save}>
+                        {#if id > 0}
+                            <Icon icon="save" /> Enregistrer
+                        {:else}
+                            <Icon icon="plus" /> Créer le joueur
+                        {/if}
+                    </Button>
+                {/if}
 
                 <Button center
                     onclick={() => push('/players')}>

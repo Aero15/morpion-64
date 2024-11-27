@@ -43,6 +43,10 @@ export function createBotPlayer(
     if (playerExists(name))
         return false
 
+    // Check if the name is valid
+    if (name.length < 1)
+        return false
+
     // Create the player
     listBots.push(new Bot(name, symbol, color, difficulty))
     return true

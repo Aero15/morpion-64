@@ -61,7 +61,6 @@ export default class Bot extends Player {
             this.symbol, this.color
         );
         let { oneSymbolPositions, twoSymbolsPositions } = strategicPositions;
-        console.log(this.symbol, strategicPositions)
 
         // Get random strategy
         const strategy = this.strategySettings.getRandomStrategy();

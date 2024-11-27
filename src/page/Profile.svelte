@@ -20,7 +20,7 @@
     import SelectTypePlayer from "$lib/form/SelectTypePlayer.svelte";
     import {
         createBotPlayer, createHumanPlayer,
-        findPlayerById, updatePlayer
+        deletePlayerById, findPlayerById, updatePlayer
     } from "$core/helpers/Players.svelte";
 
     let { params }: { params: any } = $props();
@@ -89,6 +89,15 @@
 
         push('/players')
     }
+
+    // Delete player
+    function deletePlayer() {
+        const ok = confirm('Voulez-vous vraiment supprimer ce joueur ?')
+        if (ok) {
+            deletePlayerById(id)
+            push('/players')
+        }
+    }
 </script>
 
 <main>
@@ -111,6 +120,14 @@
                     <Icon icon="undo" />
                     Abandonner
                 </Button>
+
+                {#if id > 0}
+                    <Button center variant="flat"
+                        onclick={deletePlayer}>
+                        <Icon icon="bin" />
+                        Supprimer
+                    </Button>
+                {/if}
             </div>
         </Hero>
 

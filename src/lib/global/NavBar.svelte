@@ -8,7 +8,7 @@
         icon: string,
     }
 
-    const pages = [
+    const pages: Page[] = [
         {name: 'Accueil', path: '/', icon: 'home'},
         {name: 'A propos', path: '/about', icon: 'info'},
         {name: 'Jouer', path: '/opponents', icon: 'play'},

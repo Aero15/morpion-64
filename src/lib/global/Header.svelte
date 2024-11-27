@@ -38,7 +38,7 @@
             <ul>
                 {#each pages.slice(0, 3) as {name, path, icon}}
                     <li>
-                        <a href={'#' + path} class:current={$location == path}>
+                        <a href={'#' + path} class:current={$location == path || $location.includes(path)}>
                             <Icon {icon} size={18} />
                             <p>{name}</p>
                         </a>
@@ -61,6 +61,8 @@
         align-items: center;
         gap: 1rem;
         padding: 0 1rem;
+        max-width: 1280px;
+        margin: 0 auto;
         background: light-dark(#e9e9e9, #252525);
         border-bottom: 1px solid light-dark(#cfcfcf, #353535);
 

@@ -7,6 +7,7 @@
     import favicon from '/favicon.svg';
     import Responsive from '$lib/shared/Responsive.svelte';
     import type { BreakpointSize } from '$core/enums/BreakpointSize';
+    import PageWrap from '$lib/global/PageWrap.svelte';
 
     interface Link {
         icon: string,
@@ -38,44 +39,46 @@
     </Button>
 {/snippet}
 
-<main in:fade class:cols-2={['xl', '2xl'].includes(size)}>
-    <div class="ident"
-        class:align-center={['sm', 'md', 'lg'].includes(size)}
-        class:align-right={['xl', '2xl'].includes(size)}
-        in:scale={{delay: 150, duration: 500}}
-    >
-        <img src={favicon} alt="Logo de Morpion 64" />
-        {#if ['xl', '2xl'].includes(size)}
-            <h1>Morpion <span>64</span></h1>
-        {/if}
-        <p>
-            <strong>Plus grand, plus fun, plus stratégique !</strong>
-            Choisis ta couleur, ton symbole et défie tes amis,
-            ou joue contre des bots sur des grilles de 3x3 à 8x8.
-        </p>
-    </div>
+<PageWrap>
+    <div in:fade id="pg-home" class:cols-2={['xl', '2xl'].includes(size)}>
+        <div class="ident"
+            class:align-center={['sm', 'md', 'lg'].includes(size)}
+            class:align-right={['xl', '2xl'].includes(size)}
+            in:scale={{delay: 150, duration: 500}}
+        >
+            <img src={favicon} alt="Logo de Morpion 64" />
+            {#if ['xl', '2xl'].includes(size)}
+                <h1>Morpion <span>64</span></h1>
+            {/if}
+            <p>
+                <strong>Plus grand, plus fun, plus stratégique !</strong>
+                Choisis ta couleur, ton symbole et défie tes amis,
+                ou joue contre des bots sur des grilles de 3x3 à 8x8.
+            </p>
+        </div>
 
-    <div class="tiles grid grid-cols-3" in:fade>
-        <Halo>
-            <Button variant="primary" onclick={ () => push('/opponents') }>
-                <div class="text">
-                    <strong>Jouer !</strong>
-                    {#if ['xl', '2xl'].includes(size)}
-                        <p>Lancer une nouvelle partie entre amis ou des bots</p>
-                    {/if}
-                </div>
-                <Icon icon="play" />
-            </Button>
-        </Halo>
-        
-        {#each links as {icon, label, path, variant, iconSize}}
-            {@render link(icon, label, path, variant, iconSize)}
-        {/each}
+        <div class="tiles grid grid-cols-3" in:fade>
+            <Halo>
+                <Button variant="primary" onclick={ () => push('/opponents') }>
+                    <div class="text">
+                        <strong>Jouer !</strong>
+                        {#if ['xl', '2xl'].includes(size)}
+                            <p>Lancer une nouvelle partie entre amis ou des bots</p>
+                        {/if}
+                    </div>
+                    <Icon icon="play" />
+                </Button>
+            </Halo>
+            
+            {#each links as {icon, label, path, variant, iconSize}}
+                {@render link(icon, label, path, variant, iconSize)}
+            {/each}
+        </div>
     </div>
-</main>
+</PageWrap>
 
 <style>
-    main {
+    #pg-home {
         display: flex;
         justify-content: center;
         padding: clamp(1rem, 4vw, 3rem);

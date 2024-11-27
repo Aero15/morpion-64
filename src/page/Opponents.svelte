@@ -11,6 +11,7 @@
     } from "$core/store/players.svelte";
     import { randomBetween } from "$core/helpers/Math.svelte";
     import ListPlayers from "$lib/player/ListPlayers.svelte";
+    import PageWrap from "$lib/global/PageWrap.svelte";
     import { fade, slide } from "svelte/transition";
     import Button from "$lib/form/Button.svelte";
     import Hero from "$lib/shared/Hero.svelte";
@@ -34,112 +35,114 @@
     }
 </script>
 
-<main>
-    <Hero icon="user" title="Participants">
-        <div class="toolbar">
-            {#if selectedPlayers.length > 1}
-                <Button onclick={launch} center variant="primary">
-                    <Icon icon="play" size={18} />
-                    <span>Lancer la partie</span>
+<PageWrap>
+    <div class="page-with-hero">
+        <Hero icon="user" title="Participants">
+            <div class="toolbar">
+                {#if selectedPlayers.length > 1}
+                    <Button onclick={launch} center variant="primary">
+                        <Icon icon="play" size={18} />
+                        <span>Lancer la partie</span>
+                    </Button>
+                {/if}
+                <Button onclick={abandon} center>
+                    <Icon icon="undo" size={18} />
+                    <span>Annuler</span>
                 </Button>
-            {/if}
-            <Button onclick={abandon} center>
-                <Icon icon="undo" size={18} />
-                <span>Annuler</span>
-            </Button>
+            </div>
+
+            <div class="actions">
+                {#if remainingBots.length > 0}
+                    <Button onclick={selectRandomBot} center>
+                        <Icon icon="bot" size={32} />
+                        <span>Ajouter un robot</span>
+                    </Button>
+                {:else}
+                    <span></span>
+                {/if}
+                
+                {#if selectedPlayers.length > 0}
+                    <Button onclick={clearSelectedPlayers} center>
+                        <Icon icon="bin" size={32} />
+                        <span>Vider la sélection</span>
+                    </Button>
+                {/if}
+            </div>
+
+            <div class="status">
+                {#if selectedPlayers.length < 2}
+                    <div class="warning" transition:slide>
+                        <Icon icon="warning" size={64} />
+                        <p>Vous devez choisir au moins deux joueurs pour pouvoir lancer une partie.</p>
+                    </div>
+                {/if}
+
+                {#if selectedPlayers.length >= 2}
+                    <div class="info" transition:slide>
+                        <Icon icon="checkbox" size={64} />
+                        <p>Vous pouvez lancer la partie pour faire affronter vos {selectedPlayers.length} participants.</p>
+                    </div>
+                {/if}
+            </div>
+        </Hero>
+
+        {#snippet sectionHeader(icon: string, title: string)}
+            <div class="head">
+                <Icon icon={icon} size={32} />
+                <h3>{ title }</h3>
+            </div>
+        {/snippet}
+
+        <div class="sections">
+            <section in:fade={{delay: 150}}>
+                {@render sectionHeader("profile", "Joueurs disponibles")}
+                {#if notSelectedPlayers.length > 0}
+                    <ListPlayers
+                        players={notSelectedPlayers}
+                        onPlayerClick={selectPlayerById} />
+                {:else}
+                    <div class="empty">
+                        <Icon icon="info" size={64} />
+                        <p>Aucun joueur disponible.</p>
+
+                        {#if listPlayers.length == 0}
+                            <Button center variant="primary"
+                                onclick={() => push('/players/0')}
+                            >
+                                <Icon icon="settings" size={16} />
+                                Gestion des joueurs
+                            </Button>
+                        {/if}
+                        
+                        {#if remainingBots.length > 0}
+                            <Button center onclick={selectRandomBot} >
+                                <Icon icon="plus" size={14} />
+                                Ajouter un robot
+                            </Button>
+                        {/if}
+                    </div>
+                {/if}
+            </section>
+
+            <div class="separator"></div>
+
+            <section in:fade={{delay: 300}}>
+                {@render sectionHeader("checkbox", "Joueurs sélectionnés")}
+                {#if selectedPlayers.length > 0}
+                    <ListPlayers players={selectedPlayers} onPlayerClick={removeSelectedPlayerById} />
+                {:else}
+                    <div class="empty">
+                        <Icon icon="warning" size={64} />
+                        <p>Aucun joueur séléctionné.</p>
+                    </div>
+                {/if}
+            </section>
         </div>
-
-        <div class="actions">
-            {#if remainingBots.length > 0}
-                <Button onclick={selectRandomBot} center>
-                    <Icon icon="bot" size={32} />
-                    <span>Ajouter un robot</span>
-                </Button>
-            {:else}
-                <span></span>
-            {/if}
-            
-            {#if selectedPlayers.length > 0}
-                <Button onclick={clearSelectedPlayers} center>
-                    <Icon icon="bin" size={32} />
-                    <span>Vider la sélection</span>
-                </Button>
-            {/if}
-        </div>
-
-        <div class="status">
-            {#if selectedPlayers.length < 2}
-                <div class="warning" transition:slide>
-                    <Icon icon="warning" size={64} />
-                    <p>Vous devez choisir au moins deux joueurs pour pouvoir lancer une partie.</p>
-                </div>
-            {/if}
-
-            {#if selectedPlayers.length >= 2}
-                <div class="info" transition:slide>
-                    <Icon icon="checkbox" size={64} />
-                    <p>Vous pouvez lancer la partie pour faire affronter vos {selectedPlayers.length} participants.</p>
-                </div>
-            {/if}
-        </div>
-    </Hero>
-
-    {#snippet sectionHeader(icon: string, title: string)}
-        <div class="head">
-            <Icon icon={icon} size={32} />
-            <h3>{ title }</h3>
-        </div>
-    {/snippet}
-
-    <div class="sections">
-        <section in:fade={{delay: 150}}>
-            {@render sectionHeader("profile", "Joueurs disponibles")}
-            {#if notSelectedPlayers.length > 0}
-                <ListPlayers
-                    players={notSelectedPlayers}
-                    onPlayerClick={selectPlayerById} />
-            {:else}
-                <div class="empty">
-                    <Icon icon="info" size={64} />
-                    <p>Aucun joueur disponible.</p>
-
-                    {#if listPlayers.length == 0}
-                        <Button center variant="primary"
-                            onclick={() => push('/players/0')}
-                        >
-                            <Icon icon="settings" size={16} />
-                            Gestion des joueurs
-                        </Button>
-                    {/if}
-                    
-                    {#if remainingBots.length > 0}
-                        <Button center onclick={selectRandomBot} >
-                            <Icon icon="plus" size={14} />
-                            Ajouter un robot
-                        </Button>
-                    {/if}
-                </div>
-            {/if}
-        </section>
-
-        <div class="separator"></div>
-
-        <section in:fade={{delay: 300}}>
-            {@render sectionHeader("checkbox", "Joueurs sélectionnés")}
-            {#if selectedPlayers.length > 0}
-                <ListPlayers players={selectedPlayers} onPlayerClick={removeSelectedPlayerById} />
-            {:else}
-                <div class="empty">
-                    <Icon icon="warning" size={64} />
-                    <p>Aucun joueur séléctionné.</p>
-                </div>
-            {/if}
-        </section>
     </div>
-</main>
+</PageWrap>
 
 <style>
-    main {
+    .page-with-hero {
         display: grid;
         grid-template-columns: 350px 1fr;
         gap: 2rem;

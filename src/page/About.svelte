@@ -18,6 +18,7 @@
     import tsLogo from '$png/typescript.png'
     import nodeLogo from '$png/node.png'
     import type IDevTool from "$core/interface/IDevTool";
+    import PageWrap from "$lib/global/PageWrap.svelte";
 
     const date_format_options = {
         //weekday: 'long',
@@ -67,80 +68,82 @@
     })
 </script>
 
-<main>
-    <div class="hero">
-        <Hero icon="info" title="A propos"
-            subtitle="Informations sur l'application">
-            <div class="toolbar">
-                <Button center
-                    onclick={() => push('/')}>
-                    <Icon icon="cross" />
-                    Retour
-                </Button>
-            </div>
-        </Hero>
-    </div>
-
-    <div>
-        <div class="intro" in:slide={{delay: 200, duration: 300}}>
-            <div class="ident">
-                <img src={logo} alt="Logo de Morpion 64" in:scale={{delay: 500}} />
-
-                <h3>{$app_name}</h3>
-                <p class="version">Version : <strong>{$app_version}</strong></p>
-
-                <p class="description">
-                    Le jeu de Morpion revisité avec une touche de modernité !
-                    Jouez sur des grilles de 3x3 à 8x8 et personnalisez votre expérience avec des symboles et couleurs uniques pour chaque joueur.
-                </p>
-            </div>
-
-            {#snippet info(icon: string, title: string, text: string, url?: string)}
-                <li>
-                    <Icon {icon} size={30} />
-                    <strong>{title}</strong>
-                    <p>
-                        {#if url}
-                            <a href={url}>{text}</a>
-                        {:else}
-                            {text}
-                        {/if}
-                    </p>
-                </li>
-            {/snippet}
-
-            <ul class="infos">
-                {@render info('duplicate', 'Licence', $license_name, $license_url)}
-                {@render info('clock', 'Mis à jour le', $last_update.toLocaleDateString('fr-FR', date_format_options))}
-                {@render info('profile', 'Développé par', $organisation_name, $organisation_url)}
-                {@render info('asterisk', 'Etat du projet', projectStatus)}
-            </ul>
+<PageWrap>
+    <div class="page-with-hero">
+        <div class="hero">
+            <Hero icon="info" title="A propos"
+                subtitle="Informations sur l'application">
+                <div class="toolbar">
+                    <Button center
+                        onclick={() => push('/')}>
+                        <Icon icon="cross" />
+                        Retour
+                    </Button>
+                </div>
+            </Hero>
         </div>
-    
-        <Section icon="info" title="Stack technique" delay={3}>
-            <ul class="tech_stack">
-                {#snippet tech_stack(logo: string, name: string, description: string, url?: string, darkTint?: string, brightTint?: string)}
-                    <li style:--dark-tint={darkTint} style:--bright-tint={brightTint}>
-                        <a href={url}>
-                            <img src={logo} alt={name} />
-                            <div class="text">
-                                <p class="name"><strong>{name}</strong></p>
-                                <p class="description">{description}</p>
-                            </div>
-                        </a>
+
+        <div>
+            <div class="intro" in:slide={{delay: 200, duration: 300}}>
+                <div class="ident">
+                    <img src={logo} alt="Logo de Morpion 64" in:scale={{delay: 500}} />
+
+                    <h3>{$app_name}</h3>
+                    <p class="version">Version : <strong>{$app_version}</strong></p>
+
+                    <p class="description">
+                        Le jeu de Morpion revisité avec une touche de modernité !
+                        Jouez sur des grilles de 3x3 à 8x8 et personnalisez votre expérience avec des symboles et couleurs uniques pour chaque joueur.
+                    </p>
+                </div>
+
+                {#snippet info(icon: string, title: string, text: string, url?: string)}
+                    <li>
+                        <Icon {icon} size={30} />
+                        <strong>{title}</strong>
+                        <p>
+                            {#if url}
+                                <a href={url}>{text}</a>
+                            {:else}
+                                {text}
+                            {/if}
+                        </p>
                     </li>
                 {/snippet}
-                
-                {#each dev_tools as {logo, name, description, url, darkTint, brightTint}}
-                    {@render tech_stack(logo, name, description, url, darkTint, brightTint)}
-                {/each}
-            </ul>
-        </Section>
+
+                <ul class="infos">
+                    {@render info('duplicate', 'Licence', $license_name, $license_url)}
+                    {@render info('clock', 'Mis à jour le', $last_update.toLocaleDateString('fr-FR', date_format_options))}
+                    {@render info('profile', 'Développé par', $organisation_name, $organisation_url)}
+                    {@render info('asterisk', 'Etat du projet', projectStatus)}
+                </ul>
+            </div>
+        
+            <Section icon="info" title="Stack technique" delay={3}>
+                <ul class="tech_stack">
+                    {#snippet tech_stack(logo: string, name: string, description: string, url?: string, darkTint?: string, brightTint?: string)}
+                        <li style:--dark-tint={darkTint} style:--bright-tint={brightTint}>
+                            <a href={url}>
+                                <img src={logo} alt={name} />
+                                <div class="text">
+                                    <p class="name"><strong>{name}</strong></p>
+                                    <p class="description">{description}</p>
+                                </div>
+                            </a>
+                        </li>
+                    {/snippet}
+                    
+                    {#each dev_tools as {logo, name, description, url, darkTint, brightTint}}
+                        {@render tech_stack(logo, name, description, url, darkTint, brightTint)}
+                    {/each}
+                </ul>
+            </Section>
+        </div>
     </div>
-</main>
+</PageWrap>
 
 <style>
-    main {
+    .page-with-hero {
         display: grid;
         gap: 2rem;
         padding-top: 2rem;
@@ -274,7 +277,7 @@
     }
 
     @media (width >= 900px) {
-        main {
+        .page-with-hero {
             grid-template-columns: 350px 1fr;
         }
     }

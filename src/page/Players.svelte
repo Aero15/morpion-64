@@ -3,6 +3,7 @@
     import { filterPlayerWith } from "$core/helpers/Players.svelte";
     import { listBots, listPlayers } from "$core/store/players.svelte";
     import ListPlayers from "$lib/player/ListPlayers.svelte";
+    import PageWrap from "$lib/global/PageWrap.svelte";
     import Button from "$lib/form/Button.svelte";
     import Input from "$lib/form/Input.svelte";
     import Hero from "$lib/shared/Hero.svelte";
@@ -24,43 +25,46 @@
         push('/players/' + id)
     }
 </script>
-<main>
-    <div class="hero">
-        <Hero icon="profile" title="Joueurs" {subtitle}>
-            <div class="toolbar">
-                <Button variant="primary" center
-                    onclick={openEditor}>
-                    <Icon icon="plus" />
-                    Créer un joueur
-                </Button>
 
-                <Input type="search"
-                    placeholder="Rechercher un joueur"
-                    bind:value={searchValue} />
-            </div>
-        </Hero>
+<PageWrap>
+    <div class="page-with-hero">
+        <div class="hero">
+            <Hero icon="profile" title="Joueurs" {subtitle}>
+                <div class="toolbar">
+                    <Button variant="primary" center
+                        onclick={openEditor}>
+                        <Icon icon="plus" />
+                        Créer un joueur
+                    </Button>
+    
+                    <Input type="search"
+                        placeholder="Rechercher un joueur"
+                        bind:value={searchValue} />
+                </div>
+            </Hero>
+        </div>
+    
+        <div in:fade={{delay: 150}}>
+            <h2>Liste des joueurs</h2>
+            {#if players.length > 0}
+                <ListPlayers {players} {onPlayerClick} />
+            {:else}
+                <center>
+                    <Icon icon="user" size={100} />
+                    <p>Aucun joueur à afficher</p>
+                    <Button variant="primary" center
+                        onclick={openEditor}>
+                        <Icon icon="plus" />
+                        Créer un joueur
+                    </Button>
+                </center>
+            {/if}
+        </div>
     </div>
-
-    <div in:fade={{delay: 150}}>
-        <h2>Liste des joueurs</h2>
-        {#if players.length > 0}
-            <ListPlayers {players} {onPlayerClick} />
-        {:else}
-            <center>
-                <Icon icon="user" size={100} />
-                <p>Aucun joueur à afficher</p>
-                <Button variant="primary" center
-                    onclick={openEditor}>
-                    <Icon icon="plus" />
-                    Créer un joueur
-                </Button>
-            </center>
-        {/if}
-    </div>
-</main>
+</PageWrap>
 
 <style>
-    main {
+    .page-with-hero {
         display: grid;
         gap: 2rem;
         padding-top: 2rem;
@@ -76,7 +80,7 @@
     }
 
     @media (width >= 900px) {
-        main {
+        .page-with-hero {
             grid-template-columns: 350px 1fr;
         }
     }

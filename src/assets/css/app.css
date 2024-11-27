@@ -37,14 +37,6 @@ h1, h2, h3, h4, h5, h6, strong {
     font-family: Marianne-Bold, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
-#app {
-    margin: 0 auto;
-}
-
-body:not(.extended) #app {
-    max-width: 1280px;
-}
-
 @media (prefers-color-scheme: light) {
     :root {
         color: #213547;

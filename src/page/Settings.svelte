@@ -1,5 +1,4 @@
 <script lang="ts">
-    // Imports
     import {
         BotDelay,
         defaultBotSpeedDelay,
@@ -15,12 +14,12 @@
 
     import Slider from "$lib/form/Slider.svelte";
     import Section from "$lib/shared/Section.svelte";
+    import PageWrap from "$lib/global/PageWrap.svelte";
     import { calcAvg } from "$core/helpers/Math.svelte";
     import type Point from "$core/entity/board/Point.svelte";
 
 
 
-    // Variables réactives
     let numberOfCells = $derived(countCellsFor(gridSize));
     let maxNbParticipants = $derived(calcMaxNbParticipantsFrom(numberOfCells));
     let botDelay = $derived.by(getBotSpeedDelay)
@@ -29,7 +28,6 @@
 
 
 
-    // Fonctions
     function getBotSpeedDelay(): Point {
         const delay = $botSpeedDelay
         switch (delay) {
@@ -41,7 +39,8 @@
         return defaultBotSpeedDelay
     }
 </script>
-<main>
+
+<PageWrap>
     <h1>Paramètres</h1>
 
     <div class="grid page">
@@ -93,7 +92,7 @@
             </div>
         </Section>
     </div>
-</main>
+</PageWrap>
 
 <style>
     .grid { display: grid; }

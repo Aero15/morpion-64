@@ -12,5 +12,6 @@
     .page-wrap {
         max-width: 1280px;
         margin-inline: auto;
+        padding: 1rem;
     }
 </style>

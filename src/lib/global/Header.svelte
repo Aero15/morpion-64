@@ -27,7 +27,9 @@
 
 <Responsive bind:size />
 
-<header class:center={size == 'sm'}>
+<header
+    class:center={size == 'sm'}
+    class:floating={['xl', '2xl'].includes(size)}>
     <a class="identity" href="#/">
         <h1>Morpion <span>64</span></h1>
         <img src={favicon} alt="Logo de Morpion 64" />
@@ -57,14 +59,14 @@
 
 <style>
     header {
+        --padding: 1rem;
         display: flex;
         align-items: center;
         gap: 1rem;
-        padding: 0 1rem;
-        max-width: 1280px;
+        padding: 0 var(--padding);
+        max-width: calc(1280px - var(--padding) * 2);
         margin: 0 auto;
-        background: light-dark(#e9e9e9, #252525);
-        border-bottom: 1px solid light-dark(#cfcfcf, #353535);
+        border-bottom: 1px solid light-dark(#cfcfcf, #444);
 
         &.center {
             justify-content: center;
@@ -72,6 +74,17 @@
 
         &:not(.center) {
             justify-content: space-between;
+        }
+
+        &.floating {
+            --padding: 2rem;
+            background: light-dark(#e9e9e9, #252525);
+            border: 1px solid light-dark(#a3a3a3, #666);
+            max-width: calc(1280px - var(--padding) * 2);
+            padding: 0 var(--padding);
+            border-radius: 10rem;
+            position: absolute;
+            inset: 1rem 0 auto 0;
         }
 
         .identity {
@@ -84,7 +97,6 @@
             transition: transform .2s;
             padding: .75rem 0;
             flex: 1;
-
 
             img {
                 --size: 28px;
@@ -113,6 +125,10 @@
             &:active {
                 transform: scale(1);
             }
+        }
+
+        &.center .identity {
+            justify-content: center;
         }
 
         nav {

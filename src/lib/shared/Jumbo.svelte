@@ -3,6 +3,7 @@
     import type { Snippet } from "svelte";
     import Responsive from "./Responsive.svelte";
     import type { BreakpointSize } from "$core/enums/BreakpointSize";
+    import { fade } from "svelte/transition";
 
     interface Props {
         icon?: string
@@ -26,7 +27,7 @@
 <div class="jumbo" class:overlap={['xl', '2xl'].includes(size)}>
     <div class="content">
         {#if icon.length > 0 || title.length > 0 || subtitle.length > 0}
-            <div class="identity">
+            <div class="identity" in:fade|global={{delay: 200, duration: 250}}>
                 {#if icon.length > 0}
                     <Icon { icon } size={ 70 } />
                 {/if}
@@ -42,7 +43,7 @@
         {/if}
     
         {#if children}
-            <div class="children">
+            <div class="children" in:fade|global={{delay: 200, duration: 250}}>
                 {@render children()}
             </div>
         {/if}
@@ -51,7 +52,6 @@
 
 <style>
     .jumbo {
-        --tint: light-dark(#8dcfea, #183cf1);
         background: linear-gradient(
             to right,
             light-dark(#e1adff, #7202a7),
@@ -68,7 +68,7 @@
                 rgba(255,255,255,.15)
             );
         padding: 1rem;
-        /*transition: padding .2s;*/
+        transition: padding .3s;
 
         .content {
             max-width: 1280px;

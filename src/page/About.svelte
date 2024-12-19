@@ -91,7 +91,7 @@
             </p>
             
             {#snippet info(index: number, icon: string, title: string, text: string, url?: string)}
-                <li in:fade|global={{delay: 100 * index}}>
+                <li in:fade|global={{delay: 70 * index + 350}}>
                     <Icon {icon} size={26} />
                     <strong>{title}</strong>
                     <p>

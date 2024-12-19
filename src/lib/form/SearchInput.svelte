@@ -100,7 +100,7 @@
         box-shadow: 0 0 0 0 #fff, 0 0 0 0 #fff inset,
             0 0 0 1px #00000033,
             0 5px 30px #00000033;
-        transition: box-shadow .2s, padding .2s;
+        transition: box-shadow .2s;
 
         &:hover {
             box-shadow: 0 0 0 0 #fff, 0 0 0 0 #fff inset,

@@ -72,7 +72,7 @@
 
         padding: 2rem;
         position: relative;
-        background: #fff;
+        background: light-dark(#fff, #323232);
         border-radius: var(--radius);
         box-shadow: 0 5px 30px rgba(0,0,0,.3);
 
@@ -118,7 +118,6 @@
 
     @media (prefers-color-scheme: dark) {
         .grid {
-            background: #323232;
             box-shadow: 0 0 0 1px rgba(255,255,255,.3), 0 5px 30px rgba(0,0,0,.3);
         }
     }

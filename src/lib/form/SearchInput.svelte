@@ -1,5 +1,7 @@
 <script lang="ts">
+    import type { BreakpointSize } from "$core/enums/BreakpointSize";
     import Icon from "$lib/shared/Icon.svelte";
+    import Responsive from "$lib/shared/Responsive.svelte";
     import Button from "./Button.svelte";
 
     interface Props {
@@ -13,10 +15,12 @@
     }: Props = $props();
 
     const iconSize = 20;
+    let size: BreakpointSize = $state('sm');
 </script>
 
+<Responsive bind:size />
 
-<div class="bx-search-input">
+<div class="bx-search-input" class:thick={!['sm'].includes(size)}>
     <div class="icon">
         <Icon icon="search" size={iconSize} />
     </div>
@@ -57,6 +61,28 @@
                 pointer-events: all;
             }
         }
+
+        &:not(.thick) {
+            .icon {
+                padding-left: .9rem;
+            }
+            .input-search {
+                padding: 12px 45px;
+            }
+            .actions :global(button) {
+                padding: 10px;
+            }
+        }
+
+        &.thick {
+            .icon {
+                padding-left: 1.5rem;
+            }
+            .input-search {
+                padding: 22px 60px;
+            }
+        }
+
     }
 
     .input-search {
@@ -66,8 +92,6 @@
         background: #fff;
         box-sizing: content-box;
         border-radius: 50px;
-        padding: 9px 13px;
-        padding: 22px 13px;
         font-size: 14px;
         text-align: center;
         color: light-dark(#000, #fff);
@@ -76,7 +100,7 @@
         box-shadow: 0 0 0 0 #fff, 0 0 0 0 #fff inset,
             0 0 0 1px #00000033,
             0 5px 30px #00000033;
-        transition: box-shadow .2s;
+        transition: box-shadow .2s, padding .2s;
 
         &:hover {
             box-shadow: 0 0 0 0 #fff, 0 0 0 0 #fff inset,

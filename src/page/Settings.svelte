@@ -17,6 +17,7 @@
     import PageWrap from "$lib/global/PageWrap.svelte";
     import { calcAvg } from "$core/helpers/Math.svelte";
     import type Point from "$core/entity/board/Point.svelte";
+    import Jumbo from "$lib/shared/Jumbo.svelte";
 
 
 
@@ -40,9 +41,9 @@
     }
 </script>
 
-<PageWrap>
-    <h1>Paramètres</h1>
+<Jumbo icon="config" title="Réglages" />
 
+<PageWrap>
     <div class="grid page">
         <Section icon="dice" title="Dimension du plateau">
             <div class="infographics">

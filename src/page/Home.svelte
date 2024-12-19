@@ -89,6 +89,7 @@
         &.cols-2 {
             grid-template-columns: 1fr 1fr;
             gap: 3rem;
+            padding-top: 5rem;
         }
     }
 

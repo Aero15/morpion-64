@@ -4,7 +4,7 @@
     interface Props {
         title?: string,
         variant?: string,
-        rounded?: string,
+        shape?: string,
         disabled?: boolean,
         center?: boolean,
         onclick?: () => void,
@@ -15,7 +15,7 @@
         children,
         title = '',
         variant = '',
-        rounded = 'default',
+        shape = 'default',
         disabled = $bindable(false),
         center = false,
         onclick = () => {},
@@ -27,8 +27,8 @@
     class:primary={variant === 'primary'}
     class:flat={variant === 'flat'}
 
-    class:rounded={rounded === 'rounded'}
-    class:squared={rounded === 'squared'}
+    class:rounded={shape === 'rounded'}
+    class:squared={shape === 'squared'}
 
     disabled={ disabled ? true : false }
     class:centered-content={center}

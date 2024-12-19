@@ -10,7 +10,12 @@
     import { fade } from "svelte/transition";
     import Icon from "$lib/shared/Icon.svelte";
     import { push } from "svelte-spa-router";
+    import Jumbo from "$lib/shared/Jumbo.svelte";
+    import SearchInput from "$lib/form/SearchInput.svelte";
+    import type { BreakpointSize } from "$core/enums/BreakpointSize";
+    import Responsive from "$lib/shared/Responsive.svelte";
 
+    let size: BreakpointSize = $state('sm')
     let searchValue: string = $state('')
     let isSearching: boolean = $derived(searchValue.length > 0)
     let players: Player[] = $derived(isSearching ? filterPlayerWith(searchValue) : [...listPlayers, ...listBots])
@@ -26,6 +31,18 @@
     }
 </script>
 
+<Responsive bind:size />
+
+<Jumbo icon="user" title="Joueurs" {subtitle}>
+    <span></span>
+</Jumbo>
+
+<div class="search-bar" class:thick={!['sm'].includes(size)}>
+    <SearchInput
+        bind:value={searchValue}
+        placeholder="Rechercher un joueur" />
+</div>
+
 <PageWrap>
     <div class="page-with-hero">
         <div class="hero">
@@ -36,10 +53,6 @@
                         <Icon icon="plus" />
                         Créer un joueur
                     </Button>
-    
-                    <Input type="search"
-                        placeholder="Rechercher un joueur"
-                        bind:value={searchValue} />
                 </div>
             </Hero>
         </div>
@@ -64,6 +77,18 @@
 </PageWrap>
 
 <style>
+    .search-bar {
+        display: grid;
+        max-width: 600px;
+        margin: auto;
+        margin-top: -1.5rem;
+        padding: 0 1rem;
+
+        &.thick {
+            margin-top: -2rem;
+        }
+    }
+
     .page-with-hero {
         display: grid;
         gap: 2rem;

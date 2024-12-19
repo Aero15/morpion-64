@@ -96,7 +96,7 @@
         text-align: center;
         color: light-dark(#000, #fff);
         color: #000;
-        min-width: 200px;
+        min-width: 70px;
         box-shadow: 0 0 0 0 #fff, 0 0 0 0 #fff inset,
             0 0 0 1px #00000033,
             0 5px 30px #00000033;

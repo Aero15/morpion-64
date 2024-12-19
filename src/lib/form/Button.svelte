@@ -67,7 +67,7 @@
         /* Look */
         &.rounded {border-radius: 1000px; padding: 7px 20px;}
         &.squared {border-radius: 0;}
-        &.flat {background: transparent;}
+        &.flat {background: transparent; color: inherit;}
         &.primary.flat {color: var(--main_color);}
     
         /* Content */
@@ -116,6 +116,7 @@
                 border-color: rgba(255,255,255,.2);
                 box-shadow: 0px 0 30px rgba(255,255,255,.2), 0 0 0 rgba(0,0,0,.3) inset;
             
+                &.flat {color: #fff;}
                 &.primary {border-color: rgba(255,255,255,.3);}
                 &.primary {
                     color: #fff;

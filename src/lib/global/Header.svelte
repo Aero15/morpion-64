@@ -52,7 +52,7 @@
 
     {#if size != 'sm'}
         <div class="version" in:fade>
-            <p>Version : <strong>{$app_version}</strong></p>
+            <p><a href="#/about">Version : <strong>{$app_version}</strong></a></p>
         </div>
     {/if}
 </header>
@@ -167,9 +167,18 @@
         .version {
             margin: 0;
             font-size: .9em;
-            opacity: .7;
             flex: 1;
             text-align: right;
+
+            a {
+                color: inherit;
+                padding: 1rem 0;
+
+                &:hover {
+                    text-decoration: underline;
+                    text-underline-offset: 4px;
+                }
+            }
         }
     }
 </style>

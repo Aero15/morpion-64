@@ -1,24 +1,26 @@
 <script lang="ts">
     import {
-        app_name, app_version,
+        app_version,
         last_update, project_status,
         license_name, license_url,
-        organisation_name, organisation_url
+        organisation_name, organisation_url,
+        repository_display_hostname,
+        repository_url
     } from "$core/store/application";
     import logo from "/favicon.svg";
-    import { push } from "svelte-spa-router";
-    import Hero from "$lib/shared/Hero.svelte";
     import Icon from "$lib/shared/Icon.svelte";
-    import Button from "$lib/form/Button.svelte";
     import Section from "$lib/shared/Section.svelte";
     import { ProjectStatus } from "$core/enums/ProjectStatus";
-    import { scale, slide } from "svelte/transition";
+    import { fade, scale } from "svelte/transition";
     import svelteLogo from '$svg/logo/svelte.svg'
     import viteLogo from '$svg/logo/vite.svg'
     import tsLogo from '$png/typescript.png'
     import nodeLogo from '$png/node.png'
     import type IDevTool from "$core/interface/IDevTool";
     import PageWrap from "$lib/global/PageWrap.svelte";
+    import Jumbo from "$lib/shared/Jumbo.svelte";
+    import Responsive from "$lib/shared/Responsive.svelte";
+    import type { BreakpointSize } from "$core/enums/BreakpointSize";
 
     const date_format_options = {
         //weekday: 'long',
@@ -36,25 +38,27 @@
             concis qui effectuent un travail minimal dans le navigateur."
         },
         {
-            logo: viteLogo, name: "Vite", url: "https://vitejs.dev/",
+            logo: viteLogo, name: "Vite.js", url: "https://vitejs.dev/",
             darkTint: '#936d00', brightTint: '#eace77',
-            description: "Vite est un outil de construction de projet\
+            description: "Vite.js est un outil de construction de projet\
             qui offre une expérience de construction rapide et facile."
         },
         {
             logo: tsLogo, name: "Typescript", url: "https://www.typescriptlang.org/",
             darkTint: '#024775', brightTint: '#97d5ff', 
             description: "Typescript est un langage de programmation\
-            orienté objet qui offre des fonctionnalités\
+            orienté objet (basé sur le Javascript) qui offre des fonctionnalités\
             plus modernes et plus robustes."
         },
         {
-            logo: nodeLogo, name: "Node", url: "https://nodejs.org/",
+            logo: nodeLogo, name: "Node.js", url: "https://nodejs.org/",
             darkTint: '#295c1a', brightTint: '#adea96', 
-            description: "Node est un environnement de travail\
+            description: "Node.js est un environnement de travail\
             pour le langage de programmation JavaScript."
         }
     ]
+
+    let size: BreakpointSize = $state('sm');
 
     let projectStatus = $derived.by(() => {
         switch ($project_status) {
@@ -68,124 +72,80 @@
     })
 </script>
 
-<PageWrap>
-    <div class="page-with-hero">
-        <div class="hero">
-            <Hero icon="info" title="A propos"
-                subtitle="Informations sur l'application">
-                <div class="toolbar">
-                    <Button center
-                        onclick={() => push('/')}>
-                        <Icon icon="cross" />
-                        Retour
-                    </Button>
-                </div>
-            </Hero>
-        </div>
+<Responsive bind:size />
 
-        <div>
-            <div class="intro" in:slide={{delay: 200, duration: 300}}>
-                <div class="ident">
-                    <img src={logo} alt="Logo de Morpion 64" in:scale={{delay: 500}} />
+<Jumbo>
+    <div class="bx-jumbo"
+        class:center={['sm', 'md'].includes(size)}
+        class:cols={!['sm', 'md'].includes(size)}
+    >
+        <img src={logo} alt="Logo de Morpion 64" in:scale|global={{delay: 150}} />
 
-                    <h3>{$app_name}</h3>
-                    <p class="version">Version : <strong>{$app_version}</strong></p>
+        <div class="ident">
+            <h3>Morpion <span>64</span></h3>
+            <p class="version">Version : <strong>{$app_version}</strong></p>
 
-                    <p class="description">
-                        Le jeu de Morpion revisité avec une touche de modernité !
-                        Jouez sur des grilles de 3x3 à 8x8 et personnalisez votre expérience avec des symboles et couleurs uniques pour chaque joueur.
+            <p class="description">
+                Le jeu de Morpion revisité avec une touche de modernité !
+                Jouez sur des grilles de 3x3 à 8x8 et personnalisez votre expérience avec des symboles et couleurs uniques pour chaque joueur.
+            </p>
+            
+            {#snippet info(index: number, icon: string, title: string, text: string, url?: string)}
+                <li in:fade|global={{delay: 100 * index}}>
+                    <Icon {icon} size={26} />
+                    <strong>{title}</strong>
+                    <p>
+                        {#if url}
+                            <a href={url}>{text}</a>
+                        {:else}
+                            {text}
+                        {/if}
                     </p>
-                </div>
+                </li>
+            {/snippet}
 
-                {#snippet info(icon: string, title: string, text: string, url?: string)}
-                    <li>
-                        <Icon {icon} size={30} />
-                        <strong>{title}</strong>
-                        <p>
-                            {#if url}
-                                <a href={url}>{text}</a>
-                            {:else}
-                                {text}
-                            {/if}
-                        </p>
-                    </li>
-                {/snippet}
-
-                <ul class="infos">
-                    {@render info('duplicate', 'Licence', $license_name, $license_url)}
-                    {@render info('clock', 'Mis à jour le', $last_update.toLocaleDateString('fr-FR', date_format_options))}
-                    {@render info('profile', 'Développé par', $organisation_name, $organisation_url)}
-                    {@render info('asterisk', 'Etat du projet', projectStatus)}
-                </ul>
-            </div>
-        
-            <Section icon="info" title="Stack technique" delay={3}>
-                <ul class="tech_stack">
-                    {#snippet tech_stack(logo: string, name: string, description: string, url?: string, darkTint?: string, brightTint?: string)}
-                        <li style:--dark-tint={darkTint} style:--bright-tint={brightTint}>
-                            <a href={url}>
-                                <img src={logo} alt={name} />
-                                <div class="text">
-                                    <p class="name"><strong>{name}</strong></p>
-                                    <p class="description">{description}</p>
-                                </div>
-                            </a>
-                        </li>
-                    {/snippet}
-                    
-                    {#each dev_tools as {logo, name, description, url, darkTint, brightTint}}
-                        {@render tech_stack(logo, name, description, url, darkTint, brightTint)}
-                    {/each}
-                </ul>
-            </Section>
+            <ul class="infos">
+                {@render info(0, 'duplicate', 'Licence', $license_name, $license_url)}
+                {@render info(1, 'clock', 'Mis à jour le', $last_update.toLocaleDateString('fr-FR', date_format_options))}
+                {@render info(2, 'profile', 'Développé par', $organisation_name, $organisation_url)}
+                {@render info(3, 'info', 'Etat du projet', projectStatus)}
+                {@render info(4, 'asterisk', 'Repository', $repository_display_hostname, $repository_url)}
+            </ul>
         </div>
     </div>
+</Jumbo>
+
+<PageWrap>
+    <Section icon="info" title="Stack technique" delay={1}>
+        <ul class="tech_stack">
+            {#snippet tech_stack(logo: string, name: string, description: string, url?: string, darkTint?: string, brightTint?: string)}
+                <li style:--dark-tint={darkTint} style:--bright-tint={brightTint}>
+                    <a href={url}>
+                        <div class="text">
+                            <img src={logo} alt={name} />
+                            <p class="name"><strong>{name}</strong></p>
+                            <p class="description">{description}</p>
+                        </div>
+                    </a>
+                </li>
+            {/snippet}
+            
+            {#each dev_tools as {logo, name, description, url, darkTint, brightTint}}
+                {@render tech_stack(logo, name, description, url, darkTint, brightTint)}
+            {/each}
+        </ul>
+    </Section>
 </PageWrap>
 
 <style>
-    .page-with-hero {
-        display: grid;
-        gap: 2rem;
-        padding-top: 2rem;
-
-        h2 {
-            margin-top: 0;
-        }
-    }
-
-    .toolbar {
-        display: grid;
-        gap: .5rem;
-
-        :global(button:first-child) {
-            padding-block: 1rem;
-        }
-    }
-
-    .intro {
-        background: linear-gradient(
-            to right,
-            rgb(107, 40, 194),
-            rgb(0, 93, 155),
-            rgb(0, 109, 109)
-        );
-        padding: 3rem;
-        border-radius: 2rem;
-        box-shadow:
-            0 0 0 1px rgba(0,0,0,.2) inset,
-            0 3px 30px rgba(0,0,0,.2);
-
+    .bx-jumbo {
         img {
-            width: 256px;
-            float: right;
-            margin-top: -100px;
+            filter: drop-shadow(0 0 15px rgba(0,0,0,.2));
         }
 
         .ident {
             h3 {
                 margin: 0;
-                margin-top: -1rem;
-                font-size: 64px;
             }
 
             .version {
@@ -193,18 +153,14 @@
             }
 
             .description {
-                font-size: .9em;
                 max-width: 500px;
             }
         }
 
         .infos {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 2rem;
             margin: 0;
             padding: 0;
-            margin-top: 4rem;
             list-style: none;
 
             a {
@@ -218,14 +174,92 @@
             }
 
             strong {
-                margin-top: .5rem;
-                font-size: .9em;
+                margin-top: .25rem;
                 display: block;
             }
 
             p {
                 margin: 0;
-                font-size: .9em;
+                margin-top: -.05rem;
+            }
+        }
+
+        &.center {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+
+            img {
+                max-width: 126px;
+            }
+            
+            .ident {
+                text-align: center;
+                
+                h3 {
+                    font-size: 32px;
+                }
+
+                .version,
+                .description {
+                    font-size: .8em;
+                }
+            }
+
+            .infos {
+                gap: 2rem 1rem;
+                margin-top: 2rem;
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+
+                strong {
+                    margin-top: .15rem;
+                    font-size: .8em;
+                }
+
+                p {
+                    font-size: .8em;
+                }
+            }
+        }
+
+        &.cols {
+            display: grid;
+            grid-template-columns: 256px 1fr;
+            gap: 3rem;
+
+
+            img {
+                width: 256px;
+            }
+
+            .ident {
+                h3 {
+                    font-size: 64px;
+                    margin-top: -1rem;
+
+                    span {
+                        font-family: Marianne-Light, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+                    }
+                }
+
+                .version,
+                .description {
+                    font-size: .87em;
+                }
+            }
+
+            .infos {
+                gap: 2rem;
+                margin-top: 2rem;
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+
+                strong {
+                    margin-top: .25rem;
+                }
+
+                strong, p {
+                    font-size: .87em;
+                }
             }
         }
     }
@@ -234,6 +268,7 @@
         display: grid;
         gap: .5rem;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        align-items: flex-start;
         margin: 0;
         padding: 0;
         list-style: none;
@@ -241,18 +276,15 @@
         li {
             --bright-tint: #ddd;
             --dark-tint: #333;
-            --logo-size: 100px;
+            --logo-size: 80px;
             background: light-dark(var(--bright-tint), var(--dark-tint));
-            padding: 2rem;
             border-radius: 1rem;
         }
 
         a {
             color: inherit;
-
-            display: grid;
-            grid-template-columns: var(--logo-size) 1fr;
-            gap: 1rem;
+            padding: 2rem;
+            display: block;
         }
 
         p {
@@ -265,31 +297,17 @@
             }
 
             &.description {
-                font-size: .9em;
+                font-size: .87em;
             }
         }
 
         img {
+            float: right;
+            margin-left: 1rem;
+            margin-top: -2.5rem;
             height: var(--logo-size);
             border-radius: .5rem;
             filter: drop-shadow(0 5px 10px rgba(0,0,0,.2));
         }
-    }
-
-    @media (width >= 900px) {
-        .page-with-hero {
-            grid-template-columns: 350px 1fr;
-        }
-    }
-
-    @media (prefers-color-scheme: light) {
-        .intro {
-            background: linear-gradient(
-                to right,
-                rgb(215, 183, 255),
-                rgb(158, 216, 255),
-                rgb(157, 234, 234)
-            );
-        }    
     }
 </style>

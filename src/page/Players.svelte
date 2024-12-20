@@ -6,15 +6,14 @@
     import PageWrap from "$lib/global/PageWrap.svelte";
     import Panel from "$lib/shared/panel/Panel.svelte";
     import Button from "$lib/form/Button.svelte";
-    import { fade } from "svelte/transition";
+    import { fade, scale } from "svelte/transition";
     import Icon from "$lib/shared/Icon.svelte";
     import { push } from "svelte-spa-router";
     import Jumbo from "$lib/shared/Jumbo.svelte";
-    import SearchInput from "$lib/form/SearchInput.svelte";
+    import SearchBar from "$lib/shared/SearchBar.svelte";
     import Responsive from "$lib/shared/Responsive.svelte";
     import type { BreakpointSize } from "$core/enums/BreakpointSize";
     import PanelSection from "$lib/shared/panel/PanelSection.svelte";
-    import SearchBar from "$lib/shared/SearchBar.svelte";
 
     let size: BreakpointSize = $state('sm')
     let searchValue: string = $state('')
@@ -50,9 +49,9 @@
             </Button>
         </div>
 
-        <div class="panel" in:fade={{delay: 80}}>
+        <div class="panel" in:scale={{duration: 250}}>
             <Panel>
-                <PanelSection title="Informations" icon="info" variant="transparent">
+                <PanelSection title="Informations" icon="info">
                     <div class="infos">
                         <Icon icon="user" size={100} />
                         <h3>{subtitle}</h3>

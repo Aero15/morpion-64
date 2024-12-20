@@ -4,16 +4,16 @@
     import { listBots, listPlayers } from "$core/store/players.svelte";
     import ListPlayers from "$lib/player/ListPlayers.svelte";
     import PageWrap from "$lib/global/PageWrap.svelte";
+    import Panel from "$lib/shared/panel/Panel.svelte";
     import Button from "$lib/form/Button.svelte";
-    import Input from "$lib/form/Input.svelte";
-    import Hero from "$lib/shared/Hero.svelte";
     import { fade } from "svelte/transition";
     import Icon from "$lib/shared/Icon.svelte";
     import { push } from "svelte-spa-router";
     import Jumbo from "$lib/shared/Jumbo.svelte";
     import SearchInput from "$lib/form/SearchInput.svelte";
-    import type { BreakpointSize } from "$core/enums/BreakpointSize";
     import Responsive from "$lib/shared/Responsive.svelte";
+    import type { BreakpointSize } from "$core/enums/BreakpointSize";
+    import PanelSection from "$lib/shared/panel/PanelSection.svelte";
 
     let size: BreakpointSize = $state('sm')
     let searchValue: string = $state('')
@@ -33,7 +33,7 @@
 
 <Responsive bind:size />
 
-<Jumbo icon="user" title="Joueurs" {subtitle}>
+<Jumbo icon="user" title="Joueurs" subtitle="Gestion des joueurs">
     <span></span>
 </Jumbo>
 
@@ -44,17 +44,34 @@
 </div>
 
 <PageWrap>
-    <div class="page-with-hero">
-        <div class="hero">
-            <Hero icon="profile" title="Joueurs" {subtitle}>
-                <div class="toolbar">
-                    <Button variant="primary" center
-                        onclick={openEditor}>
-                        <Icon icon="plus" />
-                        Créer un joueur
-                    </Button>
-                </div>
-            </Hero>
+    <div id="pg-players">
+        <div class="toolbar">
+            <Button variant="primary" center
+                onclick={openEditor}>
+                <Icon icon="plus" />
+                Créer un joueur
+            </Button>
+        </div>
+
+        <div class="panel">
+            <Panel>
+                <PanelSection title="Informations" icon="info" variant="transparent">
+                    <div class="infos">
+                        <Icon icon="user" size={100} />
+                        <h3>{subtitle}</h3>
+                    </div>
+                </PanelSection>
+
+                <PanelSection title="Actions" icon="play" variant="tinted">
+                    <div class="actions">
+                        <Button variant="primary" center
+                            onclick={openEditor}>
+                            <Icon icon="plus" />
+                            Créer un joueur
+                        </Button>
+                    </div>
+                </PanelSection>
+            </Panel>
         </div>
     
         <div in:fade={{delay: 150}}>
@@ -89,24 +106,45 @@
         }
     }
 
-    .page-with-hero {
+    .infos {
+        display: grid;
+        place-items: center;
+        padding-top: 2rem;
+
+        h3 {
+            margin: 0;
+        }
+        }
+    }
+
+    .actions {
+        display: grid;
+        gap: .25rem;
+        padding: 0 1rem 1rem;
+    }
+
+    #pg-players {
         display: grid;
         gap: 2rem;
-        padding-top: 2rem;
 
         h2 {
             margin-top: 0;
         }
+
+        .panel { display: none; }
+        .toolbar { display: grid; }
     }
 
-    .toolbar {
-        display: grid;
-        gap: .5rem;
-    }
+    @media (width >= 500px) {
+        #pg-players {
+            grid-template-columns: 300px 1fr;
 
-    @media (width >= 900px) {
-        .page-with-hero {
-            grid-template-columns: 350px 1fr;
+            .toolbar { display: none; }
+
+            .panel {
+                display: grid;
+                place-content: start stretch;
+            }
         }
     }
 </style>

@@ -94,6 +94,7 @@
             ), var(--end-gradient);
             background-size: 100% 40px;
             background-repeat: repeat-x;
+            border-top: 1px solid light-dark(#ccc, #777);
 
             &:hover {
                 --end-gradient: light-dark(#f0f0f0, #333);

@@ -25,10 +25,22 @@
     // Liste des joueurs non selectionnés
     let notSelectedPlayers = $derived(listPlayers.filter(player => !selectedPlayers.includes(player)))
     let remainingBots = $derived(listBots.filter(bot => !selectedPlayers.includes(bot)))
+    let canLaunchGame = $derived(selectedPlayers.length >= 2 || (selectedPlayers.length >= 1 && remainingBots.length > 0))
 
     // Actions
-    let launch = () => push('/game')
     let abandon = () => push('/')
+    function launch() {
+        // Add a bot if only one player is selected
+        if (selectedPlayers.length == 1 && remainingBots.length > 0) {
+            selectedPlayers.push(remainingBots[0])
+        }
+
+        // Abort if less than 2 players
+        if (selectedPlayers.length < 2) return
+
+        // Go to game
+        push('/game')
+    }
 
     function selectRandomBot() {
         let index = randomBetween(0, remainingBots.length - 1)
@@ -42,7 +54,7 @@
     <div class="page-with-hero">
         <Hero icon="user" title="Participants">
             <div class="toolbar">
-                {#if selectedPlayers.length > 1}
+                {#if canLaunchGame}
                     <Button onclick={launch} center variant="primary">
                         <Icon icon="play" size={18} />
                         <span>Lancer la partie</span>
@@ -73,17 +85,21 @@
             </div>
 
             <div class="status">
-                {#if selectedPlayers.length < 2}
+                {#if selectedPlayers.length < 1}
                     <div class="warning" transition:slide>
                         <Icon icon="warning" size={64} />
-                        <p>Vous devez choisir au moins deux joueurs pour pouvoir lancer une partie.</p>
+                        <p>Vous devez choisir au moins un joueur pour pouvoir lancer une partie.</p>
                     </div>
                 {/if}
 
-                {#if selectedPlayers.length >= 2}
+                {#if canLaunchGame}
                     <div class="info" transition:slide>
                         <Icon icon="checkbox" size={64} />
-                        <p>Vous pouvez lancer la partie pour faire affronter vos {selectedPlayers.length} participants.</p>
+                        {#if selectedPlayers.length == 1}
+                            <p>Vous pouvez maintenant lancer la partie de {selectedPlayers[0].name} qui affrontera un bot.</p>
+                        {:else}
+                            <p>Vous pouvez lancer la partie pour faire affronter vos {selectedPlayers.length} participants.</p>
+                        {/if}
                     </div>
                 {/if}
             </div>

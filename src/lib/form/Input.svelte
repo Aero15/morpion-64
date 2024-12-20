@@ -18,7 +18,7 @@
 
 <style> 
     input {
-        font-family: Marianne, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+        font-family: inherit;
         border: 1px solid rgba(0,0,0,.3);
         background: transparent;
         box-sizing: content-box;

@@ -53,7 +53,7 @@
 <style>
     .jumbo {
         --cell_size: 200px;
-        --cell_border_width: 0px;
+        --cell_border_width: 1px;
         --cell_border_color: light-dark(#fff, #000);
         background:
             /* Background grid */

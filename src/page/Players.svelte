@@ -14,6 +14,7 @@
     import Responsive from "$lib/shared/Responsive.svelte";
     import type { BreakpointSize } from "$core/enums/BreakpointSize";
     import PanelSection from "$lib/shared/panel/PanelSection.svelte";
+    import SearchBar from "$lib/shared/SearchBar.svelte";
 
     let size: BreakpointSize = $state('sm')
     let searchValue: string = $state('')
@@ -37,11 +38,7 @@
     <span></span>
 </Jumbo>
 
-<div class="search-bar" class:thick={!['sm'].includes(size)}>
-    <SearchInput
-        bind:value={searchValue}
-        placeholder="Rechercher un joueur" />
-</div>
+<SearchBar bind:value={searchValue} placeholder="Rechercher un joueur" />
 
 <PageWrap>
     <div id="pg-players">
@@ -94,18 +91,6 @@
 </PageWrap>
 
 <style>
-    .search-bar {
-        display: grid;
-        max-width: 600px;
-        margin: auto;
-        margin-top: -1.5rem;
-        padding: 0 1rem;
-
-        &.thick {
-            margin-top: -2rem;
-        }
-    }
-
     .infos {
         display: grid;
         place-items: center;

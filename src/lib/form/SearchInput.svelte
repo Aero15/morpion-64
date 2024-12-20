@@ -86,7 +86,7 @@
     }
 
     .input-search {
-        font-family: Marianne, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+        font-family: inherit;
         border: none;
         background: light-dark(#fff, #333);
         background: #fff;
@@ -100,7 +100,7 @@
         box-shadow: 0 0 0 0 #fff, 0 0 0 0 #fff inset,
             0 0 0 1px #00000033,
             0 5px 30px #00000033;
-        transition: box-shadow .2s;
+        transition: box-shadow .2s, padding .2s;
 
         &:hover {
             box-shadow: 0 0 0 0 #fff, 0 0 0 0 #fff inset,

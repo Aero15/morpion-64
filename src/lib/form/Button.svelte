@@ -42,7 +42,7 @@
 
 <style>
     button {
-        font-family: Marianne, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+        font-family: inherit;
         border: 1px solid transparent;
         background: rgb(215, 215, 215);
         border-radius: 10px;

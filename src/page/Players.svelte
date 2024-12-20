@@ -50,7 +50,7 @@
             </Button>
         </div>
 
-        <div class="panel">
+        <div class="panel" in:fade={{delay: 80}}>
             <Panel>
                 <PanelSection title="Informations" icon="info" variant="transparent">
                     <div class="infos">
@@ -71,7 +71,7 @@
             </Panel>
         </div>
     
-        <div in:fade={{delay: 150}}>
+        <div in:fade={{delay: 200}}>
             <h2>Liste des joueurs</h2>
             {#if players.length > 0}
                 <ListPlayers {players} {onPlayerClick} />
@@ -116,7 +116,7 @@
             margin-top: 0;
         }
 
-        .panel { display: none; }
+        .panel { display: none; transition: margin .5s; }
         .toolbar { display: grid; }
     }
 
@@ -129,6 +129,14 @@
             .panel {
                 display: grid;
                 place-content: start stretch;
+            }
+        }
+    }
+
+    @media (width >= 1300px) {
+        #pg-players {
+            .panel {
+                margin-top: -266px;
             }
         }
     }

@@ -52,12 +52,36 @@
 
 <style>
     .jumbo {
-        background: linear-gradient(
-            to right,
-            light-dark(#e1adff, #7202a7),
-            light-dark(#79c0ff, #005b97),
-            light-dark(#8dead9, #00916c)
-        );
+        --cell_size: 200px;
+        --cell_border_width: 0px;
+        --cell_border_color: light-dark(#fff, #000);
+        background:
+            /* Background grid */
+            linear-gradient(
+                to right,
+                var(--cell_border_color) var(--cell_border_width),
+                transparent 1px
+            ),
+            linear-gradient(
+                to bottom,
+                var(--cell_border_color) var(--cell_border_width),
+                transparent 1px
+            ),
+            /* Background gradient */
+            linear-gradient(
+                to right,
+                light-dark(#e1adff, #7202a7),
+                light-dark(#79c0ff, #005b97),
+                light-dark(#8dead9, #00916c)
+            ),
+            /* Background color */
+            light-dark(#fff, #333);
+        background-size: 
+            var(--cell_size) var(--cell_size),
+            var(--cell_size) var(--cell_size),
+            100% 100%;
+        background-position: top center;
+
         box-shadow:
             0 -1px 0 light-dark(
                 rgba(0,0,0,.3),

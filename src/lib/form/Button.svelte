@@ -44,13 +44,13 @@
     button {
         font-family: inherit;
         border: 1px solid transparent;
-        background: rgb(215, 215, 215);
+        background: light-dark(rgb(215, 215, 215), rgb(80, 80, 80));
         border-radius: 10px;
         padding: 8px .8em;
         font-weight: 500;
         font-size: .9em;
         cursor: pointer;
-        color: #000;
+        color: light-dark(#000, #fff);
         transition:
             transform .2s,
             border-color .2s,
@@ -102,9 +102,6 @@
 
     @media (prefers-color-scheme: dark) {
         button {
-            color: #fff;
-            background: rgb(60,60,60);
-        
             /* Color */
             &.primary {background: var(--main_color);}
             &.flat {background: transparent;}

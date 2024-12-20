@@ -17,6 +17,7 @@
     import Hero from "$lib/shared/Hero.svelte";
     import Icon from "$lib/shared/Icon.svelte";
     import { push } from "svelte-spa-router";
+    import Jumbo from "$lib/shared/Jumbo.svelte";
 
     // Effacer la selection
     clearSelectedPlayers()
@@ -34,6 +35,8 @@
         selectedPlayers.push(remainingBots[index])
     }
 </script>
+
+<Jumbo icon="play" title="Nouvelle partie" subtitle="Sélection des participants" />
 
 <PageWrap>
     <div class="page-with-hero">

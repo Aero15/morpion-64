@@ -14,10 +14,10 @@
     import PageWrap from "$lib/global/PageWrap.svelte";
     import { fade, slide } from "svelte/transition";
     import Button from "$lib/form/Button.svelte";
+    import Jumbo from "$lib/shared/Jumbo.svelte";
     import Hero from "$lib/shared/Hero.svelte";
     import Icon from "$lib/shared/Icon.svelte";
     import { push } from "svelte-spa-router";
-    import Jumbo from "$lib/shared/Jumbo.svelte";
 
     // Effacer la selection
     clearSelectedPlayers()
@@ -28,7 +28,6 @@
     let canLaunchGame = $derived(selectedPlayers.length >= 2 || (selectedPlayers.length >= 1 && remainingBots.length > 0))
 
     // Actions
-    let abandon = () => push('/')
     function launch() {
         // Add a bot if only one player is selected
         if (selectedPlayers.length == 1 && remainingBots.length > 0) {
@@ -53,18 +52,14 @@
 <PageWrap>
     <div class="page-with-hero">
         <Hero icon="user" title="Participants">
-            <div class="toolbar">
-                {#if canLaunchGame}
+            {#if canLaunchGame}
+                <div class="toolbar">
                     <Button onclick={launch} center variant="primary">
                         <Icon icon="play" size={18} />
                         <span>Lancer la partie</span>
                     </Button>
-                {/if}
-                <Button onclick={abandon} center>
-                    <Icon icon="undo" size={18} />
-                    <span>Annuler</span>
-                </Button>
-            </div>
+                </div>
+            {/if}
 
             <div class="actions">
                 {#if remainingBots.length > 0}

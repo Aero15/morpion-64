@@ -223,18 +223,19 @@
         }
 
         &.cols {
+            --logo_size: 200px;
             display: grid;
-            grid-template-columns: 256px 1fr;
+            grid-template-columns: var(--logo_size) 1fr;
             gap: 3rem;
 
 
             img {
-                width: 256px;
+                width: var(--logo_size);
             }
 
             .ident {
                 h3 {
-                    font-size: 64px;
+                    font-size: 50px;
                     margin-top: -1rem;
 
                     span {

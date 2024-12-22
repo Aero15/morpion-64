@@ -1,6 +1,6 @@
 <script lang="ts">
     import type Player from "$core/entity/player/Player.svelte";
-    import { filterPlayerWith } from "$core/helpers/Players.svelte";
+    import { filterListPlayersWith } from "$core/helpers/Players.svelte";
     import { listBots, listPlayers } from "$core/store/players.svelte";
     import ListPlayers from "$lib/player/ListPlayers.svelte";
     import PageWrap from "$lib/global/PageWrap.svelte";
@@ -14,13 +14,15 @@
     import Responsive from "$lib/shared/Responsive.svelte";
     import type { BreakpointSize } from "$core/enums/BreakpointSize";
     import PanelSection from "$lib/shared/panel/PanelSection.svelte";
+    import Collapse from "$lib/shared/Collapse.svelte";
 
     let size: BreakpointSize = $state('sm')
     let searchValue: string = $state('')
     let isSearching: boolean = $derived(searchValue.length > 0)
-    let players: Player[] = $derived(isSearching ? filterPlayerWith(searchValue) : [...listPlayers, ...listBots])
-    let countPlayers: number = $derived(players.length)
-    let subtitle: string = $derived(isSearching ? `${countPlayers} joueurs trouvés` : `${countPlayers} joueurs`)
+    let bots: Player[] = $derived(isSearching ? filterListPlayersWith(searchValue, listBots) : listBots)
+    let humans: Player[] = $derived(isSearching ? filterListPlayersWith(searchValue, listPlayers) : listPlayers)
+    let globalCount: number = $derived(bots.length + humans.length)
+    let subtitle: string = $derived(isSearching ? `${globalCount} joueurs trouvés` : `${globalCount} joueurs`)
 
     function openEditor() {
         push('/players/0')
@@ -53,7 +55,7 @@
             <Panel>
                 <PanelSection title="Informations" icon="info">
                     <div class="infos">
-                        <Icon icon="user" size={100} />
+                        <Icon icon={ isSearching ? 'search' : 'user' } size={100} />
                         <h3>{subtitle}</h3>
                     </div>
                 </PanelSection>
@@ -70,21 +72,44 @@
             </Panel>
         </div>
     
-        <div in:fade={{delay: 200}}>
-            <h2>Liste des joueurs</h2>
-            {#if players.length > 0}
-                <ListPlayers {players} {onPlayerClick} />
-            {:else}
-                <center>
-                    <Icon icon="user" size={100} />
-                    <p>Aucun joueur à afficher</p>
-                    <Button variant="primary" center
-                        onclick={openEditor}>
-                        <Icon icon="plus" />
-                        Créer un joueur
-                    </Button>
-                </center>
-            {/if}
+        <div in:fade={{delay: 200}} class="sections"
+            class:space={ !['sm', 'md', 'lg'].includes(size) }
+            class:cols-2={ ['xl', '2xl'].includes(size) }>
+            <Collapse title="Joueurs" icon="user" open
+                subtitle={ humans.length + ' résultats' }
+            >
+                {#if humans.length > 0}
+                    <ListPlayers players={humans} {onPlayerClick} />
+                {:else}
+                    <div class="empty">
+                        <Icon icon="user" size={64} />
+                        <p>Aucun joueur à afficher</p>
+                        <Button variant="primary" center
+                            onclick={openEditor}>
+                            <Icon icon="plus" />
+                            Créer un joueur
+                        </Button>
+                    </div>
+                {/if}
+            </Collapse>
+            
+            <Collapse title="Bots" icon="bot" open
+                subtitle={ bots.length + ' résultats' }
+            >
+                {#if bots.length > 0}
+                    <ListPlayers players={bots} {onPlayerClick} />
+                {:else}
+                    <div class="empty">
+                        <Icon icon="bot" size={64} />
+                        <p>Aucun bot à afficher</p>
+                        <Button variant="primary" center
+                            onclick={openEditor}>
+                            <Icon icon="plus" />
+                            Créer un bot
+                        </Button>
+                    </div>
+                {/if}
+            </Collapse>
         </div>
     </div>
 </PageWrap>
@@ -93,35 +118,66 @@
     .infos {
         display: grid;
         place-items: center;
-        padding-top: 2rem;
+        padding: 3rem 0 5rem;
+        gap: .5rem;
 
         h3 {
             margin: 0;
         }
-        }
-    }
-
-    .actions {
-        display: grid;
-        gap: .25rem;
-        padding: 0 1rem 1rem;
     }
 
     #pg-players {
         display: grid;
-        gap: 2rem;
-
-        h2 {
-            margin-top: 0;
-        }
+        gap: 1rem;
 
         .panel { display: none; transition: margin .5s; }
         .toolbar { display: grid; }
+        .actions {
+            display: grid;
+            gap: .25rem;
+            padding: 0 1rem 1rem;
+        }
+
+        .toolbar, .actions {
+            :global(button) {
+                padding: 1rem 1.2rem;
+            }
+        }
+
+        .sections {
+            display: grid;
+            align-items: start;
+            gap: 1rem;
+
+            &.cols-2 {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            &.space :global(.bx-collapse .bx-content) {
+                padding: 2rem;
+            }
+        }
+
+        .empty {
+            text-align: center;
+            padding: 1rem 0;
+
+            p {
+                margin: .25rem 0 1.5rem;
+                font-size: .9em;
+            }
+
+            :global(button) {
+                padding: 1rem 1.2rem;
+            }
+        }
     }
 
     @media (width >= 500px) {
         #pg-players {
             grid-template-columns: 300px 1fr;
+            align-items: start;
+            gap: 1rem;
 
             .toolbar { display: none; }
 

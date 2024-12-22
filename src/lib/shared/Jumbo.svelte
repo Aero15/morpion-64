@@ -55,6 +55,7 @@
         --cell_size: 200px;
         --cell_border_width: 1px;
         --cell_border_color: light-dark(#fff, #000);
+        --cell_border_color: light-dark(#00000056, #ffffff56);
         background:
             /* Background grid */
             linear-gradient(

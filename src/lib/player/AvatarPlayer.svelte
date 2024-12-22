@@ -1,77 +1,78 @@
 <script lang="ts">
     import { PlayerType } from "$core/enums/PlayerType";
-    import { getContrastColor } from "$core/helpers/Colors.svelte";
+    import { improveContrast } from "$core/helpers/Colors.svelte";
     import Icon from "$lib/shared/Icon.svelte";
 
     interface Props {
         name: string,
         symbol: string,
-        color: string
-        type: PlayerType
+        color: string,
+        type: PlayerType,
+        compact?: boolean
     }
 
     let {
         name = $bindable(''),
         symbol = $bindable(''),
         color = $bindable(''),
-        type = PlayerType.Human
+        type = PlayerType.Human,
+        compact = $bindable(false)
     }: Props = $props();
 
-    let textColor = $derived(getContrastColor(color));
+    let symbolColor = $derived.by(() => {
+        let { light, dark } = improveContrast(color);
+        return `light-dark(${light}, ${dark})`;
+    })
 </script>
 
 <div class="avatar" title={name}
-    style:--tint={color}
-    style:--text-color={textColor}>
-    <Icon icon={symbol} size={50} />
+    class:compact
+    style:color={symbolColor}
+    style:--tint={color}>
+    <Icon icon={symbol} size={ compact ? 32 : 50 } />
 
     {#if type === PlayerType.Bot}
         <div class="bubble">
-            <Icon icon="bot" size={14} />
+            <Icon icon="bot" size={ compact ? 16 : 18 } />
         </div>
     {/if}
 </div>
 
 <style>
     .avatar {
-        --text-color: #fff;
-        background: var(--tint);
-        width: clamp(2rem, 8vw, 5rem);
-        height: clamp(2rem, 8vw, 5rem);
+        --size: 5rem;
+        width: var(--size);
+        height: var(--size);
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 100px;
+        border-radius: 25%;
         font-size: 1.5rem;
-        color: var(--text-color);
+        color: var(--tint);
         aspect-ratio: 1;
         position: relative;
+        border: 1px solid light-dark(#aaa, #777);
+        background: light-dark(#e7e7e7, #3f3f3f);
+        transition: width .2s, height .2s;
 
         .bubble {
-            --size: 24px;
+            --size: 28px;
             width: var(--size);
             height: var(--size);
             border-radius: 100px;
-            background: #fff;
-            color: #000;
-            border: 3px solid var(--tint);
             position: absolute;
-            right: 0;
-            bottom: 0;
+            right: -10px;
+            top: -10px;
             display: flex;
             justify-content: center;
             align-items: center;
+            border: 1px solid light-dark(#aaa, #777);
+            background: light-dark(#fff, #000);
         }
-    }
 
-    @media (prefers-color-scheme: dark) {
-        .avatar {
-            --text-color: #000;
-
-            .bubble {
-                background: #242424;
-                color: #fff;
-            }
+        &.compact {
+            --size: 3.5rem;
+            .bubble { --size: 22px; }
         }
     }
 </style>

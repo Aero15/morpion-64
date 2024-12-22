@@ -1,6 +1,9 @@
 <script lang="ts">
+    import Bot from "$core/entity/player/Bot.svelte";
     import type Player from "$core/entity/player/Player.svelte";
     import type { BreakpointSize } from "$core/enums/BreakpointSize";
+    import { Difficulty } from "$core/enums/Difficulty";
+    import { PlayerType } from "$core/enums/PlayerType";
     import Responsive from "$lib/shared/Responsive.svelte";
     import ItemPlayer from "./ItemPlayer.svelte";
 
@@ -23,9 +26,10 @@
     class:small={['sm', 'md'].includes(size)}
     class:large={!['sm', 'md'].includes(size)}
 >
-    {#each players as { id, name, color, symbol, type } }
+    {#each players as { id, name, color, symbol, type }, ii }
+        {@const difficulty = type === PlayerType.Bot ? (players[ii] as Bot).difficulty : Difficulty.Easy}
         <ItemPlayer
-            { id } { name } { color } { symbol } { type }
+            { id } { name } { color } { symbol } { type } { difficulty }
             onclick={ onPlayerClick }
             compact={['sm', 'md'].includes(size)}
         />

@@ -39,7 +39,7 @@ h1, h2, h3, h4, h5, h6, strong {
 
 @media (prefers-color-scheme: light) {
     :root {
-        color: #213547;
+        color: #000;
         background-color: #ffffff;
     }
 
@@ -53,7 +53,7 @@ h1, h2, h3, h4, h5, h6, strong {
 
 @media (prefers-color-scheme: dark) {
     :root {
-        color: rgba(255, 255, 255, 0.87);
+        color: #fff;
         background-color: #242424;
     }
     a {

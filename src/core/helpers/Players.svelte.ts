@@ -120,7 +120,14 @@ export function getBotSpeedDelay(): Point {
 export function filterPlayerWith(
     search: string
 ) {
-    return [...listPlayers, ...listBots].filter((p) => {
+    return filterListPlayersWith(search, [...listPlayers, ...listBots])
+}
+
+export function filterListPlayersWith(
+    search: string,
+    players: Player[],
+) {
+    return players.filter((p) => {
         const query = search.toLowerCase();
         return p.name.toLowerCase().includes(query) ||
             p.symbol.toLowerCase().includes(query)

@@ -38,12 +38,11 @@
         place-items: start stretch;
 
         &.small {
-            grid-template-columns: repeat( auto-fit, minmax(70px, 1fr) );
+            grid-template-columns: repeat( auto-fill, minmax(70px, 1fr) );
         }
 
         &.large {
-            grid-template-columns: repeat( auto-fit, minmax(130px, 1fr) );
-            gap: 1rem;
+            grid-template-columns: repeat( auto-fill, minmax(130px, 1fr) );
         }
     }
 </style>

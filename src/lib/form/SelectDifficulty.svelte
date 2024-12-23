@@ -23,7 +23,7 @@
         }
     }
 
-    function getTextFor(item: Difficulty): string {
+    function getNameFor(item: Difficulty): string {
         switch (item) {
             case Difficulty.Peaceful:
                 return 'Paisible';
@@ -39,6 +39,23 @@
                 return '(Inconnue)';
         }
     }
+
+    function getTextFor(item: Difficulty): string {
+        switch (item) {
+            case Difficulty.Peaceful:
+                return "Le bot place se positionnera de manière aléatoire";
+            case Difficulty.Easy:
+                return "Le bot utilisera très peu de stratégie";
+            case Difficulty.Medium:
+                return 'Le bot essaiera de gagner mais vous pourrez le battre';
+            case Difficulty.Hard:
+                return 'Le bot utilisera plusieurs techniques pour remporter la partie';
+            case Difficulty.Impossible:
+                return 'Le bot ne vous laissera aucune chance de gagner';
+            default:
+                return '(Inconnue)';
+        }
+    }
 </script>
 
 <main>
@@ -46,8 +63,11 @@
         <label>
             <input type="radio" bind:group={value} value={item}>
             <div class="tile">
-                <Icon icon={getIconFor(item)} size={42} />
-                <span>{getTextFor(item)}</span>
+                <Icon icon={getIconFor(item)} size={32} />
+                <div class="text">
+                    <p class="name"><strong>{getNameFor(item)}</strong></p>
+                    <p class="legend">{getTextFor(item)}</p>
+                </div>
             </div>
         </label>
     {/each}
@@ -55,51 +75,37 @@
 
 <style>
     main {
-        --input-border-color: rgba(0,0,0,.3);
-        --item-border-color: #fff;
-
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0rem;
-        border: 1px solid var(--input-border-color);
-        border-radius: 20px;
-        padding: 10px;
+        gap: .25rem;
         font-size: 0;
+        overflow: clip;
     }
     input[type="radio"] {
         display: none;
     }
     .tile {
         display: flex;
-        flex-flow: column;
-        justify-content: center;
-        align-items: center;
-        border-radius: .5rem;
-
+        justify-content: start;
+        align-items: start;
         cursor: crosshair;
-        margin: 5px;
-        border: 6px solid var(--item-border-color);
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        padding: 3px;
+        padding: 1rem;
+        gap: .5rem;
+        border-radius: 1rem;
+        transition: background .2s, color .2s;
 
         input:checked + & {
-            box-shadow: 0 0 0 3px var(--input-border-color);
+            background: light-dark(#000, #fff);
+            color: light-dark(#fff, #000);
         }
 
-        span {
-            display: block;
-            margin-top: .5rem;
+        &:hover {
+            background: light-dark(rgb(173, 20, 173), cyan);
+            color: light-dark(#fff, #000);
+        }
+
+        p {
+            margin: 0;
             font-size: .8rem;
-            text-align: center;
-        }
-    }
-
-    @media (prefers-color-scheme: dark) {
-        main {
-            --input-border-color: rgba(255,255,255,.3);
-            --item-border-color: #242424;
         }
     }
 </style>

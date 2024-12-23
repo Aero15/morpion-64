@@ -54,9 +54,7 @@
         background: light-dark(#fff, #333);
         background: transparent;
         --size: 300px;
-        width: var(--size);
         height: var(--size);
-        /*padding: 2rem 0;*/
         
         --cell_size: 20px;
         --cell_border_width: 1px;
@@ -74,7 +72,7 @@
                 transparent 1px
             );
         background-position: center;
-        --animation-delay: .15s;
+        --animation-delay: 0s;
         animation: .75s ease-out var(--animation-delay) 1 gridZoomIn forwards;
         animation-timing-function: cubic-bezier(.5,.9,.2,1.2);
         

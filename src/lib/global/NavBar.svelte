@@ -10,10 +10,10 @@
 
     const pages: Page[] = [
         {name: 'Accueil', path: '/', icon: 'home'},
-        {name: 'A propos', path: '/about', icon: 'info'},
+        {name: 'Joueurs', path: '/players', icon: 'user'},
         {name: 'Jouer', path: '/opponents', icon: 'play'},
         //{name: 'Podium', path: '/podium', icon: 'podium'},
-        {name: 'Joueurs', path: '/players', icon: 'user'},
+        {name: 'A propos', path: '/about', icon: 'info'},
         {name: 'Réglages', path: '/settings', icon: 'config'},
     ]
 </script>

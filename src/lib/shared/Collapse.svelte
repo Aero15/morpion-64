@@ -70,8 +70,6 @@
             cursor: pointer;
             font-family: inherit;
             transition: background .2s;
-            position: relative;
-            z-index: 1;
 
             .ident {
                 display: flex;

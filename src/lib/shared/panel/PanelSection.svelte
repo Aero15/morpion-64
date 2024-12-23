@@ -108,10 +108,11 @@
             --end-gradient: light-dark(#cfebff, #124d75);
             background: linear-gradient(
                 to bottom,
-                var(--start-gradient),
-                var(--end-gradient)
-            ), var(--end-gradient);
-            background-size: 100% 40px;
+                var(--start-gradient) 0%,
+                var(--end-gradient) 30%,
+                transparent 100%
+            );
+            background-size: 100% 100px;
             background-repeat: repeat-x;
             border-top: 1px solid light-dark(#75afda, #1b7cbd);
 

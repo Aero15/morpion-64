@@ -18,17 +18,9 @@
 
 <style>
     main {
-        --input-border-color: rgba(0,0,0,.3);
-        --item-border-color: #fff;
-
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
         grid-template-columns: repeat(4, 1fr);
-        gap: 0rem;
-        border: 1px solid var(--input-border-color);
-        border-radius: 20px;
-        padding: 10px;
-        font-size: 0;
     }
     input[type="radio"] {
         display: none;
@@ -42,22 +34,24 @@
         height: var(--size);
         border-radius: var(--size);
         cursor: crosshair;
-        margin: 5px;
-        border: 6px solid var(--item-border-color);
+        padding: .5rem;
         font-size: .8rem;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        transition: background .2s, color .2s, transform .2s;
+
+        &:hover {
+            background: light-dark(rgb(173, 20, 173), cyan);
+            color: light-dark(#fff, #000);
+            transform: scale(1.2);
+            position: relative;
+            z-index: 10;
+        }
 
         input:checked + & {
-            box-shadow: 0 0 0 3px var(--input-border-color);
-        }
-    }
-
-    @media (prefers-color-scheme: dark) {
-        main {
-            --input-border-color: rgba(255,255,255,.3);
-            --item-border-color: #242424;
+            background: light-dark(#000, #fff);
+            color: light-dark(#fff, #000);
         }
     }
 </style>

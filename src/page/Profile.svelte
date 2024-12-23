@@ -4,7 +4,6 @@
     import { push } from "svelte-spa-router";
     import Icon from "$lib/shared/Icon.svelte";
     import Input from "$lib/form/Input.svelte";
-    import Hero from "$lib/shared/Hero.svelte";
     import Button from "$lib/form/Button.svelte";
     import type { Color } from "$core/enums/Color";
     import Bot from "$core/entity/player/Bot.svelte";
@@ -23,6 +22,14 @@
         createBotPlayer, createHumanPlayer,
         deletePlayerById, findPlayerById, updatePlayer
     } from "$core/helpers/Players.svelte";
+    import Jumbo from "$lib/shared/Jumbo.svelte";
+    import AvatarPreview from "$lib/player/AvatarPreview.svelte";
+    import Panel from "$lib/shared/panel/Panel.svelte";
+    import PanelSection from "$lib/shared/panel/PanelSection.svelte";
+    import AvatarContrastPreview from "$lib/player/AvatarContrastPreview.svelte";
+    import TabBar from "$lib/shared/TabBar.svelte";
+    import Responsive from "$lib/shared/Responsive.svelte";
+    import type { BreakpointSize } from "$core/enums/BreakpointSize";
 
     let { params }: { params: any } = $props();
 
@@ -33,10 +40,33 @@
     let color: Color|string = $state(randomColor())
     let symbol: Symbol = $state(randomSymbol())
     let difficulty: Difficulty = $state(Difficulty.Peaceful)
+    let color_and_symbol: string = $derived(color+' '+symbol)
 
     // Transitions options
     const duration: number = 200
     const delay: number = 100
+
+    let Tabs = {
+        Look: 0,
+        Color: 1,
+        Symbol: 2,
+        Rename: 3,
+        Difficulty: 4,
+    }
+    let selectedId = $state(Tabs.Rename)
+    let tabsMobile = [
+        { name: 'Symbole', icon: 'compass', id: Tabs.Symbol },
+        { name: 'Couleur', icon: 'palette', id: Tabs.Color },
+        { name: 'Identité', icon: 'write', id: Tabs.Rename },
+        { name: 'Difficulté', icon: 'bot', id: Tabs.Difficulty },
+    ]
+    let tabsPC = [
+        { name: 'Apparence', icon: 'palette', id: Tabs.Look },
+        { name: 'Identité', icon: 'write', id: Tabs.Rename },
+        { name: 'Difficulté', icon: 'bot', id: Tabs.Difficulty },
+    ]
+
+    let size: BreakpointSize = $state('sm')
 
     onMount(() => {
         // Default values
@@ -60,6 +90,10 @@
                 }
             } 
         }
+    })
+
+    $effect(() => {
+        selectedId = ['xl', '2xl'].includes($state.snapshot(size)) ? Tabs.Look : Tabs.Symbol
     })
 
     // Save player
@@ -101,125 +135,346 @@
     }
 </script>
 
-<PageWrap>
-    <div class="page-with-hero">
-        <div class="hero">
-            <Hero icon="write" title="Profil">
-                <div class="toolbar">
-                    {#if name.length > 0}
-                        <Button variant="primary" center
-                            onclick={save}>
-                            {#if id > 0}
-                                <Icon icon="save" /> Enregistrer
-                            {:else}
-                                <Icon icon="plus" /> Créer le joueur
-                            {/if}
-                        </Button>
-                    {/if}
+<Responsive bind:size />
 
-                    <Button center
-                        onclick={() => push('/players')}>
-                        <Icon icon="undo" />
-                        Abandonner
-                    </Button>
+{#if size != 'sm'}
+    <Jumbo icon="profile" title="Profil" />
+{/if}
 
-                    {#if id > 0}
-                        <Button center variant="flat"
-                            onclick={deletePlayer}>
-                            <Icon icon="bin" />
-                            Supprimer
-                        </Button>
-                    {/if}
-                </div>
-            </Hero>
+{#snippet profileInfos(insidePanel = false)}
+    <div class="infos" class:insidePanel>
+        {#key color_and_symbol}
+            <AvatarPreview symbol={symbol} color={color} />
+        {/key}
 
-            {#if id < 1}
-                <div class="type" in:fade={{delay: delay * 0, duration}}>
-                    <p class="label">Type de joueur</p>
-                    <SelectTypePlayer bind:value={type} />
-                </div>
-            {/if}
-        </div>
+        <div class="identity">
+            <p class="name"><strong>{name}</strong></p>
 
-        <div in:fade={{delay: delay * 1}}>
-            {#if type == PlayerType.Bot}
-                <h2>{id > 0 ? 'Modifier le bot' : 'Créer un bot'}</h2>
-            {/if}
-            {#if type == PlayerType.Human}
-                <h2>{id > 0 ? 'Modifier le joueur' : 'Créer un joueur'}</h2>
-            {/if}
-
-            <div class="username" in:fade={{delay: delay * 2, duration}}>
-                <label for="username">Nom de joueur</label>
-                <Input type="text" id="username"
-                    placeholder="Nom du joueur"
-                    bind:value={name} />
-            </div>
-
-            <div class="selects">
-                <div class="colors" in:fade={{delay: delay * 3, duration}}>
-                    <p class="label">Couleur</p>
-                    <SelectColor bind:value={color} />
-                </div>
-                <div class="symbols" in:fade={{delay: delay * 4, duration}}>
-                    <p class="label">Symbole</p>
-                    <SelectSymbol bind:value={symbol} />
-                </div>
-
+            <div class="type">
                 {#if type == PlayerType.Bot}
-                    <div class="difficulty" in:fade={{delay: delay * 5, duration}}>
-                        <p class="label">Difficulté</p>
-                        <SelectDifficulty bind:value={difficulty} />
-                    </div>
+                    <Icon icon="bot" size={16} />
+                    <p>Bot</p>
+                {/if}
+                {#if type == PlayerType.Human}
+                    <Icon icon="user" size={16} />
+                    <p>Humain</p>
                 {/if}
             </div>
+
+            {#if type == PlayerType.Bot}
+                <p class="difficulty">{difficulty}</p>
+            {/if}
+        </div>
+    </div>
+{/snippet}
+
+<div class="toolbar">
+    {#if name.length > 0}
+        <Button variant="primary" center
+            title={id > 0 ? 'Enregistrer les modifications' : 'Créer le joueur'}
+            onclick={save}>
+            <Icon icon="save" size={24} />
+        </Button>
+    {/if}
+
+    <Button center title="Annuler"
+        onclick={() => push('/players')}>
+        <Icon icon="undo" size={24} />
+    </Button>
+
+    {#if id > 0}
+        <Button center variant="flat" title="Supprimer"
+            onclick={deletePlayer}>
+            <Icon icon="bin" size={24} />
+        </Button>
+    {/if}
+</div>
+
+{#if size == 'sm'}
+    {@render profileInfos()}
+{/if}
+
+<PageWrap>
+    <div id="pg-profile">
+        <div class="panel">
+            <Panel>
+                <PanelSection title="Aperçu du profil" icon="info">
+                    {@render profileInfos(true)}
+                </PanelSection>
+        
+                <PanelSection title="Actions" icon="play" variant="transparent">
+                    <div class="actions">
+                        {#if name.length > 0}
+                            <Button variant="primary" center
+                                onclick={save}>
+                                {#if id > 0}
+                                    <Icon icon="save" size={24} /><p>Enregistrer</p>
+                                {:else}
+                                    <Icon icon="plus" size={24} /><p>Créer</p>
+                                {/if}
+                            </Button>
+                        {/if}
+                    
+                        <Button center
+                            onclick={() => push('/players')}>
+                            <Icon icon="undo" size={24} />
+                            <p>Annuler</p>
+                        </Button>
+                    
+                        {#if id > 0}
+                            <Button center variant="flat"
+                                onclick={deletePlayer}>
+                                <Icon icon="bin" size={24} />
+                                <p>Supprimer</p>
+                            </Button>
+                        {/if}
+                    </div>
+                </PanelSection>
+            </Panel>
+        </div>
+
+        <div in:fade={{delay: delay * 1}} class="page-content"
+            class:vertical={['sm', 'md'].includes(size)}
+            class:horizontal={!['sm', 'md'].includes(size)}
+        >
+        {#if ['sm', 'md', 'lg'].includes(size)}
+            <TabBar tabs={type != PlayerType.Bot ? tabsMobile.slice(0, 3) : tabsMobile}
+                orientation={['sm', 'md'].includes(size) ? 'horizontal' : 'vertical'}
+                bind:selectedId />
+        {:else}
+            <TabBar tabs={type != PlayerType.Bot ? tabsPC.slice(0, 2) : tabsPC}
+                orientation={['sm', 'md'].includes(size) ? 'horizontal' : 'vertical'}
+                bind:selectedId />
+        {/if}
+
+            {#if selectedId == Tabs.Rename}
+                <div class="rename">
+                    {#if id < 1}
+                        <div class="edit-type">
+                            <p class="label"><strong>Type de joueur</strong></p>
+                            <SelectTypePlayer bind:value={type} />
+                        </div>
+                    {/if}
+
+                    <div class="username">
+                        <p class="label"><strong>Pseudo</strong></p>
+                        <Input type="text" id="username"
+                            placeholder="Pseudo du joueur"
+                            bind:value={name} />
+                    </div>
+                </div>
+            {/if}
+
+            {#if selectedId == Tabs.Color}
+                <div class="colors">
+                    <div class="editor">
+                        <p class="label"><strong>Couleur</strong></p>
+                        <SelectColor bind:value={color} />
+                    </div>
+
+                    <div class="contrast">
+                        <p class="label"><strong>Aperçu</strong></p>
+                        <AvatarContrastPreview {symbol} {color} />
+                    </div>
+                </div>
+            {/if}
+
+            {#if selectedId == Tabs.Look}
+                <div class="colors">
+                    <div class="editor">
+                        <p class="label"><strong>Couleur</strong></p>
+                        <SelectColor bind:value={color} />
+                    </div>
+
+                    <div class="contrast">
+                        <p class="label"><strong>Aperçu</strong></p>
+                        <AvatarContrastPreview {symbol} {color} />
+                    </div>
+
+                    <div class="symbols">
+                        <p class="label"><strong>Symbole</strong></p>
+                        <SelectSymbol bind:value={symbol} />
+                    </div>
+                </div>
+            {/if}
+
+            {#if selectedId == Tabs.Symbol}
+                <div class="symbols">
+                    <p class="label"><strong>Symbole</strong></p>
+                    <SelectSymbol bind:value={symbol} />
+                </div>
+            {/if}
+
+            {#if type == PlayerType.Bot && selectedId == Tabs.Difficulty}
+                <div class="difficulty">
+                    <p class="label"><strong>Niveaux de difficulté</strong></p>
+                    <SelectDifficulty bind:value={difficulty} />
+                </div>
+            {/if}
         </div>
     </div>
 </PageWrap>
 
 <style>
-    .page-with-hero {
-        display: grid;
-        gap: 2rem;
-        padding-top: 2rem;
+    .infos {
+        &.insidePanel {
+            margin-top: -52px;
+            padding-bottom: 1rem;
+        }
 
-        h2 {
-            margin-top: 0;
+        .identity {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            text-align: center;
+
+            .name {
+                margin: -2.5rem 0 0;
+                font-size: 1.5em;
+                width: calc(300px - 2rem);
+                padding: 0 1rem;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .type {
+                display: flex;
+                align-items: center;
+                gap: .5rem;
+                margin: 0;
+
+                p {
+                    margin: 0;
+                    font-size: .87em;
+                }
+            }
+
+            .difficulty {
+                font-size: .6em;
+                text-transform: uppercase;
+                border: 1px solid light-dark(#000, #fff);
+                border-radius: 6px;
+                padding: 3px 7px 5px;
+                margin: .5rem 0 0;
+            }
         }
     }
 
     .toolbar {
-        display: grid;
-        gap: .5rem;
+        display: flex;
+        flex-flow: wrap;
+        justify-content: space-between;
+        gap: .25rem;
+        position: absolute;
+        inset: 56px 0 auto;
+        z-index: 1;
+        padding: .5rem;
 
-        :global(button:first-child) {
-            padding-block: 1rem;
+        :global(button) {
+            aspect-ratio: 1;
         }
     }
 
-    .type {
-        margin-top: 2rem;
-    }
-
-    .selects {
-        display: flex;
-        flex-flow: wrap;
-        gap: 2rem;
-        margin-top: 2rem;
-    }
-
-    label, .label {
-        margin: .5rem 0;
-    }
-
-    .username {
+    #pg-profile {
         display: grid;
-        max-width: 310px;
+        gap: 1rem;
+        align-items: flex-start;
+
+        .panel {
+            display: none;
+            transition: margin .5s;
+        }
+
+        .actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: .25rem;
+            height: 100%;
+            padding: 0 1rem 1rem;
+
+            :global(button) {
+                aspect-ratio: 1;
+                flex-flow: column;
+                gap: .25rem;
+
+                p {
+                    margin: 0 -10px;
+                    font-size: .78em;
+                    width: 80px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+
+        .page-content {
+            &.vertical {
+                display: grid;
+                align-items: start;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            &.horizontal {
+                display: flex;
+                align-items: start;
+                gap: 2rem;
+            }
+
+            .label {
+                margin: .25rem 0;
+                text-align: start;
+                font-size: 1em;
+            }
+
+            .username, .symbols, .difficulty, .contrast {
+                display: grid;
+                justify-content: center;
+                place-items: start;
+            }
+
+            .colors, .rename {
+                gap: 1rem;
+                display: flex;
+                flex-flow: wrap;
+                justify-content: center;
+                align-items: start;
+            }
+        }
+    }
+
+    @media (width >= 640px) {
+        .toolbar { display: none; }
+
+        #pg-profile {
+            grid-template-columns: 300px 1fr;
+            align-items: start;
+            gap: 2rem;
+
+            .panel {
+                display: grid;
+                place-content: start stretch;
+            }
+
+            .page-content {
+                .colors {
+                    gap: 2rem
+                }
+
+                .username, .symbols, .difficulty, .contrast {
+                    display: grid;
+                    justify-content: start;
+                    place-items: start;
+                }
+            }
+        }
     }
 
     @media (width >= 900px) {
-        .page-with-hero {
-            grid-template-columns: 350px 1fr;
+        #pg-profile .panel {
+            margin-top: -196px;
         }
     }
 </style>

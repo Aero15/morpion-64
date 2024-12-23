@@ -34,7 +34,7 @@
         <label>
             <input type="radio" bind:group={value} value={item}>
             <div class="tile">
-                <Icon icon={getIconFor(item)} size={42} />
+                <Icon icon={getIconFor(item)} size={18} />
                 <span>{getTextFor(item)}</span>
             </div>
         </label>
@@ -43,51 +43,41 @@
 
 <style>
     main {
-        --input-border-color: rgba(0,0,0,.3);
-        --item-border-color: #fff;
-
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0rem;
-        border: 1px solid var(--input-border-color);
-        border-radius: 20px;
-        padding: 10px;
         font-size: 0;
+        gap: .25rem;
     }
     input[type="radio"] {
         display: none;
     }
     .tile {
         display: flex;
-        flex-flow: column;
-        justify-content: center;
+        justify-content: start;
         align-items: center;
-        border-radius: .5rem;
-        aspect-ratio: 16/9.5;
+        border-radius: 1rem;
         cursor: crosshair;
-        margin: 5px;
-        border: 6px solid var(--item-border-color);
+        padding: 1rem;
+        gap: .5rem;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        padding: 3px;
+        min-width: 200px;
+        transition: background .2s, color .2s;
 
         input:checked + & {
-            box-shadow: 0 0 0 3px var(--input-border-color);
+            background: light-dark(#000, #fff);
+            color: light-dark(#fff, #000);
+        }
+
+        &:hover {
+            background: light-dark(rgb(173, 20, 173), cyan);
+            color: light-dark(#fff, #000);
         }
 
         span {
             display: block;
-            margin-top: .5rem;
             font-size: .8rem;
-            text-align: center;
-        }
-    }
-
-    @media (prefers-color-scheme: dark) {
-        main {
-            --input-border-color: rgba(255,255,255,.3);
-            --item-border-color: #242424;
+            text-align: start;
         }
     }
 </style>

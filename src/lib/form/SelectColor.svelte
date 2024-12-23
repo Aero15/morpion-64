@@ -1,6 +1,5 @@
 <script lang="ts">
     import { Color } from "$core/enums/Color";
-    import { scale } from "svelte/transition";
 
     let {
         value = $bindable('')
@@ -22,15 +21,7 @@
     {/each}
 
     <div>
-        <span class="custom" class:selected={isCustomColor}>
-            {#if isCustomColor}
-                <div
-                    class="checkmark"
-                    style:background={value}
-                    transition:scale
-                ></div>
-            {/if}
-
+        <span class="custom" class:selected={isCustomColor} style:--tint={value}>
             <input type="color" bind:value>
         </span>
     </div>
@@ -38,17 +29,11 @@
 
 <style>
     main {
-        --input-border-color: rgba(0,0,0,.3);
-        --item-border-color: #fff;
-
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
         grid-template-columns: repeat(4, 1fr);
-        gap: 0rem;
-        border: 1px solid var(--input-border-color);
-        border-radius: 20px;
-        padding: 10px;
         font-size: 0;
+        gap: 10px;
     }
     input[type="radio"] {
         display: none;
@@ -60,14 +45,14 @@
     }
     span {
         --size: 50px;
+        position: relative;
         display: inline-block;
         width: var(--size);
         height: var(--size);
         border-radius: var(--size);
         cursor: crosshair;
-        margin: 5px;
-        border: 6px solid var(--item-border-color);
-        box-shadow: 0 0 0 2px rgba(0,0,0,.5) inset;
+        border: 3px solid light-dark(#00000055, #ffffff55);
+        transition: border-color .3s, transform .2s;
 
         &.custom {
             position: relative;
@@ -75,31 +60,43 @@
                 #ffdd45, #00ff99,#006aff,
                 #ff0095, #ff4545 , #ffdd45
             );
+            background-repeat: no-repeat;
+            background-size: calc(100% + 6px) calc(100% + 6px);
+            background-position: -3px -3px;
+        }
 
-            .checkmark {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                translate: -50% -50%;
-                width: 75%;
-                height: 75%;
-                border-radius: 100%;
-                background: #f00;
-                border: 3px solid var(--item-border-color);
-            }
+        input { cursor: crosshair; }
+
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 2rem;
+            font-size: 0;
+            opacity: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            background: var(--tint, #fff);
+            border-radius: 100%;
+            border: 1px solid #00000077;
+            transition: opacity .1s, inset .1s;
+            box-shadow: 0 0 0 3px #ffffff99 inset;
+        }
+
+        &:hover {
+            transform: scale(1.3);
+            position: relative;
+            z-index: 10;
+            border-color: light-dark(#000, #fff);
         }
 
         input:checked + &,
         &.selected {
-            box-shadow: 0 0 0 2px rgba(0,0,0,.5) inset,
-                0 0 0 3px var(--input-border-color);
-        }
-    }
-
-    @media (prefers-color-scheme: dark) {
-        main {
-            --input-border-color: rgba(255,255,255,.3);
-            --item-border-color: #242424;
+            &::after {
+                opacity: 1;
+                inset: .5rem;
+            }
         }
     }
 </style>

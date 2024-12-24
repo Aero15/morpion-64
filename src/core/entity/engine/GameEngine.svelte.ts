@@ -1,13 +1,15 @@
 import { PlayerType } from "$core/enums/PlayerType";
 import GameBoard from "$core/entity/board/GameBoard.svelte";
-import type Point from "$core/entity/board/Point.svelte";
 import type Player from "$core/entity/player/Player.svelte";
-import PlayerList from "./PlayerList.svelte"
 import type IWinnerInfo from "$core/interface/IWInnerInfo";
+import type Point from "$core/entity/board/Point.svelte";
+import PlayerList from "./PlayerList.svelte"
+import Timer from "./Timer.svelte";
 
 export default class GameEngine {
     private _board: GameBoard;
     private _players: PlayerList;
+    private _timer: Timer;
     private _startTime: Date;
     private _endTime?: Date = $state(undefined);
     private _eraserEnabled: boolean = $state(false);
@@ -33,6 +35,7 @@ export default class GameEngine {
         // Init board
         this._board = new GameBoard(boardHeight, boardWidth);
         this._startTime = new Date();
+        this._timer = new Timer();
 
         // Let the first player play if it's a bot
         if (this._players.getCurrentPlayer()?.type === PlayerType.Bot) {
@@ -46,6 +49,10 @@ export default class GameEngine {
 
     get players(): PlayerList {
         return this._players;
+    }
+
+    get timer(): Timer {
+        return this._timer;
     }
 
     get startTime(): Date {
@@ -99,10 +106,15 @@ export default class GameEngine {
 
     stop(): void {
         this._endTime = new Date();
+        this._timer.stop();
     }
 
     // Callback after player move
     private afterPlayerMove(position: Point): void {
+        if (!this.timer.isRunning()) {
+            this.timer.start();
+        }
+
         // Remove highlight (if any, like hints)
         this.board.clearHighlight();
 

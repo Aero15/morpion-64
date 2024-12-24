@@ -13,11 +13,8 @@ export default class Timer {
         clearInterval(this._handle);
     }
 
-    getElapsedTime(): { hours: number, minutes: number, seconds: number } {
-        const hours = Math.floor(this._seconds / 3600);
-        const minutes = Math.floor((this._seconds % 3600) / 60);
-        const seconds = this._seconds % 60;
-        return { hours, minutes, seconds };
+    get seconds(): number {
+        return this._seconds;
     }
 
     isRunning(): boolean {

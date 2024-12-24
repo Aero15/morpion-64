@@ -18,54 +18,48 @@ export default class GameEngine {
         boardWidth: number = 3,
         boardHeight: number = 3
     ) {
-        // Vérification des dimensions du plateau
-        if (boardWidth < 3 || boardWidth > 50 || boardHeight < 3 || boardHeight > 50) {
+        // Check board dimensions
+        if (boardWidth < 3 || boardWidth > 8 || boardHeight < 3 || boardHeight > 8) {
             throw new Error("Les dimensions du plateau doivent être comprises entre 3 et 50.");
         }
     
-        // Ajout des joueurs à la liste des paricipants
+        // Add players
         this._players = new PlayerList();
         for (const player of playerList) {
             this._players.addPlayer(player);
         }
         this._players.shuffle();
     
-        // Initialisation du plateau de jeu
+        // Init board
         this._board = new GameBoard(boardHeight, boardWidth);
-        this._startTime = new Date(); // Date de début du jeu
+        this._startTime = new Date();
 
-        // Lancement de l'action du premier joueur s'il s'agit d'un ordinateur
+        // Let the first player play if it's a bot
         if (this._players.getCurrentPlayer()?.type === PlayerType.Bot) {
             this._players.getCurrentPlayer()?.play(this);
         }
     }
 
-    // Retourne le plateau de jeu
     get board(): GameBoard {
         return this._board;
     }
 
-    // Retourne la liste des joueurs
     get players(): PlayerList {
         return this._players;
     }
 
-    // Retourne la date de début du jeu
     get startTime(): Date {
         return this._startTime;
     }
 
-    // Retourne la date de fin du jeu
     get endTime(): Date | undefined {
         return this._endTime;
     }
 
-    // Indique si le mode effaceur est activé
     get eraserEnabled(): boolean {
         return this._eraserEnabled;
     }
 
-    // Active ou désactive le mode effaceur
     set eraserEnabled(enabled: boolean) {
         this._eraserEnabled = enabled;
     }
@@ -74,6 +68,7 @@ export default class GameEngine {
         return this._winnerInfo;
     }
 
+    // Play move (place or erase) at position
     playMoveAt(position: Point): void {
         if (this.eraserEnabled) {
             this.eraseAt(position)
@@ -84,7 +79,7 @@ export default class GameEngine {
         this.eraserEnabled = false
     }
   
-    // Méthode pour placer un symbole
+    // Place symbol at position
     placeAt(position: Point): void {
         const player = this.players.getCurrentPlayer();
         if (player) {
@@ -95,25 +90,32 @@ export default class GameEngine {
         this.afterPlayerMove(position);
     }
 
+    // Erase symbol at position
     eraseAt(position: Point): void {
         this.board.setEmptyAt(position);
 
         this.afterPlayerMove(position);
     }
 
+    stop(): void {
+        this._endTime = new Date();
+    }
+
+    // Callback after player move
     private afterPlayerMove(position: Point): void {
-        // Retirer la subrillance
+        // Remove highlight (if any, like hints)
         this.board.clearHighlight();
 
-        // Vérifier si la position a permis de gagner la partie
+        // Search for winner after the move
         this._winnerInfo = this.board.findWinner();
 
-        // S'il y a un gagnant ou si il n'y a plus de cellules vides, on arrete le jeu
+        // If there is a winner or if there are no more empty cells
         if (this.winnerInfo || this.board.getEmptyPositions().length === 0) {
-            this._endTime = new Date();
+            // Stop game
+            this.stop();
 
             if (this.winnerInfo) {
-                // Mettre en surbrillance les positions gagnantes
+                // Highlight winning positions
                 const { positions } = this.winnerInfo;
                 for (const position of positions) {
                     const { x, y } = position;
@@ -124,13 +126,20 @@ export default class GameEngine {
             return
         }
 
+        // If the game is over (when user changes page)
+        if (this._endTime !== undefined) {
+            return
+        }
+
+        // Switch to next player
         const player = this.players.switchToNextPlayer()
 
-        // Abandonner s'il n'y a pas de joueur à suivre
+        // Leave if there is no player to play
         if (!player) {
             return
         }
 
+        // Let the bot play if it's his turn
         if (player.type === PlayerType.Bot) {
             player.play(this);
         }

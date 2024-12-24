@@ -82,6 +82,9 @@
         // enlever la classe lorsque le composant est démonté
         return () => {
             document.body.classList.remove('extended');
+
+            // Stop game
+            game.stop()
         };
     })
 </script>

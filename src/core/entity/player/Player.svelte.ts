@@ -74,6 +74,9 @@ export default abstract class Player implements IPlayer {
     set score(value: number) {
         this._score = value;
     }
+    addScore(value: number) {
+        this._score += value;
+    }
     
     abstract play(game: GameEngine): void;
 }

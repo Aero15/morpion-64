@@ -4,6 +4,7 @@ import type Player from "$core/entity/player/Player.svelte";
 import type IWinnerInfo from "$core/interface/IWInnerInfo";
 import type Point from "$core/entity/board/Point.svelte";
 import PlayerList from "./PlayerList.svelte"
+import { Score } from "$core/enums/Score";
 import Timer from "./Timer.svelte";
 
 export default class GameEngine {
@@ -92,6 +93,7 @@ export default class GameEngine {
         if (player) {
             const { symbol, color } = player;
             this.board.placeSymbolAt(position, symbol, color);
+            player.addScore(Score.Draw);
         }
 
         this.afterPlayerMove(position);
@@ -99,7 +101,14 @@ export default class GameEngine {
 
     // Erase symbol at position
     eraseAt(position: Point): void {
+        // TODO: Remove points from the player losing his cell
+
         this.board.setEmptyAt(position);
+
+        const player = this.players.getCurrentPlayer();
+        if (player) {
+            player.addScore(Score.Erase);
+        }
 
         this.afterPlayerMove(position);
     }
@@ -126,12 +135,19 @@ export default class GameEngine {
             // Stop game
             this.stop();
 
+            // If there is a winner
             if (this.winnerInfo) {
                 // Highlight winning positions
                 const { positions } = this.winnerInfo;
                 for (const position of positions) {
                     const { x, y } = position;
                     this.board.setHighlightedAt(x, y, true);
+                }
+
+                // Add points to winner
+                const player = this.players.getCurrentPlayer();
+                if (player) {
+                    player.addScore(Score.Win);
                 }
             }
             

@@ -29,13 +29,13 @@
 
     {#if minutes > 0}
         <p class="minutes">
-            <strong>{ minutes > 9 ? minutes : '0' + minutes }</strong>
+            <strong>{ minutes }</strong>
             <span>m</span>
         </p>
     {/if}
 
     <p class="seconds">
-        <strong>{ seconds > 9 ? seconds : '0' + seconds }</strong>
+        <strong>{ seconds }</strong>
         <span>s</span>
     </p>
 </div>
@@ -51,17 +51,18 @@
             margin: 0;
             display: flex;
             align-items: baseline;
-            gap: 0.15rem;
 
             strong {
                 color: var(--tint);
-                font-size: 1.2em;
+                font-size: 1.5em;
                 font-feature-settings: "tnum";
                 font-variant-numeric: tabular-nums;
             }
 
             span {
                 font-size: 1em;
+                position: relative;
+                top: -1px;
             }
 
             &.seconds { --tint: light-dark(purple, magenta); }

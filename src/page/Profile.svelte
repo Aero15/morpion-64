@@ -178,20 +178,20 @@
 
 <div class="toolbar">
     {#if name.length > 0}
-        <Button variant="primary" center
+        <Button variant="primary" center shape="squared"
             title={id > 0 ? 'Enregistrer les modifications' : 'Créer le joueur'}
             onclick={save}>
             <Icon icon="save" size={24} />
         </Button>
     {/if}
 
-    <Button center title="Annuler"
+    <Button center title="Annuler" shape="squared"
         onclick={() => push('/players')}>
         <Icon icon="undo" size={24} />
     </Button>
 
     {#if id > 0}
-        <Button center variant="flat" title="Supprimer"
+        <Button center variant="flat" title="Supprimer" shape="squared"
             onclick={deletePlayer}>
             <Icon icon="bin" size={24} />
         </Button>
@@ -213,7 +213,7 @@
                 <PanelSection title="Actions" icon="play" variant="transparent">
                     <div class="actions">
                         {#if name.length > 0}
-                            <Button variant="primary" center
+                            <Button variant="primary" center shape="squared"
                                 onclick={save}>
                                 {#if id > 0}
                                     <Icon icon="save" size={24} /><p>Enregistrer</p>
@@ -223,14 +223,14 @@
                             </Button>
                         {/if}
                     
-                        <Button center
+                        <Button center shape="squared"
                             onclick={() => push('/players')}>
                             <Icon icon="undo" size={24} />
                             <p>Annuler</p>
                         </Button>
                     
                         {#if id > 0}
-                            <Button center variant="flat"
+                            <Button center variant="flat" shape="squared"
                                 onclick={deletePlayer}>
                                 <Icon icon="bin" size={24} />
                                 <p>Supprimer</p>
@@ -384,7 +384,7 @@
         padding: .5rem;
 
         :global(button) {
-            aspect-ratio: 1;
+            padding: .75rem;
         }
     }
 
@@ -406,7 +406,6 @@
             padding: 0 1rem 1rem;
 
             :global(button) {
-                aspect-ratio: 1;
                 flex-flow: column;
                 gap: .25rem;
 

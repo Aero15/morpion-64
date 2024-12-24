@@ -27,8 +27,10 @@
     class:lock class:blur
     class:halo={displayHalo}
 >
-    {#each grid as row}
-        <div class="row" class:lock style="grid-template-columns: repeat({ row.length }, 1fr);">
+    {#each grid as row, index}
+        <div class="row" class:lock
+            style:--index={index}
+            style="grid-template-columns: repeat({ row.length }, 1fr);">
             {#each row as { position, symbol, color, highlighted }}
                 <CellView
                     { position } { symbol }
@@ -119,7 +121,8 @@
         .row {
             position: relative;
             z-index: 1;
-            transition: filter .2s;
+            transition: filter .3s;
+            transition-delay: calc(var(--index, 0) * .025s);
         }
     }
 

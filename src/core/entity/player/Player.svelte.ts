@@ -11,6 +11,7 @@ export default abstract class Player implements IPlayer {
     private _name: string = $state('');
     private _color: Color | string = $state('');
     private _symbol: Symbol = $state(Symbol.Cross);
+    private _score: number = $state(0);
     private _type: PlayerType;
   
     constructor(
@@ -26,7 +27,7 @@ export default abstract class Player implements IPlayer {
         this._type = type;
     }
 
-    // Getter et Setter pour id
+    // Getter and Setter for id
     get id(): number {
         return this._id;
     }
@@ -34,7 +35,7 @@ export default abstract class Player implements IPlayer {
         this._id = value;
     }
   
-    // Getter et Setter pour name
+    // Getter and Setter for name
     get name(): string {
         return this._name;
     }
@@ -42,7 +43,7 @@ export default abstract class Player implements IPlayer {
         this._name = value;
     }
   
-    // Getter et Setter pour symbol
+    // Getter and Setter for symbol
     get symbol(): Symbol {
         return this._symbol;
     }
@@ -50,7 +51,7 @@ export default abstract class Player implements IPlayer {
         this._symbol = value;
     }
   
-    // Getter et Setter pour color
+    // Getter and Setter for color
     get color(): Color | string {
         return this._color;
     }
@@ -58,14 +59,21 @@ export default abstract class Player implements IPlayer {
         this._color = value;
     }
 
-    // Getter et Setter pour type
+    // Getter and Setter for type
     get type(): PlayerType {
         return this._type;
     }
     set type(type: PlayerType) {
         this._type = type;
     }
-  
-    // Méthode abstraite que les classes dérivées devront implémenter
+
+    // Getter and Setter for score
+    get score(): number {
+        return this._score;
+    }
+    set score(value: number) {
+        this._score = value;
+    }
+    
     abstract play(game: GameEngine): void;
 }

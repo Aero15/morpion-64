@@ -33,13 +33,7 @@
     }
 
     onMount(() => {
-        document.body.classList.add('extended');
-    
-        // enlever la classe lorsque le composant est démonté
         return () => {
-            document.body.classList.remove('extended');
-
-            // Stop game
             game.stop()
         };
     })
@@ -115,8 +109,9 @@
 
     <div class="flex" in:scale>
         <Grid
-            lock={botIsPlaying || game.winnerInfo !== undefined}
+            lock={botIsPlaying || game.winnerInfo !== undefined || game.endTime !== undefined}
             displayHalo={game.endTime === undefined && botIsPlaying}
+            blur={!game.timer.isRunning && game.timer.seconds > 0}
             bind:grid={game.board.grid}
             bind:eraserEnabled={game.eraserEnabled}
             onCellClick={onCellClick}
@@ -145,15 +140,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-
-    .actions {
-        display: grid;
-        gap: .5rem;
-
-        :global(button:first-child) {
-            padding-block: 1rem;
-        }
     }
 
     .info {

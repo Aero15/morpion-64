@@ -42,6 +42,7 @@ export default class GameEngine {
         // Let the first player play if it's a bot
         if (this._players.getCurrentPlayer()?.type === PlayerType.Bot) {
             this._players.getCurrentPlayer()?.play(this);
+            this._timer.start();
         }
     }
 

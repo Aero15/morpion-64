@@ -114,7 +114,7 @@
         <Grid
             lock={botIsPlaying || game.winnerInfo !== undefined || game.endTime !== undefined}
             displayHalo={game.endTime === undefined && botIsPlaying}
-            blur={!game.timer.isRunning && game.timer.seconds > 0}
+            blur={!game.timer.isRunning && game.timer.seconds > 0 && game.endTime === undefined}
             bind:grid={game.board.grid}
             bind:eraserEnabled={game.eraserEnabled}
             onCellClick={onCellClick}

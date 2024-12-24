@@ -6,6 +6,7 @@ import type Point from "$core/entity/board/Point.svelte";
 import PlayerList from "./PlayerList.svelte"
 import { Score } from "$core/enums/Score";
 import Timer from "./Timer.svelte";
+import { getRandomFrom } from "$core/helpers/Array.svelte";
 
 export default class GameEngine {
     private _board: GameBoard;
@@ -89,10 +90,10 @@ export default class GameEngine {
   
     // Place symbol at position
     placeAt(position: Point): void {
-        const player = this.players.getCurrentPlayer();
+        const player = this._players.getCurrentPlayer();
         if (player) {
             const { symbol, color } = player;
-            this.board.placeSymbolAt(position, symbol, color);
+            this._board.placeSymbolAt(position, symbol, color);
             player.addScore(Score.Draw);
         }
 
@@ -103,9 +104,9 @@ export default class GameEngine {
     eraseAt(position: Point): void {
         // TODO: Remove points from the player losing his cell
 
-        this.board.setEmptyAt(position);
+        this._board.setEmptyAt(position);
 
-        const player = this.players.getCurrentPlayer();
+        const player = this._players.getCurrentPlayer();
         if (player) {
             player.addScore(Score.Erase);
         }
@@ -118,6 +119,43 @@ export default class GameEngine {
         this._timer.stop();
     }
 
+    // Display hint  
+    showHint(): void {
+        // Remove all highlight
+        this._board.clearHighlight()
+
+        // Get current player to calculate a strategic position for him
+        let player = this._players.getCurrentPlayer()!
+        let { symbol, color } = player
+        let strategicPositions = this._board.findStrategicPositions(symbol, color)
+        let { oneSymbolPositions, twoSymbolsPositions } = strategicPositions;
+
+        // If there is a strategic position to complete an alignment of 2 existing symbols
+        if (twoSymbolsPositions.length > 0) {
+            let position = getRandomFrom<Point>(twoSymbolsPositions);
+            let x = $state.snapshot(position.x)
+            let y = $state.snapshot(position.y)
+            this._board.setHighlightedAt(x, y, true)
+            return;
+        }
+
+        // If there is a strategic position to complete an alignment of 1 existing symbol
+        if (oneSymbolPositions.length > 0) {
+            let position = getRandomFrom<Point>(oneSymbolPositions);
+            let x = $state.snapshot(position.x)
+            let y = $state.snapshot(position.y)
+            this._board.setHighlightedAt(x, y, true)
+            return;
+        }
+
+        // Get a random empty position
+        let positions = this._board.getEmptyPositions()
+        let position = getRandomFrom<Point>(positions);
+        let x = $state.snapshot(position.x)
+        let y = $state.snapshot(position.y)
+        this._board.setHighlightedAt(x, y, true)
+    }
+
     // Callback after player move
     private afterPlayerMove(position: Point): void {
         if (!this.timer.isRunning()) {
@@ -125,13 +163,13 @@ export default class GameEngine {
         }
 
         // Remove highlight (if any, like hints)
-        this.board.clearHighlight();
+        this._board.clearHighlight();
 
         // Search for winner after the move
-        this._winnerInfo = this.board.findWinner();
+        this._winnerInfo = this._board.findWinner();
 
         // If there is a winner or if there are no more empty cells
-        if (this.winnerInfo || this.board.getEmptyPositions().length === 0) {
+        if (this.winnerInfo || this._board.getEmptyPositions().length === 0) {
             // Stop game
             this.stop();
 
@@ -141,11 +179,11 @@ export default class GameEngine {
                 const { positions } = this.winnerInfo;
                 for (const position of positions) {
                     const { x, y } = position;
-                    this.board.setHighlightedAt(x, y, true);
+                    this._board.setHighlightedAt(x, y, true);
                 }
 
                 // Add points to winner
-                const player = this.players.getCurrentPlayer();
+                const player = this._players.getCurrentPlayer();
                 if (player) {
                     player.addScore(Score.Win);
                 }
@@ -160,7 +198,7 @@ export default class GameEngine {
         }
 
         // Switch to next player
-        const player = this.players.switchToNextPlayer()
+        const player = this._players.switchToNextPlayer()
 
         // Leave if there is no player to play
         if (!player) {

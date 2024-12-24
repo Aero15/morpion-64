@@ -9,15 +9,16 @@
     import PlayerTurn from "$lib/player/PlayerTurn.svelte";
     import { fade, scale, slide } from "svelte/transition";
     import Hero from "$lib/shared/Hero.svelte";
-    import { selectedPlayers } from "$core/store/players.svelte";
     import AvatarPlayer from "$lib/player/AvatarPlayer.svelte";
-    import { getRandomFrom } from "$core/helpers/Array.svelte";
-    import { gridSize } from "$core/store/settings.svelte";
     import { onMount } from "svelte";
+    import { newGameWithSelectedPlayers } from "$core/helpers/Game.svelte";
 
     let game: GameEngine = $state(undefined);
 
-    initGame()
+    let g = newGameWithSelectedPlayers()
+    if (g != null) {
+        game = g
+    }
 
     let botIsPlaying = $derived(game?.players.getCurrentPlayer() instanceof Bot)
 
@@ -25,55 +26,8 @@
         game.playMoveAt(position)
     }
 
-    function initGame() {
-        if (selectedPlayers.length < 2) {
-            push('/')
-            return
-        }
-        
-        game = new GameEngine([
-            ...selectedPlayers
-        ], gridSize.x, gridSize.y);
-    }
-
     function abandon() {
         push('/')
-    }
-
-    function getHelp() {
-        // Effacer les cellules mises en surbrillance
-        game.board.clearHighlight()
-
-        // Récupérer le joueur en cours pour calculer une position strategique
-        let player = game.players.getCurrentPlayer()!
-        let { symbol, color } = player
-        let strategicPositions = game.board.findStrategicPositions(symbol, color)
-        let { oneSymbolPositions, twoSymbolsPositions } = strategicPositions;
-
-        // S'il y a une position strategique pour compléter un alignement de 2 symboles existants
-        if (twoSymbolsPositions.length > 0) {
-            let position = getRandomFrom<Point>(twoSymbolsPositions);
-            let x = $state.snapshot(position.x)
-            let y = $state.snapshot(position.y)
-            game.board.setHighlightedAt(x, y, true)
-            return;
-        }
-
-        // S'il y a une position strategique pour compléter un alignement de 1 symbole existant
-        if (oneSymbolPositions.length > 0) {
-            let position = getRandomFrom<Point>(oneSymbolPositions);
-            let x = $state.snapshot(position.x)
-            let y = $state.snapshot(position.y)
-            game.board.setHighlightedAt(x, y, true)
-            return;
-        }
-
-        // Récupérer une position aléatoire
-        let positions = game.board.getEmptyPositions()
-        let position = getRandomFrom<Point>(positions);
-        let x = $state.snapshot(position.x)
-        let y = $state.snapshot(position.y)
-        game.board.setHighlightedAt(x, y, true)
     }
 
     onMount(() => {
@@ -92,7 +46,7 @@
 <main>
     <Hero icon="dice" title="Morpion" subtitle={game.winnerInfo === undefined ? "C'est parti !" : "Partie terminée !"}>
         <div class="actions" in:fade>
-            <Button onclick={initGame} center variant="primary">
+            <Button onclick={newGameWithSelectedPlayers} center variant="primary">
                 <Icon icon="rotate" size={18} />
                 <span>Recommencer</span>
             </Button>
@@ -118,7 +72,7 @@
                             <div class="indicator" style:opacity={game.eraserEnabled ? 1 : 0}></div>
                         </Button>
 
-                        <Button center onclick={getHelp}>
+                        <Button center onclick={() => game.showHint()}>
                             <Icon icon="info" size={32} />
                             <span>Astuce</span>
                         </Button>

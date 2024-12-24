@@ -14,6 +14,7 @@
     import { newGameWithSelectedPlayers } from "$core/helpers/Game.svelte";
     import GameStatus from "$lib/game/GameStatus.svelte";
     import Jumbo from "$lib/shared/Jumbo.svelte";
+    import Leaderboard from "$lib/game/Leaderboard.svelte";
 
     let game: GameEngine = $state(undefined);
 
@@ -105,6 +106,8 @@
                 {/if}
             {/if}
         </div>
+
+        <Leaderboard bind:game />
     </Hero>
 
     <div class="flex" in:scale>
@@ -121,7 +124,7 @@
     <div in:fade={{delay: 250}}>
         <h3>Participants</h3>
         <PlayerTurn
-            players={game.players.list()}
+            players={game.players.players}
             bind:currentTurn={game.players.currentTurn}
         />
     </div>

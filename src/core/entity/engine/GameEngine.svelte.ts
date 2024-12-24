@@ -158,7 +158,7 @@ export default class GameEngine {
 
     // Callback after player move
     private afterPlayerMove(position: Point): void {
-        if (!this.timer.isRunning()) {
+        if (!this.timer.isRunning) {
             this.timer.start();
         }
 

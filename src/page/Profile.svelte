@@ -169,7 +169,7 @@
 
             {#if id > 0}
                 <div class="score">
-                    <p>{score} points</p>
+                    <p><strong>{score}</strong> points</p>
                 </div>
             {/if}
         </div>
@@ -369,6 +369,17 @@
 
             .score p {
                 margin: 1rem 0 0;
+
+                strong {
+                    background: linear-gradient(
+                        to right,
+                        light-dark(rgb(255, 0, 200), rgb(255, 114, 243)),
+                        light-dark(rgb(0, 153, 255), cyan)
+                    );
+                    background-clip: text;
+                    color: transparent;
+                    font-size: 1.5em;
+                }
             }
         }
     }

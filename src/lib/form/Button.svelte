@@ -3,8 +3,8 @@
 
     interface Props {
         title?: string,
-        variant?: string,
-        shape?: string,
+        variant?: 'primary' | 'flat' | 'primary-red' | 'primary-green' | 'primary-yellow',
+        shape?: 'default' | 'rounded' | 'squared',
         disabled?: boolean,
         center?: boolean,
         onclick?: () => void,
@@ -26,6 +26,9 @@
 <button { title } { onclick }
     class:primary={variant === 'primary'}
     class:flat={variant === 'flat'}
+    class:primary-red={variant === 'primary-red'}
+    class:primary-green={variant === 'primary-green'}
+    class:primary-yellow={variant === 'primary-yellow'}
 
     class:rounded={shape === 'rounded'}
     class:squared={shape === 'squared'}
@@ -59,16 +62,22 @@
             color .2s;
 
         /* Color */
-        &.primary {
+        &.primary,
+        &.primary-yellow,
+        &.primary-green,
+        &.primary-red {
             background: var(--main_color);
             color: #fff;
         }
 
         /* Look */
-        &.rounded {border-radius: 1000px; padding: 7px 20px;}
-        &.squared {border-radius: 0;}
+        &.rounded {border-radius: 1000px; padding: .75rem;}
+        &.squared {aspect-ratio: 1; padding: 5px;}
         &.flat {background: transparent; color: inherit;}
         &.primary.flat {color: var(--main_color);}
+        &.primary-red {--main_color: #dc2626;}
+        &.primary-green {--main_color: #65a30d;}
+        &.primary-yellow {--main_color: #f59e0b;}
     
         /* Content */
         &.centered-content {
@@ -85,7 +94,9 @@
             box-shadow: 0px 0 30px rgba(0,0,0,.3), 0 0 0 rgba(0,0,0,.3) inset;
         
             &.primary, 
-            &.primary {
+            &.primary-yellow, 
+            &.primary-green, 
+            &.primary-red {
                 color: #fff;
                 background: var(--main_color);
                 box-shadow: 0px 0 30px var(--main_color), 0 0 0 rgba(0,0,0,.5) inset;

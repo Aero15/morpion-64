@@ -3,7 +3,7 @@
 
     interface Props {
         title?: string,
-        variant?: 'primary' | 'flat' | 'primary-red' | 'primary-green' | 'primary-yellow',
+        variant?: 'primary' | 'default' | 'flat' | 'primary-red' | 'primary-green' | 'primary-yellow',
         shape?: 'default' | 'rounded' | 'squared',
         disabled?: boolean,
         center?: boolean,
@@ -14,7 +14,7 @@
     let {
         children,
         title = '',
-        variant = '',
+        variant = 'default',
         shape = 'default',
         disabled = $bindable(false),
         center = false,

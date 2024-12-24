@@ -52,13 +52,15 @@
             {#if game.endTime === undefined} <!-- Partie en cours -->
                 {#if !botIsPlaying}
                     <div class="tools" transition:slide>
-                        <Button onclick={() => game.eraserEnabled = false} center>
+                        <Button onclick={() => game.eraserEnabled = false} center shape="squared"
+                            variant={game.eraserEnabled ? 'default' : 'primary'}>
                             <Icon icon="gps_fix" size={32} />
                             <span>Placer</span>
                             <div class="indicator" style:opacity={!game.eraserEnabled ? 1 : 0}></div>
                         </Button>
 
-                        <Button onclick={() => game.eraserEnabled = true} center>
+                        <Button onclick={() => game.eraserEnabled = true} center shape="squared"
+                            variant={game.eraserEnabled ? 'primary' : 'default'}>
                             <Icon icon="gps_slash" size={32} />
                             <span>Effacer</span>
                             <div class="indicator" style:opacity={game.eraserEnabled ? 1 : 0}></div>
@@ -162,8 +164,8 @@
             button {
                 display: grid;
                 place-content: center;
-                aspect-ratio: 1;
                 position: relative;
+                gap: .25rem;
 
                 span {
                     font-size: .8em;
@@ -171,9 +173,9 @@
 
                 .indicator {
                     position: absolute;
-                    inset: auto 0 3px 0;
+                    inset: auto 0 4px 0;
                     border-radius: 50px;
-                    background-color: var(--main_color_bright);
+                    background: #fff;
                     height: 4px;
                     width: 30px;
                     margin: auto;

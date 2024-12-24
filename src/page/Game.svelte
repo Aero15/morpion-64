@@ -12,6 +12,8 @@
     import AvatarPlayer from "$lib/player/AvatarPlayer.svelte";
     import { onMount } from "svelte";
     import { newGameWithSelectedPlayers } from "$core/helpers/Game.svelte";
+    import GameStatus from "$lib/game/GameStatus.svelte";
+    import Jumbo from "$lib/shared/Jumbo.svelte";
 
     let game: GameEngine = $state(undefined);
 
@@ -43,18 +45,13 @@
     })
 </script>
 
-<main>
+<Jumbo>
+    <span></span>
+</Jumbo>
+
+<main id="pg-game">
     <Hero icon="dice" title="Morpion" subtitle={game.winnerInfo === undefined ? "C'est parti !" : "Partie terminée !"}>
-        <div class="actions" in:fade>
-            <Button onclick={newGameWithSelectedPlayers} center variant="primary">
-                <Icon icon="rotate" size={18} />
-                <span>Recommencer</span>
-            </Button>
-            <Button onclick={abandon} center>
-                <Icon icon="cross" size={18} />
-                <span>Quitter</span>
-            </Button>
-        </div>
+        <GameStatus bind:game />
 
         <div>
             {#if game.endTime === undefined} <!-- Partie en cours -->
@@ -136,12 +133,12 @@
 </main>
 
 <style>
-    main {
+    #pg-game {
         display: grid;
         grid-template-columns: 350px 1fr 350px;
         align-items: start;
         gap: 2rem;
-        padding-top: 3rem;
+        margin-top: -4.75rem;
     }
 
     .flex {

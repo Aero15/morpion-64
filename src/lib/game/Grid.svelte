@@ -6,6 +6,7 @@
     interface Props {
         grid: Cell[][],
         lock?: boolean,
+        blur?: boolean,
         eraserEnabled?: boolean,
         displayHalo?: boolean
         onCellClick?: (position: Point) => void
@@ -14,6 +15,7 @@
     let {
         grid = $bindable<Cell[][]>(),
         lock = $bindable(false),
+        blur = $bindable(false),
         displayHalo = $bindable(false),
         eraserEnabled = $bindable(false),
         onCellClick = () => {},
@@ -22,7 +24,7 @@
 
 <div
     class="grid"
-    class:lock
+    class:lock class:blur
     class:halo={displayHalo}
 >
     {#each grid as row}
@@ -110,9 +112,14 @@
             }
         }
 
+        &.blur .row {
+            filter: blur(2rem);
+        }
+
         .row {
             position: relative;
             z-index: 1;
+            transition: filter .2s;
         }
     }
 

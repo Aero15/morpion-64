@@ -39,6 +39,7 @@
     let type: PlayerType = $state(PlayerType.Human)
     let color: Color|string = $state(randomColor())
     let symbol: Symbol = $state(randomSymbol())
+    let score: number = $state(0)
     let difficulty: Difficulty = $state(Difficulty.Peaceful)
     let color_and_symbol: string = $derived(color+' '+symbol)
 
@@ -83,6 +84,7 @@
                 type = player.type
                 color = player.color
                 symbol = player.symbol
+                score = player.score
 
                 if (type == PlayerType.Bot) {
                     let bot = player as Bot
@@ -163,6 +165,12 @@
 
             {#if type == PlayerType.Bot}
                 <p class="difficulty">{difficulty}</p>
+            {/if}
+
+            {#if id > 0}
+                <div class="score">
+                    <p>{score} points</p>
+                </div>
             {/if}
         </div>
     </div>
@@ -357,6 +365,10 @@
                 border-radius: 6px;
                 padding: 3px 7px 5px;
                 margin: .5rem 0 0;
+            }
+
+            .score p {
+                margin: 1rem 0 0;
             }
         }
     }

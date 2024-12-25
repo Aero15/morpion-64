@@ -20,6 +20,7 @@
     import type Point from "$core/entity/board/Point.svelte";
     import Jumbo from "$lib/shared/Jumbo.svelte";
     import Radio from "$lib/form/Radio.svelte";
+    import NumberInput from "$lib/form/NumberInput.svelte";
 
 
 
@@ -59,18 +60,15 @@
             </div>
 
             <div class="grid forms">
-                <Slider
-                    label="Largeur"
-                    min={minGridSize.x}
-                    max={maxGridSize.x}
-                    suffix="colonnes"
+                <NumberInput
+                    centerLabel centerLegend
+                    label="Largeur" legend="colonnes"
+                    min={minGridSize.x} max={maxGridSize.x}
                     bind:value={gridSize.x} />
-        
-                <Slider
-                    label="Hauteur"
-                    min={minGridSize.y}
-                    max={maxGridSize.y}
-                    suffix="lignes"
+                <NumberInput
+                    centerLabel centerLegend
+                    label="Hauteur" legend="lignes"
+                    min={minGridSize.y} max={maxGridSize.y}
                     bind:value={gridSize.y} />
             </div>
         </Section>
@@ -105,14 +103,15 @@
     .page { gap: clamp(.5rem, 8vw, 4rem); }
 
     .forms {
-        grid-template-columns: repeat( auto-fit, minmax(270px, 1fr) );
-        gap: clamp(.5rem, 8vw, 1.5rem);
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
     }
 
     .infographics {
         text-align: center;
 
-        strong { color: cyan; }
+        strong { color: light-dark(#a400d6, #00ccff); }
 
         & > strong {
             font-size: clamp(34px, 6vw, 5rem);
@@ -126,12 +125,6 @@
                 font-size: .9em;
                 padding-bottom: 1.5rem;
             }
-        }
-    }
-
-    @media (prefers-color-scheme: light) {
-        .infographics strong {
-            color: blue;
         }
     }
 

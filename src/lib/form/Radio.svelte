@@ -6,7 +6,8 @@
         label: string,
         value: string | number,
         description?: string,
-        children?: Snippet
+        children?: Snippet,
+        onchange?: (e: Event) => void
     }
 
     let {
@@ -14,7 +15,8 @@
         label,
         value,
         description = $bindable(''),
-        children
+        children,
+        onchange = e => {}
     }: Props = $props();
 </script>
 
@@ -22,7 +24,7 @@
     class:center_x={description.length === 0 && children === undefined}
     class:checked={group === value}
 >
-    <input type="radio" {value} bind:group />
+    <input type="radio" {value} bind:group {onchange} />
 
     <div class="text">
         <p><strong class="name">{label}</strong></p>

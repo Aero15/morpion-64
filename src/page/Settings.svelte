@@ -11,8 +11,6 @@
     import {
         botSpeedDelay, gridSize, maxGridSize, minGridSize
     } from "$core/store/settings.svelte";
-
-    import Slider from "$lib/form/Slider.svelte";
     import Section from "$lib/shared/Section.svelte";
     import PageWrap from "$lib/global/PageWrap.svelte";
     import { calcAvg } from "$core/helpers/Math.svelte";

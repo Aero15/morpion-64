@@ -19,6 +19,7 @@
     import Jumbo from "$lib/shared/Jumbo.svelte";
     import Radio from "$lib/form/Radio.svelte";
     import NumberInput from "$lib/form/NumberInput.svelte";
+    import GridPresetSelector from "$lib/settings/GridPresetSelector.svelte";
 
 
 
@@ -57,18 +58,7 @@
                 <p>Pour <strong>{maxNbParticipants} participants</strong> max</p>
             </div>
 
-            <div class="grid forms">
-                <NumberInput
-                    centerLabel centerLegend
-                    label="Largeur" legend="colonnes"
-                    min={minGridSize.x} max={maxGridSize.x}
-                    bind:value={gridSize.x} />
-                <NumberInput
-                    centerLabel centerLegend
-                    label="Hauteur" legend="lignes"
-                    min={minGridSize.y} max={maxGridSize.y}
-                    bind:value={gridSize.y} />
-            </div>
+            <GridPresetSelector />
         </Section>
 
         <Section icon="bot" title="Comportement des bots" delay={1}>
@@ -99,12 +89,6 @@
 <style>
     .grid { display: grid; }
     .page { gap: clamp(.5rem, 8vw, 4rem); }
-
-    .forms {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-    }
 
     .infographics {
         text-align: center;

@@ -8,4 +8,4 @@ export let minGridSize: Point = new Point(3, 3)
 export let maxGridSize: Point = new Point(8, 8)
 
 // Temps de réponse des bots (min et max)
-export let botSpeedDelay = writable(BotDelay.Default)
+export let botSpeedDelay = writable(BotDelay.Fast)

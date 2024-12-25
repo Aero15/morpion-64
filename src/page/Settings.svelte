@@ -16,8 +16,10 @@
     import Section from "$lib/shared/Section.svelte";
     import PageWrap from "$lib/global/PageWrap.svelte";
     import { calcAvg } from "$core/helpers/Math.svelte";
+    import RadioGroup from "$lib/form/RadioGroup.svelte";
     import type Point from "$core/entity/board/Point.svelte";
     import Jumbo from "$lib/shared/Jumbo.svelte";
+    import Radio from "$lib/form/Radio.svelte";
 
 
 
@@ -38,6 +40,10 @@
                 return fastBotSpeedDelay
         }
         return defaultBotSpeedDelay
+    }
+
+    function speedToText(speed: Point): string {
+        return `Entre ${speed.x / 1000} et ${speed.y / 1000} secondes`;
     }
 </script>
 
@@ -77,20 +83,19 @@
             </div>
 
             <strong>Delai de réponse</strong>
-            <div class="form-group">
-                {#snippet radio_botSpeed(label: string, value: number, speed: Point)}
-                    <label class="botSpeed">
-                        <input type="radio" {value}
-                            bind:group={$botSpeedDelay} />
-                        <strong class="name">{label}</strong>
-                        <p class="value">Entre {speed.x} et {speed.y}ms</p>
-                    </label>
-                {/snippet}
+            <RadioGroup>
+                <Radio bind:group={$botSpeedDelay}
+                    label="Lent" value={BotDelay.Slow}
+                    description={ speedToText(slowBotSpeedDelay) } />
 
-                {@render radio_botSpeed('Rapide', BotDelay.Fast, fastBotSpeedDelay)}
-                {@render radio_botSpeed('Normal', BotDelay.Default, defaultBotSpeedDelay)}
-                {@render radio_botSpeed('Lent', BotDelay.Slow, slowBotSpeedDelay)}
-            </div>
+                <Radio bind:group={$botSpeedDelay}
+                    label="Normal" value={BotDelay.Default}
+                    description={ speedToText(defaultBotSpeedDelay) } />
+
+                <Radio bind:group={$botSpeedDelay}
+                    label="Rapide" value={BotDelay.Fast}
+                    description={ speedToText(fastBotSpeedDelay) } />
+            </RadioGroup>
         </Section>
     </div>
 </PageWrap>
@@ -124,44 +129,9 @@
         }
     }
 
-    .form-group {
-        --tint: rgba(255,255,255,.3);
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: .5rem;
-        border: 1px solid var(--tint);
-        border-radius: 1.25rem;
-        padding: .25rem;
-
-        label {
-            padding: 1rem;
-            border-radius: 1rem;
-            cursor: crosshair;
-
-            input { display: none; }
-
-            &:has(input:checked) {
-                background: var(--tint);
-            }
-
-            .name {
-                text-transform: uppercase;
-            }
-
-            .value {
-                margin: 0;
-                font-size: .9em;
-            }
-        }
-    }
-
     @media (prefers-color-scheme: light) {
         .infographics strong {
             color: blue;
-        }
-
-        .form-group {
-            --tint: rgba(0,0,0,.2);
         }
     }
 

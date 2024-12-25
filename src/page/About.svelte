@@ -75,7 +75,7 @@
 <Responsive bind:size />
 
 <Jumbo>
-    <div class="bx-jumbo"
+    <div class="intro"
         class:center={['sm', 'md'].includes(size)}
         class:cols={!['sm', 'md'].includes(size)}
     >
@@ -89,33 +89,33 @@
                 Le jeu de Morpion revisité avec une touche de modernité !
                 Jouez sur des grilles de 3x3 à 8x8 et personnalisez votre expérience avec des symboles et couleurs uniques pour chaque joueur.
             </p>
-            
-            {#snippet info(index: number, icon: string, title: string, text: string, url?: string)}
-                <li in:fade|global={{delay: 70 * index + 350}}>
-                    <Icon {icon} size={26} />
-                    <strong>{title}</strong>
-                    <p>
-                        {#if url}
-                            <a href={url}>{text}</a>
-                        {:else}
-                            {text}
-                        {/if}
-                    </p>
-                </li>
-            {/snippet}
-
-            <ul class="infos">
-                {@render info(0, 'duplicate', 'Licence', $license_name, $license_url)}
-                {@render info(1, 'clock', 'Mis à jour le', $last_update.toLocaleDateString('fr-FR', date_format_options))}
-                {@render info(2, 'profile', 'Développé par', $organisation_name, $organisation_url)}
-                {@render info(3, 'info', 'Etat du projet', projectStatus)}
-                {@render info(4, 'asterisk', 'Repository', $repository_display_hostname, $repository_url)}
-            </ul>
         </div>
     </div>
 </Jumbo>
+            
+{#snippet info(index: number, icon: string, title: string, text: string, url?: string)}
+    <li in:fade|global={{delay: 70 * index + 350}}>
+        <Icon {icon} size={34} />
+        <strong>{title}</strong>
+        <p>
+            {#if url}
+                <a href={url}>{text}</a>
+            {:else}
+                {text}
+            {/if}
+        </p>
+    </li>
+{/snippet}
 
 <PageWrap>
+    <ul class="infos">
+        {@render info(0, 'clock', 'Mis à jour le', $last_update.toLocaleDateString('fr-FR', date_format_options))}
+        {@render info(1, 'profile', 'Développé par', $organisation_name, $organisation_url)}
+        {@render info(2, 'info', 'Etat du projet', projectStatus)}
+        {@render info(3, 'duplicate', 'Licence', $license_name, $license_url)}
+        {@render info(4, 'asterisk', 'Repository', $repository_display_hostname, $repository_url)}
+    </ul>
+
     <Section icon="info" title="Stack technique" delay={1}>
         <ul class="tech_stack">
             {#snippet tech_stack(logo: string, name: string, description: string, url?: string, darkTint?: string, brightTint?: string)}
@@ -138,7 +138,7 @@
 </PageWrap>
 
 <style>
-    .bx-jumbo {
+    .intro {
         img {
             filter: drop-shadow(0 0 15px rgba(0,0,0,.2));
         }
@@ -154,33 +154,6 @@
 
             .description {
                 max-width: 500px;
-            }
-        }
-
-        .infos {
-            display: grid;
-            margin: 0;
-            padding: 0;
-            list-style: none;
-
-            a {
-                color: inherit;
-                text-underline-offset: 2px;
-                text-decoration-thickness: 1px;
-
-                &:hover {
-                    text-decoration: underline;
-                }
-            }
-
-            strong {
-                margin-top: .25rem;
-                display: block;
-            }
-
-            p {
-                margin: 0;
-                margin-top: -.05rem;
             }
         }
 
@@ -205,27 +178,17 @@
                     font-size: .8em;
                 }
             }
-
-            .infos {
-                gap: 2rem 1rem;
-                margin-top: 2rem;
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-
-                strong {
-                    margin-top: .15rem;
-                    font-size: .8em;
-                }
-
-                p {
-                    font-size: .8em;
-                }
-            }
         }
 
         &.cols {
             --logo_size: 200px;
             display: grid;
             grid-template-columns: var(--logo_size) 1fr;
+            
+            display: flex;
+            flex-flow: row;
+            align-items: center;
+            justify-content: center;
             gap: 3rem;
 
 
@@ -248,20 +211,40 @@
                     font-size: .87em;
                 }
             }
+        }
+    }
 
-            .infos {
-                gap: 2rem;
-                margin-top: 2rem;
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    .infos {
+        display: grid;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        gap: 2rem;
+        margin: 1rem 0;
+        text-align: center;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 
-                strong {
-                    margin-top: .25rem;
-                }
+        a {
+            color: inherit;
+            text-underline-offset: 2px;
+            text-decoration-thickness: 1px;
 
-                strong, p {
-                    font-size: .87em;
-                }
+            &:hover {
+                text-decoration: underline;
             }
+        }
+
+        strong, p {
+            font-size: .78em;
+        }
+
+        strong {
+            margin-top: .25rem;
+            display: block;
+        }
+
+        p {
+            margin: -.05rem 0 0;
         }
     }
 

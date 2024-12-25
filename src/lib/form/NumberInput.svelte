@@ -75,14 +75,14 @@
     .bx-number_input {
         display: grid;
 
+        label {margin-bottom: .25rem;}
+
         label, legend {
+            font-size: .78em;
+
             &.center {
                 text-align: center;
             }
-        }
-
-        legend {
-            font-size: .78em;
         }
     }
 

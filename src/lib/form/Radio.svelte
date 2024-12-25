@@ -68,6 +68,40 @@
             }
         }
 
+        input[type="radio"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            --size: 20px;
+            width: var(--size);
+            height: var(--size);
+            border: 2px solid light-dark(#000, #fff);
+            border-radius: 50%;
+            background: transparent;
+            position: relative;
+            cursor: crosshair;
+            transition: all .2s;
+        }
+
+        &.center_x input[type="radio"] { margin-top: -1px; }
+
+        input[type="radio"]:checked {
+            --tint: light-dark(#8400ac, cyan);
+            background-color: var(--tint);
+            border-color: var(--tint);
+        }
+
+        input[type="radio"]:checked::after {
+            content: ""; 
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: light-dark(#fff, #000);
+        }
+
         p {
             margin: 0;
 

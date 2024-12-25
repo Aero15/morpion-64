@@ -5,7 +5,7 @@
         license_name, license_url,
         organisation_name, organisation_url,
         repository_display_hostname,
-        repository_url
+        repository_url, creation_date
     } from "$core/store/application";
     import logo from "/favicon.svg";
     import Icon from "$lib/shared/Icon.svelte";
@@ -110,10 +110,11 @@
 <PageWrap>
     <ul class="infos">
         {@render info(0, 'clock', 'Mis à jour le', $last_update.toLocaleDateString('fr-FR', date_format_options))}
-        {@render info(1, 'profile', 'Développé par', $organisation_name, $organisation_url)}
-        {@render info(2, 'info', 'Etat du projet', projectStatus)}
-        {@render info(3, 'duplicate', 'Licence', $license_name, $license_url)}
-        {@render info(4, 'asterisk', 'Repository', $repository_display_hostname, $repository_url)}
+        {@render info(1, 'plus', 'Créé le', $creation_date.toLocaleDateString('fr-FR', date_format_options))}
+        {@render info(2, 'profile', 'Développé par', $organisation_name, $organisation_url)}
+        {@render info(3, 'info', 'Etat du projet', projectStatus)}
+        {@render info(4, 'duplicate', 'Licence', $license_name, $license_url)}
+        {@render info(5, 'asterisk', 'Repository', $repository_display_hostname, $repository_url)}
     </ul>
 
     <Section icon="info" title="Stack technique" delay={1}>

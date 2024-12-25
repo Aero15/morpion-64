@@ -9,13 +9,15 @@
         icon?: string
         title?: string
         subtitle?: string
+        orientation?: 'vertical' | 'horizontal'
         children?: Snippet
     }
 
     let { 
         icon = $bindable(''),
         title = $bindable(''),
-        subtitle = $bindable(''), 
+        subtitle = $bindable(''),
+        orientation = $bindable('horizontal'),
         children = undefined
     }: Props = $props();
 
@@ -27,18 +29,24 @@
 <div class="jumbo" class:overlap={['xl', '2xl'].includes(size)}>
     <div class="content">
         {#if icon.length > 0 || title.length > 0 || subtitle.length > 0}
-            <div class="identity" in:fade|global={{delay: 200, duration: 250}}>
+            <div class="identity"
+                in:fade|global={{delay: 200, duration: 250}}
+                class:horizontal={orientation == 'horizontal'}
+                class:vertical={orientation == 'vertical'}
+            >
                 {#if icon.length > 0}
                     <Icon { icon } size={ 70 } />
                 {/if}
-        
-                {#if title.length > 0}
-                    <h2>{ title }</h2>
-                {/if}
-            
-                {#if subtitle.length > 0}
-                    <p class="subtitle">{ subtitle }</p>
-                {/if}
+
+                <div class="text" style:--ajust_margin_top={ subtitle.length > 0 ? '-.75rem' : '-.25rem' }>
+                    {#if title.length > 0}
+                        <h2>{ title }</h2>
+                    {/if}
+                
+                    {#if subtitle.length > 0}
+                        <p class="subtitle">{ subtitle }</p>
+                    {/if}
+                </div>
             </div>
         {/if}
     
@@ -112,7 +120,23 @@
         }
 
         .identity {
-            text-align: center;
+
+            &.vertical {
+                display: grid;
+                text-align: center;
+            }
+
+            &.horizontal {
+                gap: 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .text {
+                    margin-top: var(--ajust_margin_top, 0);
+                }
+            }
+
 
             h2 {
                 margin: 0;

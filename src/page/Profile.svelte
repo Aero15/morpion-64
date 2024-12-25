@@ -496,7 +496,7 @@
 
     @media (width >= 900px) {
         #pg-profile .panel {
-            margin-top: -196px;
+            margin-top: -166px;
         }
     }
 </style>

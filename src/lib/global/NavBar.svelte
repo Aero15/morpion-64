@@ -13,8 +13,8 @@
         {name: 'Joueurs', path: '/players', icon: 'user'},
         {name: 'Jouer', path: '/opponents', icon: 'play'},
         //{name: 'Podium', path: '/podium', icon: 'podium'},
-        {name: 'A propos', path: '/about', icon: 'info'},
         {name: 'Réglages', path: '/settings', icon: 'config'},
+        {name: 'A propos', path: '/about', icon: 'info'},
     ]
 </script>
 

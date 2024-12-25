@@ -1,7 +1,6 @@
 <script lang="ts">
     import {
         clearSelectedPlayers,
-        removeSelectedPlayerById,
         selectPlayerById
     } from "$core/helpers/Players.svelte";
     import {
@@ -15,7 +14,6 @@
     import { fade, slide } from "svelte/transition";
     import Button from "$lib/form/Button.svelte";
     import Jumbo from "$lib/shared/Jumbo.svelte";
-    import Hero from "$lib/shared/Hero.svelte";
     import Icon from "$lib/shared/Icon.svelte";
     import { push } from "svelte-spa-router";
     import Panel from "$lib/shared/panel/Panel.svelte";
@@ -55,7 +53,9 @@
     }
 </script>
 
-<Jumbo icon="play" title="Nouvelle partie" subtitle="Sélection des participants" />
+<Jumbo icon="play"
+    title="Nouvelle partie"
+    subtitle="Sélection des participants" />
 
 <PageWrap>
     <div class="page-with-hero">

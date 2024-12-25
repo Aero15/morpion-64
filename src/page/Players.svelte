@@ -35,7 +35,8 @@
 
 <Responsive bind:size />
 
-<Jumbo icon="user" title="Joueurs" subtitle="Gestion des joueurs">
+<Jumbo icon="user" title="Joueurs"
+    subtitle="Gestion des joueurs">
     <span></span>
 </Jumbo>
 
@@ -190,7 +191,7 @@
 
     @media (width >= 1300px) {
         #pg-players .panel {
-            margin-top: -282px;
+            margin-top: -230px;
         }
     }
 </style>

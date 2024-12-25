@@ -94,7 +94,7 @@
 </Jumbo>
             
 {#snippet info(index: number, icon: string, title: string, text: string, url?: string)}
-    <li in:fade|global={{delay: 70 * index + 350}}>
+    <li in:fade|global={{delay: 50 * index + 150}}>
         <Icon {icon} size={34} />
         <strong>{title}</strong>
         <p>

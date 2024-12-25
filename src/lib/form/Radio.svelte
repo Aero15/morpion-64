@@ -77,6 +77,7 @@
             --size: 20px;
             width: var(--size);
             height: var(--size);
+            aspect-ratio: 1;
             border: 2px solid light-dark(#000, #fff);
             border-radius: 50%;
             background: transparent;
@@ -100,6 +101,7 @@
             left: 4px;
             width: 8px;
             height: 8px;
+            aspect-ratio: 1;
             border-radius: 50%;
             background-color: light-dark(#fff, #000);
         }

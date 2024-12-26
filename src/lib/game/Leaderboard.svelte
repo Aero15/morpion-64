@@ -31,7 +31,7 @@
     <table>
         <thead>
             <tr>
-                <th><strong># {limit}</strong></th>
+                <th><strong>#</strong></th>
                 <th><strong>Nom</strong></th>
                 <th style:text-align="end"><strong>Score</strong></th>
             </tr>

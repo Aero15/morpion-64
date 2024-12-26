@@ -1,8 +1,8 @@
 <script lang="ts">
     import favicon from '/favicon.svg';
-    import { fade } from 'svelte/transition';
     import Icon from "$lib/shared/Icon.svelte";
-    import { location } from "svelte-spa-router";
+    import { fade, slide } from 'svelte/transition';
+    import { location, pop } from "svelte-spa-router";
     import { app_version } from '$core/store/application';
     import Responsive from '$lib/shared/Responsive.svelte';
     import type { BreakpointSize } from '$core/enums/BreakpointSize';
@@ -30,10 +30,18 @@
 <header
     class:center={size == 'sm'}
     class:floating={['xl', '2xl'].includes(size)}>
-    <a class="identity" href="#/">
-        <h1>Morpion <span>64</span></h1>
-        <img src={favicon} alt="Logo de Morpion 64" />
-    </a>
+    <div class="start">
+        {#if $location != '/'}
+            <button class="goBack" onclick={pop} transition:slide={{axis: 'x', duration: 200}}>
+                <Icon icon="arrow_left" size={22} />
+            </button>
+        {/if}
+        
+        <a class="identity" href="#/">
+            <h1>Morpion <span>64</span></h1>
+            <img src={favicon} alt="Logo de Morpion 64" />
+        </a>
+    </div>
 
     {#if ['xl', '2xl'].includes(size)}
         <nav in:fade>
@@ -63,9 +71,10 @@
         display: flex;
         align-items: center;
         gap: 1rem;
+        overflow: clip;
+        margin: 0 auto;
         padding: 0 var(--padding);
         max-width: calc(1280px - var(--padding) * 2);
-        margin: 0 auto;
         border-bottom: 1px solid light-dark(#cfcfcf, #444);
 
         &.center {
@@ -87,48 +96,69 @@
             inset: 1rem 0 auto 0;
         }
 
-        .identity {
+        .start {
             display: flex;
-            align-items: center;
+            align-items: stretch;
             justify-content: start;
-            gap: .5rem;
-            color: inherit;
-            text-underline-offset: 3px;
-            transition: transform .2s;
-            padding: .75rem 0;
             flex: 1;
 
-            img {
-                --size: 28px;
-                width: var(--size);
-                height: var(--size);
-            }
+            button {
+                border: none;
+                padding: 1rem;
+                aspect-ratio: 1;
+                cursor: pointer;
+                transition: background .2s;
 
-            h1 {
-                margin: 0;
-                font-size: 1.5rem;
-                background: linear-gradient(to right, rgb(157, 82, 255), rgb(0, 153, 255), cyan);
-                background-clip: text;
-                color: transparent;
-                padding-bottom: 4px;
-
-                span {
-                    font-family: Marianne-Light, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+                &:first-child {
+                    margin-left: calc(var(--padding) * -1);
+                    padding: 1rem 1rem 1rem 1.5rem;
+                    aspect-ratio: auto;
                 }
             }
 
-            &:hover {
-                text-decoration: underline;
-                text-decoration-thickness: 2px;
-            }
+            .identity {
+                display: flex;
+                align-items: center;
+                justify-content: start;
+                gap: .5rem;
+                color: inherit;
+                text-underline-offset: 3px;
+                transition: transform .2s;
+                padding: .75rem 0;
 
-            &:active {
-                transform: scale(1);
+                img {
+                    --size: 28px;
+                    width: var(--size);
+                    height: var(--size);
+                }
+
+                h1 {
+                    margin: 0;
+                    font-size: 1.5rem;
+                    background: linear-gradient(to right, rgb(157, 82, 255), rgb(0, 153, 255), cyan);
+                    background-clip: text;
+                    color: transparent;
+                    padding-bottom: 4px;
+
+                    span {
+                        font-family: Marianne-Light, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+                    }
+                }
+
+                &:hover {
+                    text-decoration: underline;
+                    text-decoration-thickness: 2px;
+                }
+
+                &:active {
+                    transform: scale(1);
+                }
             }
         }
 
-        &.center .identity {
+        &.center .start {
             justify-content: center;
+            flex: 1;
         }
 
         nav {

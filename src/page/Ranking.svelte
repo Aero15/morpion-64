@@ -14,7 +14,7 @@
 
 <PageWrap>
     <div id="pg-ranking">
-        <Ranking {players} displayType />
+        <Ranking {players} displayType tilesMode />
     </div>
 </PageWrap>
 

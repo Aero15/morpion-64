@@ -7,11 +7,13 @@
     interface Props {
         players: Player[],
         displayType?: boolean,
+        tilesMode?: boolean
     }
 
     let {
         players = $bindable([]),
         displayType = $bindable(false),
+        tilesMode = $bindable(false)
     }: Props = $props();
 
     let ranking = $derived(players.toSorted((a, b) => b.score - a.score))
@@ -26,7 +28,7 @@
     }
 </script>
 
-<ul class="bx-ranking">
+<ul class="bx-ranking" class:tiles={tilesMode}>
     {#each ranking as { id, color, name, symbol, score, type }, index}
         <li>
             <a href="#/players/{id}"
@@ -39,7 +41,7 @@
 
                 <div class="identity">
                     <p style:color={index > 2 ? improveColor(color) : 'inherit'} class="symbol">
-                        <Icon icon={symbol} size={18} />
+                        <Icon icon={symbol} size={ tilesMode ? 64 : 24} />
                     </p>
                     <p class="name">{name}</p>
                 </div>
@@ -74,6 +76,14 @@
         display: grid;
         gap: .25rem;
 
+        &.tiles {
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        }
+
+        &:not(.tiles) {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
         a {
             border: 1px solid transparent;
             border-radius: .5rem;
@@ -83,6 +93,7 @@
             padding: .25rem .75rem;
             text-decoration: none;
             color: inherit;
+            transition: border-color .2s, background .2s;
 
             &.gold {
                 background: linear-gradient(
@@ -117,8 +128,8 @@
 
             &:hover {
                 &:not(.gold, .silver, .bronze) {
-                    background: light-dark(#bf00ff3b, #00d9ff41);
-                    border-color: light-dark(#00000077, #ffffff77);
+                    background: light-dark(#bf00ff55, #5ee7ff55);
+                    border-color: light-dark(#00000099, #ffffff99);
                 }
 
                 &.gold, &.silver, &.bronze {
@@ -170,6 +181,45 @@
                 );
                 background-clip: text;
                 color: transparent;
+            }
+        }
+
+        &.tiles a {
+            flex-direction: column;
+            position: relative;
+            aspect-ratio: 1;
+            padding: .25rem;
+
+            .rank, .score, .type, .identity .name {
+                position: absolute;
+                padding: .25rem .5rem;
+            }
+
+            .rank {
+                inset: 0 auto auto 0;
+            }
+
+            .score {
+                inset: auto auto 0 0;
+            }
+
+            .type {
+                inset: auto 0 0 auto;
+                padding: .5rem;
+            }
+
+            .name {
+                inset: 0 0 auto auto;
+            }
+
+            .identity {
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            &:not(.gold, .silver, .bronze):not(:hover) {
+                background: light-dark(#00000017, #ffffff17);
+                border-color: light-dark(#00000055, #ffffff55);
             }
         }
     }

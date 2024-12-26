@@ -238,9 +238,12 @@
 .icon-disable:before {
   content: "\e93b";
 }
-.icon-dropdown:before {
+.icon-dropdown:before,
+.icon-chevron_down:before,
+.icon-chevron_up:before {
   content: "\e93c";
 }
+.icon-chevron_up:before {transform: rotate(180deg);}
 .icon-duplicate:before {
   content: "\e93d";
 }

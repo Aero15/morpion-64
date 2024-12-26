@@ -43,6 +43,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+[class^="icon-"]:before,
+[class*=" icon-"]:before 
+{display: inline-block;}
+
 .icon-numbers:before {
   content: "\e900";
 }
@@ -136,7 +140,6 @@
 }
 .icon-thumb_down:before {
   transform: scaleY(-1);
-  display: block;
 }
 .icon-triangle:before {
   content: "\e91e";
@@ -165,9 +168,16 @@
 .icon-apps:before {
   content: "\e926";
 }
-.icon-arrow:before {
+.icon-arrow:before,
+.icon-arrow_up:before,
+.icon-arrow_left:before,
+.icon-arrow_right:before,
+.icon-arrow_down:before {
   content: "\e927";
 }
+.icon-arrow_up:before {transform: rotate(180deg);}
+.icon-arrow_left:before {transform: rotate(90deg);}
+.icon-arrow_right:before {transform: rotate(-90deg);}
 .icon-asterisk:before {
   content: "\e928";
 }

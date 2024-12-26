@@ -81,7 +81,7 @@
 
 <style>
     #pg-menu {
-        padding-bottom: 4rem;
+        padding-bottom: 1rem;
 
         a {
             text-decoration: none;

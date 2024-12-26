@@ -81,7 +81,6 @@
     #pg-home {
         display: flex;
         justify-content: center;
-        padding: clamp(1rem, 4vw, 3rem);
 
         display: grid;
         gap: 1rem;

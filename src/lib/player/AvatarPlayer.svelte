@@ -63,17 +63,22 @@
 
         .bubble {
             --size: 28px;
+            --position: -10px;
             width: var(--size);
             height: var(--size);
             border-radius: 100px;
             position: absolute;
-            right: -10px;
-            top: -10px;
+            right: var(--position);
+            top: var(--position);
             display: flex;
             justify-content: center;
             align-items: center;
             border: 1px solid light-dark(#aaa, #777);
             background: light-dark(#fff, #000);
+        }
+
+        &.circular .bubble {
+            --position: -5px;
         }
 
         &.compact {

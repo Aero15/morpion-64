@@ -1,33 +1,35 @@
 <script lang="ts">
     import type Cell from "$core/entity/board/Cell.svelte";
     import Point from "$core/entity/board/Point.svelte";
+    import GameEngine from "$core/entity/engine/GameEngine.svelte";
+    import Bot from "$core/entity/player/Bot.svelte";
     import CellView from "./Cell.svelte";
 
     interface Props {
-        grid: Cell[][],
-        lock?: boolean,
-        blur?: boolean,
-        eraserEnabled?: boolean,
-        displayHalo?: boolean
-        onCellClick?: (position: Point) => void
+        game: GameEngine
     }
 
     let {
-        grid = $bindable<Cell[][]>(),
-        lock = $bindable(false),
-        blur = $bindable(false),
-        displayHalo = $bindable(false),
-        eraserEnabled = $bindable(false),
-        onCellClick = () => {},
+        game = $bindable(new GameEngine([], 0, 0)),
     }: Props = $props();
+
+    let botIsPlaying = $derived(game?.players.getCurrentPlayer() instanceof Bot)
+    let lock = $derived(botIsPlaying || game.winnerInfo !== undefined || game.endTime !== undefined)
+    let blur = $derived(!game.timer.isRunning && game.timer.seconds > 0 && game.endTime === undefined)
+    let halo = $derived(game.endTime === undefined && botIsPlaying)
+
+    function onCellClick(position: Point) {
+        game.playMoveAt(position)
+    }
 </script>
 
 <div
     class="grid"
-    class:lock class:blur
-    class:halo={displayHalo}
+    class:lock
+    class:blur
+    class:halo
 >
-    {#each grid as row, index}
+    {#each game.board.grid as row, index}
         <div class="row" class:lock
             style:--index={index}
             style="grid-template-columns: repeat({ row.length }, 1fr);">
@@ -36,7 +38,7 @@
                     { position } { symbol }
                     { color } { lock }
                     { highlighted }
-                    bind:eraserEnabled
+                    bind:eraserEnabled={game.eraserEnabled}
                     onClick={ onCellClick }
                 />
             {/each}

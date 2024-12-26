@@ -26,14 +26,6 @@
 
     let botIsPlaying = $derived(game?.players.getCurrentPlayer() instanceof Bot)
 
-    function onCellClick(position: Point) {
-        game.playMoveAt(position)
-    }
-
-    function abandon() {
-        push('/')
-    }
-
     onMount(() => {
         return () => {
             game.stop()
@@ -95,14 +87,7 @@
     </Hero>
 
     <div class="flex" in:scale>
-        <Grid
-            lock={botIsPlaying || game.winnerInfo !== undefined || game.endTime !== undefined}
-            displayHalo={game.endTime === undefined && botIsPlaying}
-            blur={!game.timer.isRunning && game.timer.seconds > 0 && game.endTime === undefined}
-            bind:grid={game.board.grid}
-            bind:eraserEnabled={game.eraserEnabled}
-            onCellClick={onCellClick}
-        />
+        <Grid bind:game />
     </div>
 
     <div in:fade={{delay: 250}}>

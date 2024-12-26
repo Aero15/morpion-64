@@ -12,9 +12,10 @@
         {name: 'Accueil', path: '/', icon: 'home'},
         {name: 'Joueurs', path: '/players', icon: 'user'},
         {name: 'Jouer', path: '/opponents', icon: 'play'},
-        //{name: 'Podium', path: '/podium', icon: 'podium'},
-        {name: 'Réglages', path: '/settings', icon: 'config'},
-        {name: 'A propos', path: '/about', icon: 'info'},
+        {name: 'Classement', path: '/ranking', icon: 'podium'},
+        {name: 'Menu', path: '/menu', icon: 'menu_dots'},
+        //{name: 'Réglages', path: '/settings', icon: 'config'},
+        //{name: 'A propos', path: '/about', icon: 'info'},
     ]
 </script>
 

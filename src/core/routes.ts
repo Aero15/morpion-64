@@ -1,6 +1,6 @@
 import { wrap } from 'svelte-spa-router/wrap';
 
-// Créer une route asynchrone
+// Create a route asynchronously
 function createAsyncRoute (
     path: string,
     component: any
@@ -21,5 +21,6 @@ export const routes = {
     ...createAsyncRoute('/ranking',     () => import('$page/Ranking.svelte')),
     ...createAsyncRoute('/settings',    () => import('$page/Settings.svelte')),
     ...createAsyncRoute('/about',       () => import('$page/About.svelte')),
+    ...createAsyncRoute('/menu',        () => import('$page/Menu.svelte')),
     ...createAsyncRoute('*',            () => import('$page/NotFound.svelte')),
 };

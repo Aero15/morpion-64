@@ -89,7 +89,7 @@
             var(--cell_size) var(--cell_size),
             var(--cell_size) var(--cell_size),
             100% 100%;
-        background-position: top center;
+        background-position: center -1px;
 
         box-shadow:
             0 -1px 0 light-dark(

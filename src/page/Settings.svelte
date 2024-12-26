@@ -93,7 +93,7 @@
     .infographics {
         text-align: center;
 
-        strong { color: light-dark(#a400d6, #00ccff); }
+        strong { color: light-dark(#a400d6, #00f7ff); }
 
         & > strong {
             font-size: clamp(34px, 6vw, 5rem);

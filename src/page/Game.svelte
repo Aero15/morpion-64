@@ -15,6 +15,7 @@
     import GameStatus from "$lib/game/GameStatus.svelte";
     import Jumbo from "$lib/shared/Jumbo.svelte";
     import Leaderboard from "$lib/game/Leaderboard.svelte";
+    import ToolBox from "$lib/game/ToolBox.svelte";
 
     let game: GameEngine = $state(undefined);
 
@@ -51,26 +52,7 @@
         <div>
             {#if game.endTime === undefined} <!-- Partie en cours -->
                 {#if !botIsPlaying}
-                    <div class="tools" transition:slide>
-                        <Button onclick={() => game.eraserEnabled = false} center shape="squared"
-                            variant={game.eraserEnabled ? 'default' : 'primary'}>
-                            <Icon icon="gps_fix" size={32} />
-                            <span>Placer</span>
-                            <div class="indicator" style:opacity={!game.eraserEnabled ? 1 : 0}></div>
-                        </Button>
-
-                        <Button onclick={() => game.eraserEnabled = true} center shape="squared"
-                            variant={game.eraserEnabled ? 'primary' : 'default'}>
-                            <Icon icon="gps_slash" size={32} />
-                            <span>Effacer</span>
-                            <div class="indicator" style:opacity={game.eraserEnabled ? 1 : 0}></div>
-                        </Button>
-
-                        <Button center onclick={() => game.showHint()}>
-                            <Icon icon="info" size={32} />
-                            <span>Astuce</span>
-                        </Button>
-                    </div>
+                    <ToolBox bind:game />
                 {:else}
                     <div class="info" transition:slide>
                         <Icon icon="info" size={20} />
@@ -153,35 +135,6 @@
         gap: .5rem;
         font-size: .9em;
         color: var(--main_color);
-    }
-
-    .tools {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: .5rem;
-
-        :global {
-            button {
-                display: grid;
-                place-content: center;
-                position: relative;
-                gap: .25rem;
-
-                span {
-                    font-size: .8em;
-                }
-
-                .indicator {
-                    position: absolute;
-                    inset: auto 0 4px 0;
-                    border-radius: 50px;
-                    background: #fff;
-                    height: 4px;
-                    width: 30px;
-                    margin: auto;
-                }
-            }
-        }
     }
 
     .winner {

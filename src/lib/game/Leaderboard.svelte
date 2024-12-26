@@ -4,14 +4,17 @@
     import Icon from "$lib/shared/Icon.svelte";
 
     interface Props {
-        game: GameEngine
+        game: GameEngine,
+        limit?: number
     }
 
     let {
-        game = $bindable(new GameEngine([], 0, 0))
+        game = $bindable(new GameEngine([], 0, 0)),
+        limit = $bindable(0)
     }: Props = $props();
 
-    let ranking = $derived(game.players.players.toSorted((a, b) => b.score - a.score))
+    let sorted = $derived(game.players.players.toSorted((a, b) => b.score - a.score))
+    let ranking = $derived(limit > 0 ? sorted.slice(0, limit) : sorted)
 
     function improveColor(color: string) {
         let { light, dark } = improveContrast(color);

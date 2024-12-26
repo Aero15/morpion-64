@@ -73,7 +73,7 @@
             </Panel>
         </div>
     
-        <div in:fade={{delay: 200}} class="sections"
+        <div in:fade={{duration: 200, delay: 100}} class="sections"
             class:space={ !['sm', 'md', 'lg'].includes(size) }
             class:cols-2={ ['xl', '2xl'].includes(size) }>
             <Collapse title="Joueurs" icon="user" open

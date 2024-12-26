@@ -17,6 +17,10 @@
         let { light, dark } = improveContrast(color);
         return `light-dark(${light}, ${dark})`;
     }
+
+    function formatScore(score: number) {
+        return score.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ')
+    }
 </script>
 
 <table class="bx-leaderboard">
@@ -24,14 +28,14 @@
         <tr>
             <th><strong>#</strong></th>
             <th><strong>Nom</strong></th>
-            <th><strong>Score</strong></th>
+            <th style:text-align="end"><strong>Score</strong></th>
         </tr>
     </thead>
 
     <tbody>
         {#each ranking as { color, name, symbol, score }, index}
             <tr>
-                <td><p class="rank">{index + 1}</p></td>
+                <td><p class="rank"><strong>{index + 1}</strong></p></td>
                 <td>
                     <div class="identity">
                         <p style:color={improveColor(color)} class="symbol">
@@ -42,7 +46,8 @@
                 </td>
                 <td>
                     <p class="score">
-                        <strong>{score}</strong>
+                        <strong>{formatScore(score)}</strong>
+                        <span>pts</span>
                     </p>
                 </td>
             </tr>
@@ -78,14 +83,18 @@
             .symbol { font-size: 0; }
         }
 
-        .score strong {
-            background: linear-gradient(
-                to right,
-                light-dark(rgb(255, 0, 200), rgb(255, 145, 243)),
-                light-dark(rgb(0, 153, 255), cyan)
-            );
-            background-clip: text;
-            color: transparent;
+        .score {
+            text-align: end;
+
+            strong {
+                background: linear-gradient(
+                    to right,
+                    light-dark(rgb(255, 0, 200), rgb(255, 145, 243)),
+                    light-dark(rgb(0, 153, 255), cyan)
+                );
+                background-clip: text;
+                color: transparent;
+            }
         }
     }
 </style>

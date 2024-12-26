@@ -12,6 +12,7 @@ export default abstract class Player implements IPlayer {
     private _color: Color | string = $state('');
     private _symbol: Symbol = $state(Symbol.Cross);
     private _score: number = $state(0);
+    private _temporaryScore: number = $state(0);
     private _type: PlayerType;
   
     constructor(
@@ -74,8 +75,30 @@ export default abstract class Player implements IPlayer {
     set score(value: number) {
         this._score = value;
     }
-    addScore(value: number) {
-        this._score += value;
+
+    // Getter and Setter for temporaryScore
+    get temporaryScore(): number {
+        return this._temporaryScore;
+    }
+    set temporaryScore(value: number) {
+        this._temporaryScore = value;
+    }
+
+    // Add temporary score
+    addScore(value: number, isTemporary: boolean = true) {
+        if (isTemporary) {
+            this._temporaryScore += value;
+        } else {
+            this._score += value;
+        }
+    }
+
+    applyTemporaryScore() {
+        this._score += this._temporaryScore;
+    }
+
+    clearTemporaryScore() {
+        this._temporaryScore = 0;
     }
     
     abstract play(game: GameEngine): void;

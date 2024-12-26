@@ -1,6 +1,5 @@
 <script lang="ts">
     import GameEngine from "$core/entity/engine/GameEngine.svelte";
-    import Bot from "$core/entity/player/Bot.svelte";
     import Button from "$lib/form/Button.svelte";
     import Icon from "$lib/shared/Icon.svelte";
     import { slide } from "svelte/transition";

@@ -5,10 +5,12 @@
 
     interface Props {
         game: GameEngine,
+        compact?: boolean
     }
 
     let {
         game = $bindable(new GameEngine([], 0, 0)),
+        compact = $bindable(false)
     }: Props = $props();
 
     let players: Player[] = $derived(sort(game.players.players, game.players.currentTurn))
@@ -44,15 +46,15 @@
 <div class="bx-player_turn">
     <div class="bubbles">
         {#each players.slice(0,3) as { name, color, symbol, type }, index}
-            <div class="indicator"
+            <div class="indicator" class:compact
                 class:current={ index === 0 }
                 style:z-index={ players.length - index }>
-                <AvatarPlayer { name } { color } { symbol } { type } shape="circular" />
+                <AvatarPlayer {compact} { name } { color } { symbol } { type } shape="circular" />
             </div>
         {/each}
 
         {#if players.length > 3}
-            <div class="indicator remains">
+            <div class="indicator remains" class:compact>
                 <p><strong>+{ players.length - 3 }</strong></p>
             </div>
         {/if}
@@ -76,7 +78,12 @@
                 transition: transform .2s;
 
                 &:not(.current) {
-                    margin-inline-start: -1rem;
+                    &.compact {
+                        margin-inline-start: -.5rem;
+                    }
+                    &:not(.compact) {
+                        margin-inline-start: -1rem;
+                    }
                 }
 
                 &.remains {
@@ -91,6 +98,10 @@
                     p {
                         margin: 0;
                         font-size: 1.75em;
+                    }
+
+                    &.compact p {
+                        font-size: 1.25em;
                     }
                 }
             }

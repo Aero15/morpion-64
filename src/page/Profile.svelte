@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { fade } from "svelte/transition";
-    import { push } from "svelte-spa-router";
+    import { pop, push } from "svelte-spa-router";
     import Icon from "$lib/shared/Icon.svelte";
     import Input from "$lib/form/Input.svelte";
     import Button from "$lib/form/Button.svelte";
@@ -124,7 +124,7 @@
             }
         }
 
-        push('/players')
+        pop()
     }
 
     // Delete player
@@ -132,7 +132,7 @@
         const ok = confirm('Voulez-vous vraiment supprimer ce joueur ?')
         if (ok) {
             deletePlayerById(id)
-            push('/players')
+            pop()
         }
     }
 </script>
@@ -186,7 +186,7 @@
     {/if}
 
     <Button center title="Annuler" shape="squared"
-        onclick={() => push('/players')}>
+        onclick={() => pop()}>
         <Icon icon="undo" size={24} />
     </Button>
 
@@ -224,7 +224,7 @@
                         {/if}
                     
                         <Button center shape="squared"
-                            onclick={() => push('/players')}>
+                            onclick={() => pop()}>
                             <Icon icon="undo" size={24} />
                             <p>Annuler</p>
                         </Button>

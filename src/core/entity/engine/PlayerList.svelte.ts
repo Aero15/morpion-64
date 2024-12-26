@@ -46,4 +46,14 @@ export default class PlayerList {
         this._currentTurn = (this._currentTurn + 1) % this._players.length;
         return this.getCurrentPlayer();
     }
+
+    // Apply score to each player
+    saveScore(): void {
+        this._players.forEach(player => player.applyTemporaryScore());
+    }
+
+    // Clear temporary score from each player
+    clearTemporaryScore(): void {
+        this._players.forEach(player => player.clearTemporaryScore());
+    }
 }

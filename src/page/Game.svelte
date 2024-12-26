@@ -29,6 +29,7 @@
     onMount(() => {
         return () => {
             game.stop()
+            game.players.clearTemporaryScore()
         };
     })
 </script>

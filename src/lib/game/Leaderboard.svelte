@@ -13,7 +13,7 @@
         limit = $bindable(0)
     }: Props = $props();
 
-    let sorted = $derived(game.players.players.toSorted((a, b) => b.score - a.score))
+    let sorted = $derived(game.players.players.toSorted((a, b) => b.temporaryScore - a.temporaryScore))
     let ranking = $derived(limit > 0 ? sorted.slice(0, limit) : sorted)
 
     function improveColor(color: string) {
@@ -36,7 +36,7 @@
     </thead>
 
     <tbody>
-        {#each ranking as { color, name, symbol, score }, index}
+        {#each ranking as { color, name, symbol, temporaryScore }, index}
             <tr>
                 <td><p class="rank"><strong>{index + 1}</strong></p></td>
                 <td>
@@ -49,7 +49,7 @@
                 </td>
                 <td>
                     <p class="score">
-                        <strong>{formatScore(score)}</strong>
+                        <strong>{formatScore(temporaryScore)}</strong>
                         <span>pts</span>
                     </p>
                 </td>

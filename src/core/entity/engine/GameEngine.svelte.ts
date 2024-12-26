@@ -189,6 +189,9 @@ export default class GameEngine {
                     player.addScore(Score.Win);
                 }
             }
+
+            // Save score
+            this._players.saveScore();
             
             return
         }

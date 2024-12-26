@@ -13,6 +13,7 @@
     }: Props = $props();
 
     function newGame() {
+        game.players.clearTemporaryScore()
         let g = newGameWithSelectedPlayers()
         if (g != null) {
             game = g

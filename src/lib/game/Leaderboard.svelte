@@ -1,6 +1,7 @@
 <script lang="ts">
     import GameEngine from "$core/entity/engine/GameEngine.svelte";
     import { improveContrast } from "$core/helpers/Colors.svelte";
+    import Button from "$lib/form/Button.svelte";
     import Icon from "$lib/shared/Icon.svelte";
 
     interface Props {
@@ -26,40 +27,65 @@
     }
 </script>
 
-<table class="bx-leaderboard">
-    <thead>
-        <tr>
-            <th><strong>#</strong></th>
-            <th><strong>Nom</strong></th>
-            <th style:text-align="end"><strong>Score</strong></th>
-        </tr>
-    </thead>
-
-    <tbody>
-        {#each ranking as { color, name, symbol, temporaryScore }, index}
+<div class="bx-leaderboard">
+    <table>
+        <thead>
             <tr>
-                <td><p class="rank"><strong>{index + 1}</strong></p></td>
-                <td>
-                    <div class="identity">
-                        <p style:color={improveColor(color)} class="symbol">
-                            <Icon icon={symbol} size={18} />
-                        </p>
-                        <p class="name">{name}</p>
-                    </div>
-                </td>
-                <td>
-                    <p class="score">
-                        <strong>{formatScore(temporaryScore)}</strong>
-                        <span>pts</span>
-                    </p>
-                </td>
+                <th><strong># {limit}</strong></th>
+                <th><strong>Nom</strong></th>
+                <th style:text-align="end"><strong>Score</strong></th>
             </tr>
-        {/each}
-    </tbody>
-</table>
+        </thead>
+    
+        <tbody>
+            {#each ranking as { color, name, symbol, temporaryScore }, index}
+                <tr>
+                    <td><p class="rank"><strong>{index + 1}</strong></p></td>
+                    <td>
+                        <div class="identity">
+                            <p style:color={improveColor(color)} class="symbol">
+                                <Icon icon={symbol} size={18} />
+                            </p>
+                            <p class="name">{name}</p>
+                        </div>
+                    </td>
+                    <td>
+                        <p class="score">
+                            <strong>{formatScore(temporaryScore)}</strong>
+                            <span>pts</span>
+                        </p>
+                    </td>
+                </tr>
+            {/each}
+        </tbody>
+    </table>
+    
+    <div class="actions">
+        {#if sorted.length > limit && limit > 0}
+            <Button center title="Ouvrir le classement"
+                onclick={() => limit = sorted.length}>
+                <Icon icon="chevron_down" size={16} />
+                <span>Afficher le reste du classement ({sorted.length - limit})</span>
+            </Button>
+        {/if}
+    
+        {#if limit == sorted.length}
+            <Button center title="Ouvrir le classement"
+                onclick={() => limit = 3}>
+                <Icon icon="chevron_up" size={16} />
+                <span>Réduire le classement</span>
+            </Button>
+        {/if}
+    </div>
+</div>
 
 <style>
     .bx-leaderboard {
+        display: grid;
+        gap: .5rem;
+    }
+
+    .bx-leaderboard table {
         border-collapse: collapse;
         padding: 0;
         margin: 0;
@@ -97,6 +123,17 @@
                 );
                 background-clip: text;
                 color: transparent;
+            }
+        }
+    }
+
+    .bx-leaderboard .actions {
+        display: grid;
+
+        :global(button) {
+            justify-content: start;
+            span {
+                font-size: .8em;
             }
         }
     }

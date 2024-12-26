@@ -38,7 +38,7 @@
             </p>
 
             <div class="identity">
-                <p style:color={improveColor(color)} class="symbol">
+                <p style:color={index > 2 ? improveColor(color) : 'inherit'} class="symbol">
                     <Icon icon={symbol} size={18} />
                 </p>
                 <p class="name">{name}</p>
@@ -81,9 +81,46 @@
             gap: 1rem;
             padding: .25rem .75rem;
 
+            &.gold {
+                background: linear-gradient(
+                    to bottom,
+                    light-dark(#ebce5a, #a48100),
+                    light-dark(#f1eacf, #b89e34),
+                    light-dark(#a89b67, #675719)
+                );
+            }
+            &.silver {
+                background: linear-gradient(
+                    to bottom,
+                    light-dark(#bcb79d, #625e4b),
+                    light-dark(#f3f3f3, #808080),
+                    light-dark(#a2a2a2, #3a3a3a)
+                );
+            }
+            &.bronze {
+                background: linear-gradient(
+                    to bottom,
+                    light-dark(#ed8852, #b3451d),
+                    light-dark(#e8c4b0, #ba6232),
+                    light-dark(#ae6548, #6b371e)
+                );
+            }
+
+            &.gold, &.silver, &.bronze {
+                border-color: light-dark(#00000055, #ffffff55);
+                background-size: 105% 105%;
+                background-position: center;
+            }
+
             &:hover {
-                background: light-dark(#bf00ff3b, #00d9ff41);
-                border-color: light-dark(#00000077, #ffffff77);
+                &:not(.gold, .silver, .bronze) {
+                    background: light-dark(#bf00ff3b, #00d9ff41);
+                    border-color: light-dark(#00000077, #ffffff77);
+                }
+
+                &.gold, &.silver, &.bronze {
+                    border-color: light-dark(#000000ff, #ffffffff);
+                }
             }
 
             p {
@@ -118,15 +155,18 @@
             .score {
                 text-align: end;
                 strong {
-                    background: linear-gradient(
-                        to right,
-                        light-dark(rgb(255, 0, 200), rgb(255, 145, 243)),
-                        light-dark(rgb(0, 153, 255), cyan)
-                    );
-                    background-clip: text;
-                    color: transparent;
                     font-size: 1.2em;
                 }
+            }
+
+            &:not(.gold, .silver, .bronze) .score strong {
+                background: linear-gradient(
+                    to right,
+                    light-dark(rgb(255, 0, 200), rgb(255, 145, 243)),
+                    light-dark(rgb(0, 153, 255), cyan)
+                );
+                background-clip: text;
+                color: transparent;
             }
         }
     }

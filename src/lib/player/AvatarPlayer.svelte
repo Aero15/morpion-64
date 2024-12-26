@@ -8,7 +8,8 @@
         symbol: string,
         color: string,
         type: PlayerType,
-        compact?: boolean
+        compact?: boolean,
+        shape?: 'rounded' | 'circular'
     }
 
     let {
@@ -16,7 +17,8 @@
         symbol = $bindable(''),
         color = $bindable(''),
         type = PlayerType.Human,
-        compact = $bindable(false)
+        compact = $bindable(false),
+        shape = $bindable('rounded'),
     }: Props = $props();
 
     let symbolColor = $derived.by(() => {
@@ -27,6 +29,8 @@
 
 <div class="avatar" title={name}
     class:compact
+    class:rounded={shape === 'rounded'}
+    class:circular={shape === 'circular'}
     style:color={symbolColor}
     style:--tint={color}>
     <Icon icon={symbol} size={ compact ? 32 : 50 } />
@@ -46,7 +50,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 25%;
         font-size: 1.5rem;
         color: var(--tint);
         aspect-ratio: 1;
@@ -54,6 +57,9 @@
         border: 1px solid light-dark(#aaa, #777);
         background: light-dark(#e7e7e7, #3f3f3f);
         transition: width .2s, height .2s;
+
+        &.rounded { border-radius: 25%; }
+        &.circular { border-radius: 100%; }
 
         .bubble {
             --size: 28px;

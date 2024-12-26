@@ -283,6 +283,7 @@
                     <div class="contrast">
                         <p class="label"><strong>Aperçu</strong></p>
                         <AvatarContrastPreview {symbol} {color} />
+                        <p class="legend">Adaptation de la couleur du symbole en fonction du contraste (mode sombre)</p>
                     </div>
                 </div>
             {/if}
@@ -297,6 +298,7 @@
                     <div class="contrast">
                         <p class="label"><strong>Aperçu</strong></p>
                         <AvatarContrastPreview {symbol} {color} />
+                        <p class="legend">Adaptation de la couleur du symbole en fonction du contraste (mode sombre)</p>
                     </div>
 
                     <div class="symbols">
@@ -463,6 +465,12 @@
                 flex-flow: wrap;
                 justify-content: center;
                 align-items: start;
+            }
+
+            .contrast .legend {
+                width: 194px;
+                text-align: center;
+                font-size: .75em;
             }
         }
     }

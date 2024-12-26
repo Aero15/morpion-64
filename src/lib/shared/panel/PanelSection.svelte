@@ -87,7 +87,7 @@
         }
 
         &.default {
-            --start-gradient: light-dark(#e2e2e2, #505050);
+            --start-gradient: light-dark(#e2e2e2, #ffffff41);
             --end-gradient: transparent;
             background: linear-gradient(
                 to bottom,

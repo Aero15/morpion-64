@@ -25,3 +25,16 @@ export let listPlayers: Player[] = $state([
     new Human("Dia Bête", Symbol.Heart, Color.Fuchsia),
     new Human("Squid", Symbol.Compass, Color.Teal),
 ])
+
+// Fake scores
+listPlayers[0].score = 483
+listPlayers[1].score = 116
+listPlayers[2].score = 590
+listPlayers[3].score = 638
+listPlayers[4].score = 1105
+
+listBots[2].score = 32
+listBots[4].score = 64
+listBots[0].score = 128
+listBots[3].score = 256
+listBots[1].score = 512

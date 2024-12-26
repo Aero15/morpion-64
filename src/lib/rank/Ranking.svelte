@@ -27,40 +27,41 @@
 </script>
 
 <ul class="bx-ranking">
-    {#each ranking as { color, name, symbol, score, type }, index}
-        <li
-            class:gold={index === 0}
-            class:silver={index === 1}
-            class:bronze={index === 2}
-        >
-            <p class="rank">
-                <strong>{index + 1}</strong>
-            </p>
-
-            <div class="identity">
-                <p style:color={index > 2 ? improveColor(color) : 'inherit'} class="symbol">
-                    <Icon icon={symbol} size={18} />
+    {#each ranking as { id, color, name, symbol, score, type }, index}
+        <li>
+            <a href="#/players/{id}"
+                class:gold={index === 0}
+                class:silver={index === 1}
+                class:bronze={index === 2}>
+                <p class="rank">
+                    <strong>{index + 1}</strong>
                 </p>
-                <p class="name">{name}</p>
-            </div>
 
-            <p class="score">
-                <strong>{formatScore(score)}</strong>
-                <span>pts</span>
-            </p>
-            
-            {#if displayType}
-                <div class="type">
-                    {#if type == PlayerType.Bot}
-                        <Icon icon="bot" size={16} />
-                        <p>Bot</p>
-                    {/if}
-                    {#if type == PlayerType.Human}
-                        <Icon icon="user" size={16} />
-                        <p>Humain</p>
-                    {/if}
+                <div class="identity">
+                    <p style:color={index > 2 ? improveColor(color) : 'inherit'} class="symbol">
+                        <Icon icon={symbol} size={18} />
+                    </p>
+                    <p class="name">{name}</p>
                 </div>
-            {/if}
+
+                <p class="score">
+                    <strong>{formatScore(score)}</strong>
+                    <span>pts</span>
+                </p>
+                
+                {#if displayType}
+                    <div class="type">
+                        {#if type == PlayerType.Bot}
+                            <Icon icon="bot" size={16} />
+                            <p>Bot</p>
+                        {/if}
+                        {#if type == PlayerType.Human}
+                            <Icon icon="user" size={16} />
+                            <p>Humain</p>
+                        {/if}
+                    </div>
+                {/if}
+            </a>
         </li>
     {/each}
 </ul>
@@ -73,13 +74,15 @@
         display: grid;
         gap: .25rem;
 
-        li {
+        a {
             border: 1px solid transparent;
             border-radius: .5rem;
             display: flex;
             align-items: center;
             gap: 1rem;
             padding: .25rem .75rem;
+            text-decoration: none;
+            color: inherit;
 
             &.gold {
                 background: linear-gradient(

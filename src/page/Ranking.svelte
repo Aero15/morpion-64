@@ -1,19 +1,96 @@
-<script>
+<script lang="ts">
     import { listBots, listPlayers } from "$core/store/players.svelte";
+    import PanelSection from "$lib/shared/panel/PanelSection.svelte";
     import PageWrap from "$lib/global/PageWrap.svelte";
+    import Panel from "$lib/shared/panel/Panel.svelte";
     import Ranking from "$lib/rank/Ranking.svelte";
+    import Button from "$lib/form/Button.svelte";
     import Jumbo from "$lib/shared/Jumbo.svelte";
+    import Icon from "$lib/shared/Icon.svelte";
+    import { scale } from "svelte/transition";
+    import { push } from "svelte-spa-router";
 
     let players = $state([
         ...listBots,
         ...listPlayers
     ])
+
+    let avgScore = $derived(players.reduce((acc, player) => acc + player.score, 0) / players.length)
+    let maxScore = $derived(Math.max(...players.map(player => player.score)))
+
+    function resetAllScores() {
+        if (confirm('Voulez-vous vraiment réinitialiser les scores ?')) {
+            listPlayers.forEach(player => player.score = 0)
+            listBots.forEach(bot => bot.score = 0)
+        }
+    }
 </script>
 
 <Jumbo icon="podium" title="Classement" />
 
+{#snippet actions()}
+    {#if maxScore > 0}
+        <Button variant="primary" center
+            onclick={resetAllScores}>
+            <Icon icon="bin" />
+            Réinitialiser les scores
+        </Button>
+    {/if}
+
+    {#if players.length < 1}
+        <Button variant="primary" center
+            onclick={() => push('/players')}>
+            <Icon icon="plus" />
+            Créer des joueurs
+        </Button>
+    {/if}
+
+    {#if players.length > 0 && maxScore < 1}
+        <Button variant="primary" center
+            onclick={() => push('/opponents')}>
+            <Icon icon="play" />
+            Lancer une partie
+        </Button>
+    {/if}
+{/snippet}
+
 <PageWrap>
     <div id="pg-ranking">
+        <div class="toolbar">
+            {@render actions()}
+        </div>
+
+        <div class="panel" in:scale={{duration: 250}}>
+            <Panel>
+                <PanelSection title="Informations" icon="info">
+                    <div class="infos">
+                        <Icon icon="podium" size={100} />
+                    </div>
+
+                    <div class="stats">
+                        {#snippet score(value: number, legend: string)}
+                            <div class="score">
+                                <p>
+                                    <strong class="value">{value}</strong>
+                                    <span>pts</span>
+                                </p>
+                                <p class="legend"><strong>{legend}</strong></p>
+                            </div>
+                        {/snippet}
+
+                        {@render score(maxScore, 'Maximum')}
+                        {@render score(avgScore, 'Moyenne')}
+                    </div>
+                </PanelSection>
+
+                <PanelSection title="Actions" icon="play" variant="tinted">
+                    <div class="actions">
+                        {@render actions()}
+                    </div>
+                </PanelSection>
+            </Panel>
+        </div>
+        
         <Ranking {players} displayType tilesMode />
     </div>
 </PageWrap>
@@ -21,5 +98,86 @@
 <style>
     #pg-ranking {
         display: grid;
+        gap: 1rem;
+
+        .panel { display: none; transition: margin .5s; }
+        .toolbar { display: grid; }
+        .actions {
+            display: grid;
+            gap: .25rem;
+            padding: 0 1rem 1rem;
+        }
+
+        .toolbar, .actions {
+            :global(button) {
+                padding: 1rem 1.2rem;
+            }
+        }
+
+        .infos {
+            display: grid;
+            place-items: center;
+            padding: 2rem 0 2rem;
+            gap: .5rem;
+        }
+
+        .stats {
+            display: flex;
+            flex-flow: wrap;
+            justify-content: center;
+            gap: 2rem;
+            text-align: center;
+            padding-bottom: 3rem;
+
+            .score {
+                display: grid;
+
+                p {
+                    margin: 0;
+
+                    .value {
+                        font-size: 1.5em;
+                        background: linear-gradient(
+                            to right,
+                            light-dark(rgb(255, 0, 200), rgb(255, 145, 243)),
+                            light-dark(rgb(0, 153, 255), cyan)
+                        );
+                        background-clip: text;
+                        color: transparent;
+                    }
+
+                    span {
+                        font-size: .75em;
+                    }
+
+                    &.legend {
+                        font-size: .7em;
+                        letter-spacing: 1px;
+                        text-transform: uppercase;
+                    }
+                }
+            }
+        }
+    }
+
+    @media (width >= 500px) {
+        #pg-ranking {
+            grid-template-columns: 300px 1fr;
+            align-items: start;
+            gap: 1rem;
+
+            .toolbar { display: none; }
+
+            .panel {
+                display: grid;
+                place-content: start stretch;
+            }
+        }
+    }
+
+    @media (width >= 1100px) {
+        #pg-ranking .panel {
+            margin-top: -166px;
+        }
     }
 </style>

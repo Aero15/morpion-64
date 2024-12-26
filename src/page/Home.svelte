@@ -18,7 +18,7 @@
     }
     let links: Link[] = [
         {icon: 'user', label: 'Gérer les joueurs', path: '/players'},
-        {icon: 'podium', label: 'Podium', path: '/podium'},
+        {icon: 'podium', label: 'Classement', path: '/ranking'},
         {icon: 'config', label: 'Réglages', path: '/settings'},
         {icon: 'info', label: 'Infos', path: '/about'},
     ]

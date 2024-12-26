@@ -1,45 +1,104 @@
 <script lang="ts">
+    import GameEngine from "$core/entity/engine/GameEngine.svelte";
     import type Player from "$core/entity/player/Player.svelte";
-    import ItemPlayer from "./ItemPlayer.svelte";
+    import AvatarPlayer from "./AvatarPlayer.svelte";
 
     interface Props {
-        players: Player[],
-        currentTurn: number
+        game: GameEngine,
     }
 
     let {
-        players = $bindable<Player[]>([]),
-        currentTurn = $bindable(-1)
+        game = $bindable(new GameEngine([], 0, 0)),
     }: Props = $props();
+
+    let players: Player[] = $derived(sort(game.players.players, game.players.currentTurn))
+    let names: string = $derived(listNames(players))
+
+    function sort(
+        arr: Player[],
+        index: number
+    ): Player[] {
+        // Split the elements before and after the index
+        const beforeIndex = arr.slice(0, index);
+        const afterIndex = arr.slice(index);
+        return [...afterIndex, ...beforeIndex];
+    }
+
+    function listNames(players: Player[]): string {
+        if (players.length === 2) {
+            return `${players[0].name} puis ${players[1].name}.`
+        }
+
+        if (players.length === 3) {
+            return `${players[0].name}, suivis de ${players[1].name} et de ${players[2].name}.`
+        }
+
+        if (players.length > 3) {
+            return `${players[0].name}, puis ${players[1].name}, suivis de ${players.length - 2} autres joueurs.`
+        }
+
+        return 'Error: configuration error'
+    }
 </script>
 
-<div class="grid">
-    {#each players as { id, name, color, symbol, type }, index}
-        {@const isCurrentPlayer = index === currentTurn}
-        <div class="indicator" class:current={ isCurrentPlayer }>
-            <ItemPlayer { id } { name } { color } { symbol } { type } />
-        </div>
-    {/each}
+<div class="bx-player_turn">
+    <div class="bubbles">
+        {#each players.slice(0,3) as { name, color, symbol, type }, index}
+            <div class="indicator"
+                class:current={ index === 0 }
+                style:z-index={ players.length - index }>
+                <AvatarPlayer { name } { color } { symbol } { type } shape="circular" />
+            </div>
+        {/each}
+
+        {#if players.length > 3}
+            <div class="indicator remains">
+                <p><strong>+{ players.length - 3 }</strong></p>
+            </div>
+        {/if}
+    </div>
+
+    <p class="legend">{ names }</p>
 </div>
 
 <style>
-    .grid {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-flow: wrap;
-        gap: 1rem;
-        padding: 1rem;
-    }
+    .bx-player_turn {
+        display: grid;
+        gap: .25rem;
 
-    .indicator {
-        transition: transform .2s;
-        &.current {
-            transform: scale(1.2);
+        .bubbles {
+            display: flex;
+            justify-content: start;
+            align-items: stretch;
+
+            .indicator {
+                position: relative;
+                transition: transform .2s;
+
+                &:not(.current) {
+                    margin-inline-start: -1rem;
+                }
+
+                &.remains {
+                    border: 1px solid light-dark(#aaa, #777);
+                    background: light-dark(#e7e7e7, #3f3f3f);
+                    aspect-ratio: 1;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 100%;
+
+                    p {
+                        margin: 0;
+                        font-size: 1.75em;
+                    }
+                }
+            }
         }
 
-        &:not(.current) {
-            opacity: .5;
+        .legend {
+            margin: 0;
+            font-size: .78em;
         }
     }
 </style>

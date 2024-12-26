@@ -92,10 +92,7 @@
 
     <div in:fade={{delay: 250}}>
         <h3>Participants</h3>
-        <PlayerTurn
-            players={game.players.players}
-            bind:currentTurn={game.players.currentTurn}
-        />
+        <PlayerTurn bind:game />
     </div>
 </main>
 

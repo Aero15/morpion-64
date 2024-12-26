@@ -218,7 +218,7 @@
             }
 
             &:not(.gold, .silver, .bronze):not(:hover) {
-                background: light-dark(#00000017, #ffffff17);
+                background: light-dark(#ddd, #494949);
                 border-color: light-dark(#00000055, #ffffff55);
             }
         }

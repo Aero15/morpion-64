@@ -9,14 +9,36 @@
     import Icon from "$lib/shared/Icon.svelte";
     import { scale } from "svelte/transition";
     import { push } from "svelte-spa-router";
+    import TabBar from "$lib/shared/TabBar.svelte";
 
-    let players = $state([
-        ...listBots,
-        ...listPlayers
-    ])
+    let players = $derived.by(() => {
+        let results = [];
+        
+        if (selectedTab === Categories.Humans || selectedTab === Categories.General) {
+            results.push(...listPlayers)
+        }
+
+        if (selectedTab === Categories.Bots || selectedTab === Categories.General) {
+            results.push(...listBots)
+        }
+
+        return results
+    });
 
     let avgScore = $derived(players.reduce((acc, player) => acc + player.score, 0) / players.length)
     let maxScore = $derived(Math.max(...players.map(player => player.score)))
+
+    let Categories = {
+        General: 0,
+        Humans: 1,
+        Bots: 2
+    }
+    let selectedTab = $state(Categories.General)
+    let tabs = [
+        { name: 'Général', icon: 'asterisk', id: Categories.General },
+        { name: 'Humains', icon: 'user', id: Categories.Humans },
+        { name: 'Bots', icon: 'bot', id: Categories.Bots },
+    ]
 
     function resetAllScores() {
         if (confirm('Voulez-vous vraiment réinitialiser les scores ?')) {
@@ -60,6 +82,10 @@
             {@render actions()}
         </div>
 
+        <div class="tabs outside">
+            <TabBar {tabs} bind:selectedId={selectedTab} />
+        </div>
+
         <div class="panel" in:scale={{duration: 250}}>
             <Panel>
                 <PanelSection title="Informations" icon="info">
@@ -80,6 +106,12 @@
 
                         {@render score(maxScore, 'Maximum')}
                         {@render score(avgScore, 'Moyenne')}
+                    </div>
+                </PanelSection>
+
+                <PanelSection title="Catégories" icon="package" variant="transparent">
+                    <div class="tabs">
+                        <TabBar {tabs} bind:selectedId={selectedTab} />
                     </div>
                 </PanelSection>
 
@@ -117,7 +149,7 @@
         .infos {
             display: grid;
             place-items: center;
-            padding: 2rem 0 2rem;
+            padding: 1.5rem 0 1rem;
             gap: .5rem;
         }
 
@@ -127,7 +159,7 @@
             justify-content: center;
             gap: 2rem;
             text-align: center;
-            padding-bottom: 3rem;
+            padding-bottom: 2rem;
 
             .score {
                 display: grid;
@@ -168,9 +200,17 @@
 
             .toolbar { display: none; }
 
+            .tabs.outside {
+                display: none;
+            }
+
             .panel {
                 display: grid;
                 place-content: start stretch;
+
+                .tabs {
+                    padding-bottom: 1.75rem;
+                }
             }
         }
     }

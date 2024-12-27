@@ -49,36 +49,34 @@
         padding: 0;
         margin: 0;
         width: 80px;
-        border: 1px solid rgba(127,127,127,1);
+        border: 1px solid transparent;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 10px;
-        transition: background .2s, border-color .2s, color .2s;
+        border-radius: 1rem;
+        transition: background .2s, color .2s, transform .2s;
 
         &:disabled {
-            border-color: transparent;
             background: transparent;
             color: inherit;
         }
 
         &:not(:disabled) {
             cursor: pointer;
-            background: transparent;
+            background: light-dark(#d1d1d1, #525252);
 
             &:hover {
-                background: var(--main_color);
+                background: light-dark(#9c9c9c, #888);
+                border-color: light-dark(#000, #fff);
+            }
+
+            &:active {
+                transform: scale(1.2);
             }
         }
 
         &.highlighted {
-            background: #fff;
-        }
-    }
-
-    @media (prefers-color-scheme: light) {
-        .cell.highlighted {
-            background: rgba(0,0,0,1);
+            background: light-dark(#000, #fff);
         }
     }
 </style>

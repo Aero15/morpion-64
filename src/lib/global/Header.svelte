@@ -28,8 +28,9 @@
 <Responsive bind:size />
 
 <header
-    class:floating={['xl', '2xl'].includes(size)}>
-    <div class="start">
+    class:floating={['xl', '2xl'].includes(size)}
+    class:space-between={!['sm'].includes(size)}>
+    <div class="start" style:flex={['md', 'lg'].includes(size) ? 'inherit' : '1'}>
         {#if $location != '/'}
             <button class="goBack" onclick={pop}
                 transition:slide={{axis: 'x', duration: 200}}>
@@ -65,7 +66,7 @@
     {/if}
 
     {#if size != 'sm'}
-        <div class="version" in:fade>
+        <div class="version" in:fade style:flex={['sm', 'md', 'lg'].includes(size) ? 'inherit' : '1'}>
             <p><a href="#/about">Version : <strong>{$app_version}</strong></a></p>
         </div>
     {/if}
@@ -80,9 +81,12 @@
         overflow: clip;
         margin: 0 auto;
         padding: 0 var(--padding);
-        justify-content: space-between;
         max-width: calc(1280px - var(--padding) * 2);
         border-bottom: 1px solid light-dark(#cfcfcf, #444);
+
+        &.space-between {
+            justify-content: space-between;
+        }
 
         &.floating {
             --padding: 1.5rem;
@@ -99,7 +103,6 @@
             display: flex;
             align-items: stretch;
             justify-content: start;
-            flex: 1;
 
             button {
                 border: none;
@@ -181,6 +184,13 @@
             }
         }
 
+        &:not(.floating) {
+            position: fixed;
+            inset: 0 0 auto 0;
+            background: light-dark(#e9e9e977, #25252577);
+            backdrop-filter: blur(20px);
+        }
+
         &:not(.floating) .start {
             justify-content: space-between;
 
@@ -234,8 +244,9 @@
         .version {
             margin: 0;
             font-size: .78em;
-            flex: 1;
-            text-align: end;
+            align-items: center;
+            display: flex;
+            justify-content: end;
 
             a {
                 color: inherit;

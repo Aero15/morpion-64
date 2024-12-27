@@ -241,19 +241,18 @@
             </Panel>
         </div>
 
-        <div in:fade={{delay: delay * 1}} class="page-content"
-            class:vertical={['sm', 'md'].includes(size)}
-            class:horizontal={!['sm', 'md'].includes(size)}
-        >
-        {#if ['sm', 'md', 'lg'].includes(size)}
-            <TabBar tabs={type != PlayerType.Bot ? tabsMobile.slice(0, 3) : tabsMobile}
-                orientation={['sm', 'md'].includes(size) ? 'horizontal' : 'vertical'}
-                bind:selectedId />
-        {:else}
-            <TabBar tabs={type != PlayerType.Bot ? tabsPC.slice(0, 2) : tabsPC}
-                orientation={['sm', 'md'].includes(size) ? 'horizontal' : 'vertical'}
-                bind:selectedId />
-        {/if}
+        <div in:fade={{delay: delay * 1}} class="page-content vertical">
+            <div class="tabs" class:after-jumbo={size != 'sm'}>
+                {#if ['sm', 'md', 'lg'].includes(size)}
+                    <TabBar tabs={type != PlayerType.Bot ? tabsMobile.slice(0, 3) : tabsMobile}
+                        variant={['sm'].includes(size) ? 'squared' : 'rounded'}
+                        bind:selectedId />
+                {:else}
+                    <TabBar tabs={type != PlayerType.Bot ? tabsPC.slice(0, 2) : tabsPC}
+                        variant={['sm'].includes(size) ? 'squared' : 'rounded'}
+                        bind:selectedId />
+                {/if}
+            </div>
 
             {#if selectedId == Tabs.Rename}
                 <div class="rename">
@@ -399,6 +398,10 @@
         :global(button) {
             padding: .75rem;
         }
+    }
+
+    .tabs.after-jumbo {
+        margin-top: -52px;
     }
 
     #pg-profile {

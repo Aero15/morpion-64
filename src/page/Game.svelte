@@ -93,8 +93,8 @@
                                     <ToolBox bind:game />
                                 {:else}
                                     <div class="info" transition:slide>
-                                        <Icon icon="info" size={20} />
-                                        <span>{game.players.getCurrentPlayer()?.name} est en train de jouer...</span>
+                                        <Icon icon="bot" size={34} />
+                                        <p><strong>{game.players.getCurrentPlayer()?.name}</strong> est en train de jouer...</p>
                                     </div>
                                 {/if}
                             </div>
@@ -142,11 +142,17 @@
         }
 
         .info {
-            display: flex;
+            display: grid;
             align-items: center;
             gap: .5rem;
-            font-size: .9em;
+            font-size: .78em;
             color: light-dark(var(--main_color), var(--main_color_bright));
+            justify-content: center;
+            place-items: center;
+            margin-top: -1rem;
+
+            p {margin: 0;}
+            strong {color: light-dark(#ab00ce, #fff);}
         }
     }
 

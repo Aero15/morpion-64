@@ -33,7 +33,7 @@
     <div class="start">
         {#if $location != '/'}
             <button class="goBack" onclick={pop} transition:slide={{axis: 'x', duration: 200}}>
-                <Icon icon="arrow_left" size={22} />
+                <Icon icon="arrow_left" size={18} />
             </button>
         {/if}
         
@@ -49,7 +49,7 @@
                 {#each pages.slice(0, 3) as {name, path, icon}}
                     <li>
                         <a href={'#' + path} class:current={$location == path || $location.includes(path)}>
-                            <Icon {icon} size={18} />
+                            <Icon {icon} size={16} />
                             <p>{name}</p>
                         </a>
                     </li>
@@ -69,7 +69,7 @@
     header {
         --padding: 1rem;
         display: flex;
-        align-items: center;
+        align-items: stretch;
         gap: 1rem;
         overflow: clip;
         margin: 0 auto;
@@ -86,7 +86,7 @@
         }
 
         &.floating {
-            --padding: 2rem;
+            --padding: 1.5rem;
             background: light-dark(#e9e9e9, #252525);
             border: 1px solid light-dark(#a3a3a3, #666);
             max-width: calc(1280px - var(--padding) * 2);
@@ -104,15 +104,29 @@
 
             button {
                 border: none;
-                padding: 1rem;
-                aspect-ratio: 1;
+                padding: .75rem 0;
                 cursor: pointer;
                 transition: background .2s;
+                background: transparent;
+                display: flex;
+                align-items: center;
+                justify-content: center;
 
                 &:first-child {
                     margin-left: calc(var(--padding) * -1);
-                    padding: 1rem 1rem 1rem 1.5rem;
-                    aspect-ratio: auto;
+                    padding: .5rem 1rem .5rem 1.5rem;
+                }
+
+                &:not(:first-child) {
+                    aspect-ratio: 1;
+                }
+
+                &:hover {
+                    background: light-dark(#00000033, #ffffff33);
+                }
+
+                &:active {
+                    background: light-dark(cyan, magenta);
                 }
             }
 
@@ -124,21 +138,21 @@
                 color: inherit;
                 text-underline-offset: 3px;
                 transition: transform .2s;
-                padding: .75rem 0;
+                padding: 0 .5rem;
 
                 img {
-                    --size: 28px;
+                    --size: 26px;
                     width: var(--size);
                     height: var(--size);
                 }
 
                 h1 {
                     margin: 0;
-                    font-size: 1.5rem;
+                    font-size: 1.25rem;
                     background: linear-gradient(to right, rgb(157, 82, 255), rgb(0, 153, 255), cyan);
                     background-clip: text;
                     color: transparent;
-                    padding-bottom: 4px;
+                    padding-bottom: 2px;
 
                     span {
                         font-family: Marianne-Light, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -148,10 +162,22 @@
                 &:hover {
                     text-decoration: underline;
                     text-decoration-thickness: 2px;
+                    background: linear-gradient(
+                        to left,
+                        transparent,
+                        light-dark(#00000033, #ffffff55),
+                        transparent
+                    );
+
+                    h1 {
+                        background: transparent;
+                        background-clip: unset;
+                        color: inherit;
+                    }
                 }
 
                 &:active {
-                    transform: scale(1);
+                    transform: scale(1.1);
                 }
             }
         }
@@ -180,6 +206,10 @@
                         padding: 0 1rem;
                         transition: all .2s;
 
+                        p {
+                            font-size: .8em;
+                        }
+
                         &:hover {
                             background: linear-gradient(to top, light-dark(#ccc, #444), transparent);
                             box-shadow: inset 0 -2px 0 light-dark(#777, #777);
@@ -196,9 +226,9 @@
 
         .version {
             margin: 0;
-            font-size: .9em;
+            font-size: .78em;
             flex: 1;
-            text-align: right;
+            text-align: end;
 
             a {
                 color: inherit;

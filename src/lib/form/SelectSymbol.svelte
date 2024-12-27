@@ -35,6 +35,7 @@
         border-radius: var(--size);
         cursor: crosshair;
         padding: .5rem;
+        margin: -1px;
         font-size: .8rem;
         overflow: hidden;
         text-overflow: ellipsis;

@@ -200,7 +200,7 @@
             }
 
             .score {
-                inset: auto auto 0 0;
+                inset: 0 0 auto auto;
             }
 
             .type {
@@ -209,7 +209,7 @@
             }
 
             .name {
-                inset: 0 0 auto auto;
+                inset: auto auto 0 0;
             }
 
             .identity {

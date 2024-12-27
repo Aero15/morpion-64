@@ -13,7 +13,7 @@ export let listBots: Player[] = $state([
     new Bot("Cortana", Symbol.Percent, Color.Pink, Difficulty.Peaceful),
     new Bot("Alexa", Symbol.Square, Color.Blue, Difficulty.Easy),
     new Bot("Siri", Symbol.Circle, Color.Orange, Difficulty.Medium),
-    new Bot("Bixbi", Symbol.Triangle, Color.Green, Difficulty.Hard),
+    new Bot("Bixbi", Symbol.Triangle, '#00ff00', Difficulty.Hard),
     new Bot("Jarvis", Symbol.Bot, Color.Red, Difficulty.Impossible)
 ])
 

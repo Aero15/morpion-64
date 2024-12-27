@@ -1,15 +1,17 @@
 <script lang="ts">
     import { listBots, listPlayers } from "$core/store/players.svelte";
     import PanelSection from "$lib/shared/panel/PanelSection.svelte";
+    import type { BreakpointSize } from "$core/enums/BreakpointSize";
+    import Responsive from "$lib/shared/Responsive.svelte";
     import PageWrap from "$lib/global/PageWrap.svelte";
     import Panel from "$lib/shared/panel/Panel.svelte";
+    import TabBar from "$lib/shared/TabBar.svelte";
     import Ranking from "$lib/rank/Ranking.svelte";
     import Button from "$lib/form/Button.svelte";
     import Jumbo from "$lib/shared/Jumbo.svelte";
     import Icon from "$lib/shared/Icon.svelte";
     import { scale } from "svelte/transition";
     import { push } from "svelte-spa-router";
-    import TabBar from "$lib/shared/TabBar.svelte";
 
     let players = $derived.by(() => {
         let results = [];
@@ -40,6 +42,8 @@
         { name: 'Bots', icon: 'bot', id: Categories.Bots },
     ]
 
+    let size: BreakpointSize = $state('sm')
+
     function resetAllScores() {
         if (confirm('Voulez-vous vraiment réinitialiser les scores ?')) {
             listPlayers.forEach(player => player.score = 0)
@@ -48,7 +52,13 @@
     }
 </script>
 
-<Jumbo icon="podium" title="Classement" />
+<Responsive bind:size />
+
+{#if size != 'sm'}
+    <Jumbo icon="podium" title="Classement">
+        <span></span>
+    </Jumbo>
+{/if}
 
 {#snippet actions()}
     {#if maxScore > 0}
@@ -78,12 +88,13 @@
 
 <PageWrap>
     <div id="pg-ranking">
-        <div class="toolbar">
-            {@render actions()}
+        <div class="tabs">
+            <TabBar {tabs} bind:selectedId={selectedTab}
+                variant={['sm'].includes(size) ? 'squared' : 'rounded'} />
         </div>
 
-        <div class="tabs outside">
-            <TabBar {tabs} bind:selectedId={selectedTab} />
+        <div class="toolbar">
+            {@render actions()}
         </div>
 
         <div class="panel" in:scale={{duration: 250}}>
@@ -106,12 +117,6 @@
 
                         {@render score(maxScore, 'Maximum')}
                         {@render score(avgScore, 'Moyenne')}
-                    </div>
-                </PanelSection>
-
-                <PanelSection title="Catégories" icon="package" open variant="transparent">
-                    <div class="tabs">
-                        <TabBar {tabs} bind:selectedId={selectedTab} />
                     </div>
                 </PanelSection>
 
@@ -192,16 +197,18 @@
         }
     }
 
-    @media (width >= 500px) {
+    @media (width >= 640px) {
         #pg-ranking {
             grid-template-columns: 300px 1fr;
             align-items: start;
             gap: 1rem;
+            transition: gap .5s;
 
             .toolbar { display: none; }
 
-            .tabs.outside {
-                display: none;
+            .tabs {
+                grid-column: 1/3;
+                margin-top: -52px;
             }
 
             .panel {
@@ -215,9 +222,12 @@
         }
     }
 
-    @media (width >= 1100px) {
-        #pg-ranking .panel {
-            margin-top: -166px;
+    @media (width >= 1024px) {
+        #pg-ranking {
+            gap: 3rem;
+            .panel {
+                margin-top: -266px;
+            }
         }
     }
 </style>

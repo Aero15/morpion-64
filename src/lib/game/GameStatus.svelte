@@ -6,10 +6,14 @@
     import { push } from "svelte-spa-router";
     import Timer from "./Timer.svelte";
 
-    interface Props { game: GameEngine }
+    interface Props {
+        game: GameEngine,
+        orientation?: 'horizontal' | 'vertical'
+    }
 
     let {
-        game = $bindable(new GameEngine([], 0, 0))
+        game = $bindable(new GameEngine([], 0, 0)),
+        orientation = 'horizontal'
     }: Props = $props();
 
     function newGame() {
@@ -21,7 +25,10 @@
     }
 </script>
 
-<main class="bx-game_status">
+<main class="bx-game_status"
+    class:horizontal={orientation === 'horizontal'}
+    class:vertical={orientation === 'vertical'}
+>
     <Timer secondsTotal={game.timer.seconds} />
 
     <div class="actions">
@@ -71,8 +78,17 @@
     .bx-game_status {
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        gap: 1rem;
+
+        &.vertical {
+            flex-direction: column-reverse;
+            align-items: end;
+        }
+
+        &.horizontal {
+            flex-direction: row;
+            align-items: center;
+            gap: 1rem;
+        }
 
         .actions {
             display: flex;

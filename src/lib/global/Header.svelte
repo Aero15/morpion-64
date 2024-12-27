@@ -2,7 +2,7 @@
     import favicon from '/favicon.svg';
     import Icon from "$lib/shared/Icon.svelte";
     import { fade, slide } from 'svelte/transition';
-    import { location, pop } from "svelte-spa-router";
+    import { location, pop, push } from "svelte-spa-router";
     import { app_version } from '$core/store/application';
     import Responsive from '$lib/shared/Responsive.svelte';
     import type { BreakpointSize } from '$core/enums/BreakpointSize';
@@ -28,11 +28,11 @@
 <Responsive bind:size />
 
 <header
-    class:center={size == 'sm'}
     class:floating={['xl', '2xl'].includes(size)}>
     <div class="start">
         {#if $location != '/'}
-            <button class="goBack" onclick={pop} transition:slide={{axis: 'x', duration: 200}}>
+            <button class="goBack" onclick={pop}
+                transition:slide={{axis: 'x', duration: 200}}>
                 <Icon icon="arrow_left" size={18} />
             </button>
         {/if}
@@ -41,6 +41,12 @@
             <h1>Morpion <span>64</span></h1>
             <img src={favicon} alt="Logo de Morpion 64" />
         </a>
+
+        {#if size == 'sm'}
+            <button class="menu" onclick={() => push('/menu')}>
+                <Icon icon="menu_dots" size={18} />
+            </button>
+        {/if}
     </div>
 
     {#if ['xl', '2xl'].includes(size)}
@@ -74,16 +80,9 @@
         overflow: clip;
         margin: 0 auto;
         padding: 0 var(--padding);
+        justify-content: space-between;
         max-width: calc(1280px - var(--padding) * 2);
         border-bottom: 1px solid light-dark(#cfcfcf, #444);
-
-        &.center {
-            justify-content: center;
-        }
-
-        &:not(.center) {
-            justify-content: space-between;
-        }
 
         &.floating {
             --padding: 1.5rem;
@@ -182,9 +181,17 @@
             }
         }
 
-        &.center .start {
-            justify-content: center;
-            flex: 1;
+        &:not(.floating) .start {
+            justify-content: space-between;
+
+            button {
+                padding: 1rem 1.25rem;
+                aspect-ratio: inherit;
+
+                &.menu {
+                    margin-right: -1rem;
+                }
+            }
         }
 
         nav {

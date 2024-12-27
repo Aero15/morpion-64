@@ -1,16 +1,17 @@
 <script lang="ts">
-    import type Cell from "$core/entity/board/Cell.svelte";
-    import Point from "$core/entity/board/Point.svelte";
     import GameEngine from "$core/entity/engine/GameEngine.svelte";
+    import Point from "$core/entity/board/Point.svelte";
     import Bot from "$core/entity/player/Bot.svelte";
     import CellView from "./Cell.svelte";
 
     interface Props {
-        game: GameEngine
+        game: GameEngine,
+        compact?: boolean
     }
 
     let {
         game = $bindable(new GameEngine([], 0, 0)),
+        compact = false,
     }: Props = $props();
 
     let botIsPlaying = $derived(game?.players.getCurrentPlayer() instanceof Bot)
@@ -28,6 +29,7 @@
     class:lock
     class:blur
     class:halo
+    class:compact
 >
     {#each game.board.grid as row, index}
         <div class="row" class:lock
@@ -37,7 +39,7 @@
                 <CellView
                     { position } { symbol }
                     { color } { lock }
-                    { highlighted }
+                    { highlighted } { compact }
                     bind:eraserEnabled={game.eraserEnabled}
                     onClick={ onCellClick }
                 />
@@ -72,7 +74,6 @@
         --border-width: .5rem;
         --radius : 2rem;
 
-        padding: 2rem;
         position: relative;
         border-radius: var(--radius);
         box-shadow: 0 5px 30px rgba(0,0,0,.3);
@@ -103,6 +104,14 @@
             border-radius: calc(var(--radius) + var(--border-width));
             animation: 3s spin linear infinite;
             transition: opacity .2s, padding .2s;
+        }
+
+        &.compact {
+            padding: .5rem;
+            --radius: 1rem;
+        }
+        &:not(.compact) {
+            padding: 2rem;
         }
 
         &.halo {

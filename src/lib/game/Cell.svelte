@@ -9,6 +9,7 @@
         symbol?: string,
         color?: string,
         lock: boolean,
+        compact?: boolean,
         highlighted: boolean,
         onClick?: (position: Point) => void
     }
@@ -18,6 +19,7 @@
         position = $bindable(new Point(0, 0)),
         symbol = $bindable(undefined),
         highlighted = $bindable(false),
+        compact = false,
         color = $bindable(undefined),
         lock = $bindable(false),
         onClick = () => {},
@@ -32,13 +34,15 @@
 </script>
 
 <button
-    class="cell" class:highlighted
+    class="cell"
+    class:compact
+    class:highlighted
     onclick={() => onClick(position)}
     {disabled}
 >
     {#if symbol}
         <div transition:scale style:color={color}>
-            <Icon icon={symbol} size={64} />
+            <Icon icon={symbol} size={compact ? 32 : 64} />
         </div>
     {/if}
 </button>
@@ -48,13 +52,21 @@
         aspect-ratio: 1;
         padding: 0;
         margin: 0;
-        width: 80px;
         border: 1px solid transparent;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 1rem;
         transition: background .2s, color .2s, transform .2s;
+
+        &.compact {
+            width: 50px;
+            border-radius: .75rem;
+        }
+
+        &:not(.compact) {
+            width: 80px;
+            border-radius: 1rem;
+        }
 
         &:disabled {
             background: transparent;

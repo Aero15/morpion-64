@@ -20,6 +20,7 @@
 
     let size: BreakpointSize = $state('sm');
     let game: GameEngine = $state(undefined);
+    let displayRanking = $state(false);
 
     let g = newGameWithSelectedPlayers()
     if (g != null) {
@@ -33,6 +34,11 @@
             game.stop()
             game.players.clearTemporaryScore()
         };
+    })
+
+    $effect(() => {
+        // Display the ranking when the game is over
+        displayRanking = game.endTime !== undefined
     })
 </script>
 
@@ -61,7 +67,7 @@
                         </div>
                     </PanelSection>
 
-                    <PanelSection title="Classement" icon="podium" variant="transparent">
+                    <PanelSection title="Classement" icon="podium" variant="transparent" bind:open={displayRanking}>
                         <div class="pane-content">
                             <Leaderboard bind:game limit={3} />
                         </div>

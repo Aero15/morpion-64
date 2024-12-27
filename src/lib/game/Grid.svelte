@@ -65,11 +65,7 @@
     div {
         display: grid;
         transition: all .3s;
-        gap: 0;
-
-        &:not(.lock) {
-            gap: 6px;
-        }
+        gap: .25rem;
     }
 
     .grid {
@@ -78,9 +74,15 @@
 
         padding: 2rem;
         position: relative;
-        background: light-dark(#fff, #323232);
         border-radius: var(--radius);
         box-shadow: 0 5px 30px rgba(0,0,0,.3);
+
+        &.lock {
+            background: light-dark(#ffffffcc, #323232cc);
+        }
+        &:not(.lock) {
+            background: light-dark(#fff, #323232);
+        }
 
         &::after, &::before {
             content: '';

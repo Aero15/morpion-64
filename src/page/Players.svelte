@@ -54,14 +54,14 @@
 
         <div class="panel" in:scale={{duration: 250}}>
             <Panel>
-                <PanelSection title="Informations" icon="info">
+                <PanelSection title="Informations" icon="info" open>
                     <div class="infos">
                         <Icon icon={ isSearching ? 'search' : 'user' } size={100} />
                         <h3>{subtitle}</h3>
                     </div>
                 </PanelSection>
 
-                <PanelSection title="Actions" icon="play" variant="tinted">
+                <PanelSection title="Actions" icon="play" open variant="tinted">
                     <div class="actions">
                         <Button variant="primary" center
                             onclick={openEditor}>

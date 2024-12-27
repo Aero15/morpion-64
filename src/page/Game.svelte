@@ -54,7 +54,7 @@
         <div id="gameCenter">
             <aside class="panel">
                 <Panel>
-                    <PanelSection icon="play"
+                    <PanelSection icon="play" open
                         title={game.endTime === undefined ? "Partie en cours" : "Partie terminée"} >
                         <div class="pane-content">
                             <GameStatus bind:game />
@@ -69,7 +69,7 @@
                 </Panel>
 
                 <Panel>
-                    <PanelSection title={game.endTime === undefined ? "Ordre de passage" : "Résultat"} icon="profile">
+                    <PanelSection title={game.endTime === undefined ? "Ordre de passage" : "Résultat"} icon="profile" open>
                         <div class="pane-content">
                             {#if game.endTime === undefined}
                                 <PlayerTurn bind:game compact />
@@ -81,7 +81,7 @@
                     </PanelSection>
 
                     {#if game.endTime === undefined}
-                        <PanelSection title="Outils" icon="menu_dots" variant="tinted">
+                        <PanelSection title="Outils" icon="menu_dots" variant="tinted" open>
                             <div class="pane-content">
                                 {#if !botIsPlaying}
                                     <ToolBox bind:game />

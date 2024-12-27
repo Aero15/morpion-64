@@ -206,11 +206,11 @@
     <div id="pg-profile">
         <div class="panel">
             <Panel>
-                <PanelSection title="Aperçu du profil" icon="info">
+                <PanelSection title="Aperçu du profil" icon="info" open>
                     {@render profileInfos(true)}
                 </PanelSection>
         
-                <PanelSection title="Actions" icon="play" variant="transparent">
+                <PanelSection title="Actions" icon="play" open variant="transparent">
                     <div class="actions">
                         {#if name.length > 0}
                             <Button variant="primary" center shape="squared"

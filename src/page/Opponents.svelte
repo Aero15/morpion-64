@@ -61,7 +61,7 @@
     <div class="page-with-hero">
         <div class="hero">
             <Panel>
-                <PanelSection title="Actions" icon="asterisk">
+                <PanelSection title="Actions" icon="asterisk" open>
                     {#if canLaunchGame || selectedPlayers.length > 0}
                         <div class="actions" transition:slide>
                             {#if canLaunchGame}
@@ -88,7 +88,7 @@
                     {/if}
                 </PanelSection>
 
-                <PanelSection title="Participants sélectionnés ({selectedPlayers.length})" icon="user" variant="transparent">
+                <PanelSection title="Participants sélectionnés ({selectedPlayers.length})" icon="user" variant="transparent" open>
                     <div class="actions square-buttons">
                         {#if remainingHumans.length > 0}
                             <Button onclick={selectRandomHuman} center>

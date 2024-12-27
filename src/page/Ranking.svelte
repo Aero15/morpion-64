@@ -88,7 +88,7 @@
 
         <div class="panel" in:scale={{duration: 250}}>
             <Panel>
-                <PanelSection title="Informations" icon="info">
+                <PanelSection title="Informations" icon="info" open>
                     <div class="infos">
                         <Icon icon="podium" size={100} />
                     </div>
@@ -109,7 +109,7 @@
                     </div>
                 </PanelSection>
 
-                <PanelSection title="Catégories" icon="package" variant="transparent">
+                <PanelSection title="Catégories" icon="package" open variant="transparent">
                     <div class="tabs">
                         <TabBar {tabs} bind:selectedId={selectedTab} />
                     </div>

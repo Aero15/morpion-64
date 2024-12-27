@@ -17,7 +17,7 @@
         icon = '',
         title = '',
         variant = 'default',
-        open = $bindable(true)
+        open = $bindable(false)
     }: Props = $props();
 </script>
 

@@ -35,13 +35,14 @@
             <a href="#/players/{id}"
                 class:gold={index === 0}
                 class:silver={index === 1}
-                class:bronze={index === 2}>
+                class:bronze={index === 2}
+                style:--tint={improveColor(color)}>
                 <p class="rank">
                     <strong>{index + 1}</strong>
                 </p>
 
                 <div class="identity">
-                    <p style:color={index > 2 ? improveColor(color) : 'inherit'} class="symbol">
+                    <p style:--color={index > 2 ? improveColor(color) : 'inherit'} class="symbol">
                         <Icon icon={symbol} size={ tilesMode ? 64 : 24} />
                     </p>
                     <p class="name">{name}</p>
@@ -94,7 +95,7 @@
             padding: .25rem .75rem;
             text-decoration: none;
             color: inherit;
-            transition: border-color .2s, background .2s;
+            transition: border-color .2s, background .2s, transform .2s;
 
             &.gold {
                 background: linear-gradient(
@@ -121,6 +122,10 @@
                 );
             }
 
+            &:not(:hover, .gold, .silver, .bronze) .symbol {
+                color: var(--tint);
+            }
+
             &.gold, &.silver, &.bronze {
                 border-color: light-dark(#00000055, #ffffff55);
                 background-size: 105% 105%;
@@ -128,14 +133,17 @@
             }
 
             &:hover {
-                &:not(.gold, .silver, .bronze) {
-                    background: light-dark(#bf00ff55, #5ee7ff55);
-                    border-color: light-dark(#00000099, #ffffff99);
+                &, &.gold, &.silver, &.bronze {
+                    background: var(--tint);
                 }
 
-                &.gold, &.silver, &.bronze {
-                    border-color: light-dark(#000000ff, #ffffffff);
-                }
+                color: #fff;
+            }
+
+            &:active {
+                transform: scale(1.3);
+                position: relative;
+                z-index: 10;
             }
 
             p {
@@ -174,7 +182,7 @@
                 }
             }
 
-            &:not(.gold, .silver, .bronze) .score strong {
+            &:not(.gold, .silver, .bronze):not(:hover) .score strong {
                 background: linear-gradient(
                     to right,
                     light-dark(rgb(255, 0, 200), rgb(255, 145, 243)),

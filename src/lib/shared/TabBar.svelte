@@ -114,7 +114,10 @@
 
                 &:hover .icon {
                     background: light-dark(#00000022, #ffffff66);
-                    transform: scale(1.2);
+                }
+
+                &:active .icon {
+                    transform: scale(1.3);
                 }
 
                 &.selected .icon {

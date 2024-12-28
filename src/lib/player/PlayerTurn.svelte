@@ -1,6 +1,7 @@
 <script lang="ts">
     import GameEngine from "$core/entity/engine/GameEngine.svelte";
     import type Player from "$core/entity/player/Player.svelte";
+    import { scale } from "svelte/transition";
     import AvatarPlayer from "./AvatarPlayer.svelte";
 
     interface Props {
@@ -31,18 +32,24 @@
 <div class="bx-player_turn">
     <div class="bubbles">
         {#each players.slice(0, limit) as { name, color, symbol, type }, index}
-            <div class="indicator" class:compact
-                class:current={ index === 0 }
-                style:z-index={ players.length - index }>
-                <AvatarPlayer {compact} { name } { color } { symbol } { type }
-                    tinted={ index === 0 } shape="circular" />
-            </div>
+            {#key color+'_'+symbol}
+                <div class="indicator" class:compact
+                    class:current={ index === 0 }
+                    style:z-index={ players.length - index }
+                    in:scale|global={{delay: 50 * index}}>
+                    <AvatarPlayer {compact} { name } { color } { symbol } { type }
+                        tinted={ index === 0 } shape="circular" />
+                </div>
+            {/key}
         {/each}
 
         {#if players.length > limit}
-            <div class="indicator remains" class:compact>
-                <p><strong>+{ players.length - limit }</strong></p>
-            </div>
+            {#key players[0].color+'_'+players[0].symbol}
+                <div class="indicator remains" class:compact
+                    in:scale|global={{delay: 50 * (limit+1)}}>
+                    <p><strong>+{ players.length - limit }</strong></p>
+                </div>
+            {/key}
         {/if}
     </div>
 </div>

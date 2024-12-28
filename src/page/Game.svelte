@@ -46,18 +46,20 @@
 
 {#if !['sm', 'md', 'lg'].includes(size)}
     <Jumbo>
-        <span></span>
+        <div style:padding-top="70px"></div>
     </Jumbo>
 {/if}
 
 <main id="pg-game">
     <div class="topbar">
-        <GameStatus bind:game />
-        <PlayerTurn bind:game compact />
+        <GameStatus bind:game
+            orientation={['sm'].includes(size) ? 'vertical' : 'horizontal'} />
+        <PlayerTurn bind:game compact
+            limit={size == 'sm' ? 1 : 3} />
     </div>
 
     <PageWrap>
-        <div id="gameCenter">
+        <div id="gameCenter" class:with-jumbo={!['sm', 'md', 'lg'].includes(size)}>
             <aside class="panel">
                 <Panel>
                     <PanelSection icon="play" open
@@ -104,7 +106,7 @@
             </aside>
 
             <div class="game" in:scale>
-                <Grid bind:game />
+                <Grid bind:game compact={['sm', 'md', 'lg'].includes(size)} />
             </div>
         </div>
     </PageWrap>
@@ -125,7 +127,6 @@
 
             .panel {
                 display: none;
-                transition: margin .5s;
 
                 .pane-content {
                     padding: 0 1rem 1rem;
@@ -157,6 +158,11 @@
     }
 
     @media (width >= 640px) {
+        #pg-game :global(.page-wrap) {
+            display: flex;
+            justify-content: center;
+        }
+        
         #pg-game .topbar { display: none; }
 
         #pg-game #gameCenter {
@@ -174,7 +180,13 @@
 
     @media (width >= 1024px) {
         #pg-game {
-            margin-top: -86px;
+            margin-top: calc(-96px - 60px);
+
+            #gameCenter {
+                &.with-jumbo, .panel {
+                    gap: 2rem;
+                }
+            }
         }
     }
 </style>

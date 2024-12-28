@@ -5,11 +5,13 @@
 
     interface Props {
         game: GameEngine,
-        compact?: boolean
+        compact?: boolean,
+        limit?: number
     }
 
     let {
         game = $bindable(new GameEngine([], 0, 0)),
+        limit = $bindable(3),
         compact = $bindable(false)
     }: Props = $props();
 
@@ -28,17 +30,18 @@
 
 <div class="bx-player_turn">
     <div class="bubbles">
-        {#each players.slice(0,3) as { name, color, symbol, type }, index}
+        {#each players.slice(0, limit) as { name, color, symbol, type }, index}
             <div class="indicator" class:compact
                 class:current={ index === 0 }
                 style:z-index={ players.length - index }>
-                <AvatarPlayer {compact} { name } { color } { symbol } { type } shape="circular" />
+                <AvatarPlayer {compact} { name } { color } { symbol } { type }
+                    tinted={ index === 0 } shape="circular" />
             </div>
         {/each}
 
-        {#if players.length > 3}
+        {#if players.length > limit}
             <div class="indicator remains" class:compact>
-                <p><strong>+{ players.length - 3 }</strong></p>
+                <p><strong>+{ players.length - limit }</strong></p>
             </div>
         {/if}
     </div>
@@ -86,11 +89,6 @@
                     }
                 }
             }
-        }
-
-        .legend {
-            margin: 0;
-            font-size: .78em;
         }
     }
 </style>

@@ -5,7 +5,7 @@ export function randomColor() {
     return list[Math.floor(Math.random() * list.length)]
 }
 
-export function getContrastColor(backgroundColor: string) {
+export function getForegroundColorFor(backgroundColor: string) {
     // Convert the hex color to RGB
     const rgb = hexToRgb(backgroundColor);
 

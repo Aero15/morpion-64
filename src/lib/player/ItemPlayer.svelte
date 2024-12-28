@@ -39,7 +39,7 @@
     class:clickable={ !!onclick }
     class:compact
     onclick={ () => onclick ? onclick(id) : null } >
-    <AvatarPlayer { name } { color } { symbol } { type } { compact } />
+    <AvatarPlayer tinted { name } { color } { symbol } { type } { compact } />
     <p class="name">{ name }</p>
     {#if type === PlayerType.Bot && difficulty}
         <p class="difficulty">{ difficulty }</p>

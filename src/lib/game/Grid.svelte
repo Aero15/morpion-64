@@ -128,7 +128,8 @@
         }
 
         &.blur .row {
-            filter: blur(2rem);
+            filter: blur(2.5rem);
+            pointer-events: none;
         }
 
         .row {

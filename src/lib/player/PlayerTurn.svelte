@@ -14,7 +14,6 @@
     }: Props = $props();
 
     let players: Player[] = $derived(sort(game.players.players, game.players.currentTurn))
-    let names: string = $derived(listNames(players))
 
     function sort(
         arr: Player[],
@@ -24,22 +23,6 @@
         const beforeIndex = arr.slice(0, index);
         const afterIndex = arr.slice(index);
         return [...afterIndex, ...beforeIndex];
-    }
-
-    function listNames(players: Player[]): string {
-        if (players.length === 2) {
-            return `${players[0].name} puis ${players[1].name}.`
-        }
-
-        if (players.length === 3) {
-            return `${players[0].name}, suivis de ${players[1].name} et de ${players[2].name}.`
-        }
-
-        if (players.length > 3) {
-            return `${players[0].name}, puis ${players[1].name}, suivis de ${players.length - 2} autres joueurs.`
-        }
-
-        return 'Error: configuration error'
     }
 </script>
 
@@ -59,8 +42,6 @@
             </div>
         {/if}
     </div>
-
-    <p class="legend">{ names }</p>
 </div>
 
 <style>

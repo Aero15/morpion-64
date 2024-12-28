@@ -128,7 +128,9 @@
             </Panel>
         </div>
         
-        <Ranking {players} displayType tilesMode />
+        {#key selectedTab}
+            <Ranking {players} displayType tilesMode />
+        {/key}
     </div>
 </PageWrap>
 

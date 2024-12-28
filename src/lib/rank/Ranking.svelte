@@ -1,8 +1,9 @@
 <script lang="ts">
+    import { improveContrast } from "$core/helpers/Colors.svelte";
     import type Player from "$core/entity/player/Player.svelte";
     import { PlayerType } from "$core/enums/PlayerType";
-    import { improveContrast } from "$core/helpers/Colors.svelte";
     import Icon from "$lib/shared/Icon.svelte";
+    import { fade, scale } from "svelte/transition";
 
     interface Props {
         players: Player[],
@@ -30,7 +31,7 @@
 
 <ul class="bx-ranking" class:tiles={tilesMode}>
     {#each ranking as { id, color, name, symbol, score, type }, index}
-        <li>
+        <li in:scale|global={{delay: 25 * index}}>
             <a href="#/players/{id}"
                 class:gold={index === 0}
                 class:silver={index === 1}
@@ -189,6 +190,7 @@
             position: relative;
             aspect-ratio: 1;
             padding: .25rem;
+            border-radius: .75rem;
 
             .rank, .score, .type, .identity .name {
                 position: absolute;
@@ -218,7 +220,7 @@
             }
 
             &:not(.gold, .silver, .bronze):not(:hover) {
-                background: light-dark(#ddd, #494949);
+                background: linear-gradient(to bottom, transparent,light-dark(#ddd, #494949));
                 border-color: light-dark(#00000055, #ffffff55);
             }
         }

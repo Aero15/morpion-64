@@ -5,10 +5,12 @@
     import Jumbo from "$lib/shared/Jumbo.svelte";
     import Winner from "$lib/game/Winner.svelte";
     import ToolBox from "$lib/game/ToolBox.svelte";
+    import { GameView } from "$core/enums/GameView";
     import Bot from "$core/entity/player/Bot.svelte";
     import { scale, slide } from "svelte/transition";
     import PageWrap from "$lib/global/PageWrap.svelte";
     import Panel from "$lib/shared/panel/Panel.svelte";
+    import BottomBar from "$lib/game/BottomBar.svelte";
     import GameStatus from "$lib/game/GameStatus.svelte";
     import PlayerTurn from "$lib/player/PlayerTurn.svelte";
     import Leaderboard from "$lib/game/Leaderboard.svelte";
@@ -29,6 +31,9 @@
 
     let botIsPlaying = $derived(game?.players.getCurrentPlayer() instanceof Bot)
 
+    // View mode for smartphone
+    let currentView = $state(GameView.Game);
+
     onMount(() => {
         return () => {
             game.stop()
@@ -39,6 +44,11 @@
     $effect(() => {
         // Display the ranking when the game is over
         displayRanking = game.endTime !== undefined
+
+        // Display the game when the current player is not a bot
+        if (botIsPlaying) {
+            currentView = GameView.Game
+        }
     })
 </script>
 
@@ -51,11 +61,11 @@
 {/if}
 
 <main id="pg-game">
-    <div class="topbar">
+    <div class="top-bar">
         <GameStatus bind:game
             orientation={['sm'].includes(size) ? 'vertical' : 'horizontal'} />
         <PlayerTurn bind:game compact
-            limit={size == 'sm' ? 1 : 3} />
+            limit={size == 'sm' ? 2 : 3} />
     </div>
 
     <PageWrap>
@@ -110,14 +120,21 @@
             </div>
         </div>
     </PageWrap>
+
+    {#if size == 'sm'}
+        <BottomBar bind:game bind:currentView />
+    {/if}
 </main>
 
 <style>
     #pg-game {
-        .topbar {
-            display: grid;
+        .top-bar {
             gap: .25rem;
             padding: 1rem;
+            display: flex;
+            align-items: start;
+            flex-flow: row-reverse;
+            justify-content: space-between;
         }
 
         #gameCenter {
@@ -163,7 +180,7 @@
             justify-content: center;
         }
         
-        #pg-game .topbar { display: none; }
+        #pg-game .top-bar { display: none; }
 
         #pg-game #gameCenter {
             grid-template-columns: 300px 1fr;

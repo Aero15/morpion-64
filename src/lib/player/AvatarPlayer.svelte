@@ -85,8 +85,10 @@
                 color: light-dark(#000, #fff);
             }
 
-            &, .bubble {
-                border: 1px solid light-dark(#000000aa, #ffffffaa);
+            .bubble {
+                background: light-dark(#000, #fff);
+                color: light-dark(#fff, #000);
+                border-color: #000;
             }
         }
         &:not(.tinted) {

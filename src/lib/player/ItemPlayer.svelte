@@ -1,7 +1,6 @@
 <script lang="ts">
     import { Difficulty } from "$core/enums/Difficulty";
     import { PlayerType } from "$core/enums/PlayerType";
-    import { improveContrast } from "$core/helpers/Colors.svelte";
     import AvatarPlayer from "./AvatarPlayer.svelte";
 
     interface Props {
@@ -12,7 +11,6 @@
         type: PlayerType;
         compact?: boolean,
         difficulty?: Difficulty,
-
         onclick?: ((id: number) => void) | null
     }
 
@@ -24,18 +22,11 @@
         type = PlayerType.Human,
         compact = $bindable(false),
         difficulty = $bindable(),
-
         onclick = null,
     }: Props = $props();
-
-    let symbolColor = $derived.by(() => {
-        let { light, dark } = improveContrast(color);
-        return `light-dark(${light}, ${dark})`;
-    })
 </script>
 
 <button
-    style:--tint={symbolColor}
     class:clickable={ !!onclick }
     class:compact
     onclick={ () => onclick ? onclick(id) : null } >
@@ -73,7 +64,6 @@
         }
 
         &.clickable {
-            --tint: red;
             cursor: crosshair;
             border-radius: .5rem;
             border: 1px solid transparent;
@@ -96,9 +86,8 @@
             }
 
             &:hover {
-                background: var(--tint);
+                background: light-dark(#00000022, #ffffff22);
                 border-color: light-dark(#00000077, #ffffff77);
-                color: #fff;
             }
         }
     }

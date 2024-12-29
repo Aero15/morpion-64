@@ -58,7 +58,7 @@
         </div>
 
         <div class="tiles grid grid-cols-3" in:fade>
-            <Halo>
+            <Halo visibleOnHover>
                 <Button variant="primary" onclick={ () => push('/opponents') }>
                     <div class="text">
                         <strong>Jouer !</strong>

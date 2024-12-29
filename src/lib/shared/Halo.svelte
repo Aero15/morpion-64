@@ -3,19 +3,24 @@
 
     interface Props {
         children: Snippet,
-        borderWidth?: string
-        cornerRadius?: string
+        borderWidth?: string,
+        cornerRadius?: string,
+        visible?: boolean,
+        visibleOnHover?: boolean
     }
 
     let {
         children,
         borderWidth = $bindable("1rem"),
         cornerRadius = $bindable("10px"),
+        visible = false,
+        visibleOnHover = false
     }: Props = $props();
 </script>
 
 <div
-    class="halo"
+    class="halo" class:visible
+    class:visibleOnHover
     style:--border-width={borderWidth}
     style:--radius={cornerRadius}
 >
@@ -69,7 +74,8 @@
             transition: opacity .2s, padding .2s;
         }
 
-        &:hover {
+        &.visibleOnHover:hover,
+        &.visible {
             &::before, &::after {
                 padding: var(--border-width);
             }

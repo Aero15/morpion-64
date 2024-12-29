@@ -39,7 +39,7 @@
     
         <tbody>
             {#each ranking as { color, name, symbol, temporaryScore }, index}
-                <tr>
+                <tr class:podium={index < 3}>
                     <td><p class="rank"><strong>{index + 1}</strong></p></td>
                     <td>
                         <div class="identity">
@@ -96,8 +96,15 @@
         }
 
         tbody tr {
-            &:not(:last-child) {
-                border-bottom: 1px solid light-dark(#00000033, #ffffff33);
+            border-top: 1px solid light-dark(#00000033, #ffffff33);
+
+            &.podium {
+                background: linear-gradient(
+                    to left,
+                    transparent,
+                    light-dark(#00000033, #ffffff33),
+                    transparent
+                );
             }
 
             &:hover {

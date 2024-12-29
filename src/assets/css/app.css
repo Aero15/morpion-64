@@ -59,10 +59,3 @@ h1, h2, h3, h4, h5, h6, strong {
         color: #535bf2;
     }
 }
-
-@media (width < 1024px) {
-    body {
-        padding-top: 51px;
-        padding-bottom: 64px;
-    }
-}

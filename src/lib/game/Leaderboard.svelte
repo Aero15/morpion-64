@@ -95,8 +95,14 @@
             text-align: start;
         }
 
-        tbody tr:hover {
-            background: light-dark(#ebbffa, #45727a);
+        tbody tr {
+            &:not(:last-child) {
+                border-bottom: 1px solid light-dark(#00000033, #ffffff33);
+            }
+
+            &:hover {
+                background: light-dark(#ebbffa, #45727a);
+            }
         }
 
         p {
@@ -123,6 +129,7 @@
                 );
                 background-clip: text;
                 color: transparent;
+                font-size: 1.2em;
             }
         }
     }

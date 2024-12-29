@@ -7,7 +7,7 @@
     import ToolBox from "$lib/game/ToolBox.svelte";
     import { GameView } from "$core/enums/GameView";
     import Bot from "$core/entity/player/Bot.svelte";
-    import { scale, slide } from "svelte/transition";
+    import { fade, scale, slide } from "svelte/transition";
     import PageWrap from "$lib/global/PageWrap.svelte";
     import Panel from "$lib/shared/panel/Panel.svelte";
     import BottomBar from "$lib/game/BottomBar.svelte";
@@ -56,11 +56,13 @@
 
 {#if !['sm', 'md', 'lg'].includes(size)}
     <Jumbo>
-        <div style:padding-top="70px"></div>
+        <div style:padding-top="100px"></div>
     </Jumbo>
 {/if}
 
-<main id="pg-game">
+<main id="pg-game"
+    class:sm={size == 'sm'}
+>
     <div class="top-bar">
         <GameStatus bind:game
             orientation={['sm'].includes(size) ? 'vertical' : 'horizontal'} />
@@ -115,8 +117,25 @@
                 </Panel>
             </aside>
 
-            <div class="game" in:scale>
-                <Grid bind:game compact={['sm', 'md', 'lg'].includes(size)} />
+            <div class="page" in:scale
+                class:game={size != 'sm' || (['sm'].includes(size) && currentView == GameView.Game)}
+                class:leaderboard={size == 'sm' && currentView == GameView.Leaderboard}
+            >
+                {#if size != 'sm' || (['sm'].includes(size) && currentView == GameView.Game)}
+                    <div in:fade class="tab-game">
+                        <Grid bind:game compact={['sm', 'md', 'lg'].includes(size)} />
+                    </div>
+                {/if}
+                
+                {#if ['sm'].includes(size) && currentView == GameView.Leaderboard}
+                    <div in:fade class="tab-leaderboard">
+                        <div class="title">
+                            <Icon icon="podium" size={24} />
+                            <h2>Classement</h2>
+                        </div>
+                        <Leaderboard bind:game />
+                    </div>
+                {/if}
             </div>
         </div>
     </PageWrap>
@@ -129,12 +148,20 @@
 <style>
     #pg-game {
         .top-bar {
+            position: fixed;
+            inset: 0 0 auto;
+            z-index: 10;
             gap: .25rem;
-            padding: 1rem;
+            padding: 1rem 1rem .5rem;
             display: flex;
             align-items: start;
             flex-flow: row-reverse;
             justify-content: space-between;
+            background: light-dark(#fff, #323232);
+            border-bottom: 1px solid light-dark(#00000055, #ffffff55);
+        }
+        &.sm {
+            padding: 100px 0 76px;
         }
 
         #gameCenter {
@@ -150,12 +177,28 @@
                 }
             }
 
-            .game {
+            .page {
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 position: relative;
                 z-index: 5;
+
+                .tab-leaderboard {
+                    flex: 1;
+                    max-width: 300px;
+
+                    .title {
+                        display: flex;
+                        align-items: center;
+                        gap: .5rem;
+                        margin-bottom: 1rem;
+
+                        h2 {
+                            margin: 0;
+                        }
+                    }
+                }
             }
         }
 
@@ -197,7 +240,7 @@
 
     @media (width >= 1024px) {
         #pg-game {
-            margin-top: calc(-96px - 60px);
+            margin-top: calc(-96px - 150px);
 
             #gameCenter {
                 &.with-jumbo, .panel {

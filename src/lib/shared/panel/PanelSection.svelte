@@ -132,7 +132,7 @@
         &.default,
         &.transparent {
             button.head:hover {
-                background: light-dark(#f3d1ff, #694a6e);
+                background: light-dark(#00000017, #ffffff17);
             }
         }
 

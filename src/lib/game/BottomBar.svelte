@@ -38,16 +38,18 @@
 
     <div class="end">
         {#if currentView == GameView.Leaderboard}
-            <Button center variant="default" shape="squared"
+            <Button center variant="flat" shape="squared"
+                title="Afficher la grille de jeu"
                 onclick={() => currentView = GameView.Game}>
-                <Icon icon="dice" size={24} />
+                <Icon icon="podium" size={32} />
             </Button>
         {/if}
 
         {#if currentView == GameView.Game}
-            <Button center variant="default" shape="squared"
+            <Button center variant="flat" shape="squared"
+                title="Afficher le classement"
                 onclick={() => currentView = GameView.Leaderboard}>
-                <Icon icon="podium" size={24} />
+                <Icon icon="dice" size={32} />
             </Button>
         {/if}
     </div>
@@ -73,7 +75,7 @@
             justify-content: end;
         }
 
-        :global(button) {
+        .start :global(button) {
             box-shadow: 0 0 0 1px light-dark(#00000055, #ffffff44) inset,
                 0 3px 7px #00000022;
         }

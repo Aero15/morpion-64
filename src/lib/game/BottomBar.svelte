@@ -45,7 +45,29 @@
                         </div>
                     {/if}
                 {:else}
-                    <p>TODO: Afficher gagnant/match nul</p>
+                    {#if game.winnerInfo !== undefined && game.players.getCurrentPlayer() !== null}
+                        {@const player = game.players.getCurrentPlayer()!}
+                        <div class="info winner" transition:slide>
+                            <AvatarPlayer
+                                name={ player.name }
+                                color={ player.color }
+                                symbol={ player.symbol }
+                                type={ player.type }
+                                shape="circular"
+                                compact tinted
+                            />
+                            <p><strong>{ player.name }</strong> a remporté la partie !</p>
+                        </div>
+                    {/if}
+
+                    {#if game.winnerInfo === undefined}
+                        <div class="info match-draw" transition:slide>
+                            <div style:padding=".25rem">
+                                <Icon icon="thumb_down" size={45} />
+                            </div>
+                            <p><strong>Match nul ! 😩</strong> Pas de gagnant</p>
+                        </div>
+                    {/if}
                 {/if}
             </div>
 

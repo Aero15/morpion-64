@@ -15,7 +15,7 @@ export default defineConfig({
       manifest: {
         name: 'Morpion 64',
         short_name: 'Morpion 64',
-        description: "Tic tac toe game with a 64 x 64 grid",
+        description: "Tic tac toe game with a 64 grid",
         theme_color: '#5e0080',
         orientation: 'portrait-primary',
         lang: 'fr-FR',

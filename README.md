@@ -1,5 +1,5 @@
 # Morpion 64
-This app is a 🕹️ tic tac toe 🎲 game with a 64x64 grid size.
+This app is a 🕹️ tic tac toe 🎲 game with a (8x8) 64 grid size.
 
 ![Game in progress in Morpion 64](https://github.com/Aero15/morpion-64/blob/main/wiki/game.png?raw=true)
 

@@ -31,20 +31,20 @@
 
 <div class="bx-player_turn">
     <div class="bubbles">
-        {#each players.slice(0, limit) as { name, color, symbol, type }, index}
-            {#key color+'_'+symbol}
+        {#each players.slice(0, limit) as { id, name, color, symbol, type }, index}
+            {#key id}
                 <div class="indicator" class:compact
                     class:current={ index === 0 }
                     style:z-index={ players.length - index }
                     in:scale|global={{delay: 50 * index}}>
                     <AvatarPlayer {compact} { name } { color } { symbol } { type }
-                        tinted={ index === 0 } shape="circular" />
+                        tinted shape="circular" />
                 </div>
             {/key}
         {/each}
 
         {#if players.length > limit}
-            {#key players[0].color+'_'+players[0].symbol}
+            {#key players[0].id}
                 <div class="indicator remains" class:compact
                     in:scale|global={{delay: 50 * (limit+1)}}>
                     <p><strong>+{ players.length - limit }</strong></p>
@@ -71,6 +71,7 @@
                 &:not(.current) {
                     &.compact {
                         margin-inline-start: -.5rem;
+                        width: 3.5rem;
                     }
                     &:not(.compact) {
                         margin-inline-start: -1rem;

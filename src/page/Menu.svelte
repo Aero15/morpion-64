@@ -30,7 +30,7 @@
         Page('/ranking', 'podium', 'Classement'),
     ]
     let other_pages: PageItem[] = [
-        Page('/', 'home', 'Accueil'),
+        //Page('/', 'home', 'Accueil'),
         Page('/settings', 'settings', 'Paramètres'),
         Page('/about', 'info', 'A propos'),
     ]

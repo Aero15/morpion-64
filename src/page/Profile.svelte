@@ -444,12 +444,6 @@
                 gap: 1rem;
             }
 
-            &.horizontal {
-                display: flex;
-                align-items: start;
-                gap: 2rem;
-            }
-
             .label {
                 margin: .25rem 0;
                 text-align: start;

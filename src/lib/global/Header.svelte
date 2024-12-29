@@ -185,6 +185,7 @@
         }
 
         &:not(.floating) {
+            z-index: 3;
             position: fixed;
             inset: 0 0 auto 0;
             background: light-dark(#e9e9e977, #25252577);

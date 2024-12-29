@@ -216,10 +216,6 @@
             .panel {
                 display: grid;
                 place-content: start stretch;
-
-                .tabs {
-                    padding-bottom: 1.75rem;
-                }
             }
         }
     }

@@ -1,11 +1,12 @@
 <script lang="ts">
+    import GameEngine from "$core/entity/engine/GameEngine.svelte";
+    import AvatarPlayer from "$lib/player/AvatarPlayer.svelte";
+    import Bot from "$core/entity/player/Bot.svelte";
+    import { GameView } from "$core/enums/GameView";
     import Button from "$lib/form/Button.svelte";
     import Icon from "$lib/shared/Icon.svelte";
     import { slide } from "svelte/transition";
     import ToolBox from "./ToolBox.svelte";
-    import GameEngine from "$core/entity/engine/GameEngine.svelte";
-    import Bot from "$core/entity/player/Bot.svelte";
-  import { GameView } from "$core/enums/GameView";
 
     interface Props {
         game: GameEngine,
@@ -17,7 +18,8 @@
         currentView = $bindable(GameView.Game)
     }: Props = $props();
 
-    let botIsPlaying = $derived(game?.players.getCurrentPlayer() instanceof Bot)
+    let player = $derived(game?.players.getCurrentPlayer())
+    let botIsPlaying = $derived(player instanceof Bot)
 </script>
 
 <main class="bottom-bar">
@@ -26,8 +28,15 @@
             {#if !botIsPlaying}
                 <ToolBox bind:game compact />
             {:else}
-                <div class="info" transition:slide>
-                    <Icon icon="bot" size={34} />
+                <div class="info botPlaying" transition:slide>
+                    <AvatarPlayer
+                        name={ player!.name }
+                        color={ player!.color }
+                        symbol={ player!.symbol }
+                        type={ player!.type }
+                        shape="circular"
+                        compact tinted
+                    />
                     <p><strong>{game.players.getCurrentPlayer()?.name}</strong> est en train de jouer...</p>
                 </div>
             {/if}
@@ -76,8 +85,20 @@
         }
 
         .start :global(button) {
-            box-shadow: 0 0 0 1px light-dark(#00000055, #ffffff44) inset,
-                0 3px 7px #00000022;
+            border-color: light-dark(#00000055, #ffffff44);
+            box-shadow: 0 3px 7px #00000022;
+        }
+
+        .info {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            gap: 1rem;
+
+            p {
+                margin: 0;
+                font-size: .8em;
+            }
         }
     }
 </style>

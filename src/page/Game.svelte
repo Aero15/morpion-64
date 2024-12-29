@@ -62,6 +62,7 @@
 
 <main id="pg-game"
     class:sm={size == 'sm'}
+    class:center={currentView == GameView.Game}
 >
     <div class="top-bar">
         <GameStatus bind:game
@@ -83,7 +84,7 @@
 
                     <PanelSection title="Classement" icon="podium" variant="transparent" bind:open={displayRanking}>
                         <div class="pane-content">
-                            <Leaderboard bind:game limit={3} />
+                            <Leaderboard bind:game compact limit={3} />
                         </div>
                     </PanelSection>
                 </Panel>
@@ -133,7 +134,7 @@
                             <Icon icon="podium" size={24} />
                             <h2>Classement</h2>
                         </div>
-                        <Leaderboard bind:game />
+                        <Leaderboard bind:game hightlightFirstRows />
                     </div>
                 {/if}
             </div>
@@ -162,6 +163,12 @@
         }
         &.sm {
             padding: 100px 0 76px;
+            min-height: calc(100vh - 200px);
+
+            &.center {
+                display: flex;
+                align-items: center;
+            }
         }
 
         #gameCenter {
@@ -186,7 +193,7 @@
 
                 .tab-leaderboard {
                     flex: 1;
-                    max-width: 300px;
+                    max-width: 400px;
 
                     .title {
                         display: flex;

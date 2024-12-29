@@ -6,11 +6,15 @@
 
     interface Props {
         game: GameEngine,
-        limit?: number
+        limit?: number,
+        compact?: boolean,
+        hightlightFirstRows?: boolean
     }
 
     let {
         game = $bindable(new GameEngine([], 0, 0)),
+        hightlightFirstRows = false,
+        compact = false,
         limit = $bindable(0)
     }: Props = $props();
 
@@ -28,7 +32,7 @@
 </script>
 
 <div class="bx-leaderboard">
-    <table>
+    <table class:hightlightFirstRows class:compact>
         <thead>
             <tr>
                 <th><strong>#</strong></th>
@@ -44,7 +48,7 @@
                     <td>
                         <div class="identity">
                             <p style:color={improveColor(color)} class="symbol">
-                                <Icon icon={symbol} size={18} />
+                                <Icon icon={symbol} size={compact ? 16 : 24} />
                             </p>
                             <p class="name">{name}</p>
                         </div>
@@ -91,21 +95,29 @@
         margin: 0;
 
         th, td {
-            font-size: .8em;
             text-align: start;
+        }
+
+        &:not(.compact) :where(td, th) {
+            padding: .25rem 0;
+            font-size: .9em;
+        }
+
+        &.compact :where(td, th) {
+            font-size: .8em;
+        }
+
+        &.hightlightFirstRows tr.podium {
+            background: linear-gradient(
+                to left,
+                transparent,
+                light-dark(#00000033, #ffffff33),
+                transparent
+            );
         }
 
         tbody tr {
             border-top: 1px solid light-dark(#00000033, #ffffff33);
-
-            &.podium {
-                background: linear-gradient(
-                    to left,
-                    transparent,
-                    light-dark(#00000033, #ffffff33),
-                    transparent
-                );
-            }
 
             &:hover {
                 background: light-dark(#ebbffa, #45727a);
@@ -119,7 +131,7 @@
         .identity {
             display: flex;
             align-items: center;
-            gap: .25rem;
+            gap: .5rem;
             padding: .25rem 0;
 
             .symbol { font-size: 0; }

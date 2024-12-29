@@ -124,7 +124,9 @@
             >
                 {#if size != 'sm' || (['sm'].includes(size) && currentView == GameView.Game)}
                     <div in:fade class="tab-game">
-                        <Grid bind:game compact={['sm', 'md', 'lg'].includes(size)} />
+                        <Grid bind:game
+                            flat={size == 'sm'}
+                            compact={['sm', 'md', 'lg'].includes(size)} />
                     </div>
                 {/if}
                 

@@ -6,12 +6,14 @@
 
     interface Props {
         game: GameEngine,
-        compact?: boolean
+        compact?: boolean,
+        flat?: boolean
     }
 
     let {
         game = $bindable(new GameEngine([], 0, 0)),
         compact = false,
+        flat = false
     }: Props = $props();
 
     let botIsPlaying = $derived(game?.players.getCurrentPlayer() instanceof Bot)
@@ -29,6 +31,7 @@
     class:lock
     class:blur
     class:halo
+    class:flat
     class:compact
 >
     {#each game.board.grid as row, index}
@@ -75,14 +78,17 @@
         --radius : 2rem;
 
         position: relative;
-        border-radius: var(--radius);
-        box-shadow: 0 5px 30px rgba(0,0,0,.3);
 
-        &.lock {
-            background: light-dark(#ffffffcc, #323232cc);
-        }
-        &:not(.lock) {
-            background: light-dark(#fff, #323232);
+        &:not(.flat) {
+            border-radius: var(--radius);
+            box-shadow: 0 5px 30px rgba(0,0,0,.3);
+
+            &.lock {
+                background: light-dark(#ffffffcc, #323232cc);
+            }
+            &:not(.lock) {
+                background: light-dark(#fff, #323232);
+            }
         }
 
         &::after, &::before {
@@ -106,15 +112,17 @@
             transition: opacity .2s, padding .2s;
         }
 
-        &.compact {
-            padding: .5rem;
-            --radius: 1rem;
-        }
-        &:not(.compact) {
-            padding: 2rem;
+        &:not(.flat) {
+            &.compact {
+                padding: .5rem;
+                --radius: 1rem;
+            }
+            &:not(.compact) {
+                padding: 2rem;
+            }
         }
 
-        &.halo {
+        &.halo:not(.flat) {
             &::before, &::after {
                 padding: var(--border-width);
             }
@@ -141,7 +149,7 @@
     }
 
     @media (prefers-color-scheme: dark) {
-        .grid {
+        .grid:not(.flat) {
             box-shadow: 0 0 0 1px rgba(255,255,255,.3), 0 5px 30px rgba(0,0,0,.3);
         }
     }

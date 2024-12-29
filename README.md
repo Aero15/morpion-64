@@ -16,6 +16,7 @@ This app is a 🕹️ tic tac toe 🎲 game with a 64x64 grid size.
 Still have many things to do, 👁️👄👁️ look at zis :
 
 - Play with friend ⚔️ on the network (or Bluetooth)
+- 💾 Persistant data (score, profile, settings, etc...)
 - Improve gameplay with new tools (or bonus) in game 💣 (bomb, suffle grid, moving cells, and more...)
 - Limit answering time ⏲️ for players (with a circular progress bar behind avatar)
 - Add some sound effects 🔊 for some events (you win, you loose, bot is playing, ...)

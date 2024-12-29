@@ -1,12 +1,12 @@
-// Import du CSS
+// Import style
 import '$css/fonts.css'
 import '$css/app.css'
 
-// Import de l'application
+// Import logic
 import { mount } from 'svelte'
 import App from './App.svelte'
 
-// Montage de l'application
+// Mount the app
 const app = mount(App, {
   target: document.getElementById('app')!,
 })

@@ -1,47 +1,33 @@
-# Svelte + TS + Vite
+# Morpion 64
+This app is a 🕹️ tic tac toe 🎲 game with a 64x64 grid size.
 
-This template should help get you started developing with Svelte and TypeScript in Vite.
+![Game in progress in Morpion 64](https://github.com/Aero15/morpion-64/blob/main/wiki/game.png?raw=true)
 
-## Recommended IDE Setup
+## Features
+- **Large grid size**: 😮 yup you can play with a 64 grid size
+- **Multiplayer**: have fun with your friends* 😂 or come to fight "dumb" bots (😜 sorry Siri and Cortana)
+- **Ranking**: earn points and try to finish at the top 👑 of the leaderboard 🏆
+- **Responsive**: this game can run on PC, tablets and smartphone 🔥
+- **PWA** (Play With Android ✨): this app can be installed on your 📞📱 phone
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+*Unfortunately, ℹ️ it's not possible to play with your friends on the network🛜. Everything run on your browser, nothing outside 🥹 It will be possible in the future 🤞
 
-## Need an official Svelte framework?
+## TODO list
+Still have many things to do, 👁️👄👁️ look at zis :
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+- Play with friend ⚔️ on the network (or Bluetooth)
+- Improve gameplay with new tools (or bonus) in game 💣 (bomb, suffle grid, moving cells, and more...)
+- Limit answering time ⏲️ for players (with a circular progress bar behind avatar)
+- Add some sound effects 🔊 for some events (you win, you loose, bot is playing, ...)
+- Add a "end game" screen to display final leaderbord with earned score by players, with some confetti ✨ (hi Svelte Confetti)
+- Add a "mashup" 🥗 screen to reveal order list or a "versus" screen  (P1 vs P2) before starting game
+- Make bots powerful again 👿
+- More symbols 😻 (animals, fruits and chess)
+- More 💋💄 colors (or gradients) for players
 
-## Technical considerations
-
-**Why use this over SvelteKit?**
-
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
-
-This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
-
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
-
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
-
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
-
-**Why include `.vscode/extensions.json`?**
-
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
-
-**Why enable `allowJs` in the TS template?**
-
-While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```ts
-// store.ts
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
-```
+## Tech stack
+This project uses some dependencies, all listed there :
+- Svelte 5 (of course)
+- Svelte SPA Router
+- TypeScript
+- Vite + PWA Plugin

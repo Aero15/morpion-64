@@ -191,7 +191,7 @@
 
     @media (width >= 1300px) {
         #pg-players .panel {
-            margin-top: -230px;
+            margin-top: -228px;
         }
     }
 </style>

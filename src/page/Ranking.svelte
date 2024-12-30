@@ -224,7 +224,7 @@
         #pg-ranking {
             gap: 3rem;
             .panel {
-                margin-top: -266px;
+                margin-top: -289px;
             }
         }
     }

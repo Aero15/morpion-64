@@ -112,7 +112,7 @@
         }
 
         &.overlap {
-            padding-top: 78px;
+            padding-top: 84px;
 
             .content {
                 padding: 2rem 0;

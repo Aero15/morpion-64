@@ -34,7 +34,7 @@
         {#if $location != '/'}
             <button class="goBack" onclick={pop}
                 transition:slide={{axis: 'x', duration: 200}}>
-                <Icon icon="arrow_left" size={18} />
+                <Icon icon="arrow_left" size={20} />
             </button>
         {/if}
         
@@ -45,7 +45,7 @@
 
         {#if size == 'sm'}
             <button class="menu" onclick={() => push('/menu')}>
-                <Icon icon="menu_dots" size={18} />
+                <Icon icon="menu_dots" size={20} />
             </button>
         {/if}
     </div>
@@ -56,7 +56,7 @@
                 {#each pages.slice(0, 3) as {name, path, icon}}
                     <li>
                         <a href={'#' + path} class:current={$location == path || $location.includes(path)}>
-                            <Icon {icon} size={16} />
+                            <Icon {icon} size={20} />
                             <p>{name}</p>
                         </a>
                     </li>
@@ -116,7 +116,7 @@
 
                 &:first-child {
                     margin-left: calc(var(--padding) * -1);
-                    padding: .5rem 1rem .5rem 1.5rem;
+                    padding: .75rem 1rem .75rem 1.5rem;
                 }
 
                 &:not(:first-child) {
@@ -143,18 +143,18 @@
                 padding: 0 .5rem;
 
                 img {
-                    --size: 26px;
+                    --size: 30px;
                     width: var(--size);
                     height: var(--size);
                 }
 
                 h1 {
                     margin: 0;
-                    font-size: 1.25rem;
+                    font-size: 1.5rem;
                     background: linear-gradient(to right, rgb(157, 82, 255), rgb(0, 153, 255), cyan);
                     background-clip: text;
                     color: transparent;
-                    padding-bottom: 2px;
+                    padding-bottom: 4px;
 
                     span {
                         font-family: Marianne-Light, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -225,7 +225,7 @@
                         transition: all .2s;
 
                         p {
-                            font-size: .8em;
+                            font-size: .9em;
                         }
 
                         &:hover {
@@ -244,7 +244,7 @@
 
         .version {
             margin: 0;
-            font-size: .78em;
+            font-size: .9em;
             align-items: center;
             display: flex;
             justify-content: end;

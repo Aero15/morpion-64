@@ -10,13 +10,15 @@
     }
 
     let {
-        compact = true
+        compact = false
     }: Props = $props();
 
     let selected = $state(0)
+    let nb = 0
     let pages: IPaginationItem[] = $state([
-        { variant: 'number', title: 'Grille de jeu', number: 1, path: '/grid' },
-        { variant: 'number', title: 'Participants', number: 2, path: '/participants' },
+        //{ variant: 'number', title: 'Règles de jeu', number: ++nb, path: '/rules' },
+        { variant: 'number', title: 'Grille de jeu', number: ++nb, path: '/grid' },
+        { variant: 'number', title: 'Participants', number: ++nb, path: '/participants' },
         { variant: 'icon', title: 'Jouer', icon: 'play', path: '/recap' },
     ])
 </script>
@@ -45,7 +47,7 @@
         &.compact {
             gap: .5rem;
             button {
-                width: 3rem;
+                width: 2.75rem;
             }
         }
         &:not(.compact) {
@@ -58,7 +60,8 @@
         button {
             box-shadow: 0 0 5px #00000011, 0 5px 10px #00000022;
             border: 1px solid light-dark(#00000055, #ffffff55);
-            background: light-dark(#ffffff22, #ffffff22);
+            background: light-dark(#ffffff55, #ffffff33);
+            backdrop-filter: blur(15px);
             aspect-ratio: 1;
             border-radius: 50%;
             display: flex;
@@ -82,7 +85,7 @@
             }
 
             &:hover {
-                background: light-dark(#00000022, #ffffff66);
+                background: light-dark(#fff, #ffffff66);
             }
 
             &:active {

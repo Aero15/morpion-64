@@ -118,7 +118,7 @@
                 &:hover {
                     border-bottom-color: light-dark(#00000077, #ffffff77);
                     background: light-dark(#ffffff99, #ffffff55);
-                    backdrop-filter: blur(15px);
+                    backdrop-filter: blur(10px);
                 }
 
                 &.selected {

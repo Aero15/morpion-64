@@ -27,7 +27,7 @@
     <input type="radio" {value} bind:group {onchange} />
 
     <div class="text">
-        <p><strong class="name">{label}</strong></p>
+        <p class="name"><strong>{label}</strong></p>
     
         {#if description.length > 0}
             <p class="description">{ description }</p>
@@ -87,6 +87,7 @@
         }
 
         &.center_x input[type="radio"] { margin-top: -1px; }
+        &:not(.center_x) input[type="radio"] { margin-top: 2px; }
 
         input[type="radio"]:checked {
             --tint: light-dark(#8400ac, cyan);
@@ -108,6 +109,10 @@
 
         p {
             margin: 0;
+
+            &.name {
+                font-size: .9em;
+            }
 
             &.description {
                 font-size: .78rem;

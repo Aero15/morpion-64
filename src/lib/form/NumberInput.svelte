@@ -49,14 +49,15 @@
     {/if}
 
     <div class="form">
+        <input type="number" {id}
+            bind:value {min} {max} {step} />
+
         <button class="decrement"
             disabled={!canDecrement}
             onclick={decrement}
             title="Décrémenter">
             <Icon icon="minus" size={16} />
         </button>
-    
-        <input type="number" {id} bind:value {min} {max} {step} />
     
         <button class="increment"
             disabled={!canIncrement}
@@ -87,17 +88,16 @@
     }
 
     .form {
-        --radius: .5rem;
+        --radius: .75rem;
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
 
         input, button {
-            aspect-ratio: 1;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
-            border: 1px solid light-dark(#00000055, #ffffff55);
+            border: 1px solid light-dark(#00000077, #ffffff77);
             transition: border-color .2s, background .2s, box-shadow .2s;
 
             &:not(:disabled) {
@@ -113,14 +113,17 @@
         }
 
         input {
-            margin: 0 -1px;
+            margin: 0;
             -moz-appearance: textfield;
             appearance: textfield;
-            border-inline-color: transparent;
             background: light-dark(#fff, #222);
             font-size: 20px;
             font-family: inherit;
             min-width: 2.5rem;
+            grid-column: 1 / 3;
+            aspect-ratio: 2/1;
+            border-bottom: none;
+            border-radius: var(--radius) var(--radius) 0 0;
         }
         input[type="number"]::-webkit-outer-spin-button,
         input[type="number"]::-webkit-inner-spin-button {
@@ -130,19 +133,22 @@
         }
 
         button {
-            background: light-dark(#00000025, #ffffff25);
+            background: light-dark(#f4ceff, #005368);
             position: relative;
             z-index: 1;
+            aspect-ratio: 1;
+            padding: .75rem;
             &:not(:disabled) {
                 cursor: crosshair;
             }
         }
 
         .decrement {
-            border-radius: var(--radius) 0 0 var(--radius);
+            border-radius: 0 0 0 var(--radius);
         }
         .increment {
-            border-radius: 0 var(--radius) var(--radius) 0;
+            border-radius: 0 0 var(--radius) 0;
+            border-left: none;
         }
     }
 </style>

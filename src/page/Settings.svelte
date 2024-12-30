@@ -6,25 +6,20 @@
         slowBotSpeedDelay
     } from "$core/enums/Bot";
     import {
-        calcMaxNbParticipantsFrom, countCellsFor
-    } from "$core/helpers/Grid.svelte";
-    import {
-        botSpeedDelay, gridSize, maxGridSize, minGridSize
+        botSpeedDelay
     } from "$core/store/settings.svelte";
+    import Radio from "$lib/form/Radio.svelte";
+    import Jumbo from "$lib/shared/Jumbo.svelte";
     import Section from "$lib/shared/Section.svelte";
     import PageWrap from "$lib/global/PageWrap.svelte";
     import { calcAvg } from "$core/helpers/Math.svelte";
     import RadioGroup from "$lib/form/RadioGroup.svelte";
     import type Point from "$core/entity/board/Point.svelte";
-    import Jumbo from "$lib/shared/Jumbo.svelte";
-    import Radio from "$lib/form/Radio.svelte";
-    import NumberInput from "$lib/form/NumberInput.svelte";
+    import GridSizeStats from "$lib/settings/GridSizeStats.svelte";
     import GridPresetSelector from "$lib/settings/GridPresetSelector.svelte";
 
 
 
-    let numberOfCells = $derived(countCellsFor(gridSize));
-    let maxNbParticipants = $derived(calcMaxNbParticipantsFrom(numberOfCells));
     let botDelay = $derived.by(getBotSpeedDelay)
     let avgResponseTimeMs: number = $derived(parseInt(calcAvg(botDelay.toArray()).toFixed(0)));
     let avgResponseTimeScd = $derived((avgResponseTimeMs / 1000).toFixed(1));
@@ -52,13 +47,10 @@
 <PageWrap>
     <div class="grid page">
         <Section icon="dice" title="Dimension du plateau">
-            <div class="infographics">
-                <strong>{gridSize.x} x {gridSize.y}</strong>
-                <p>Soit <strong>{numberOfCells} cases</strong></p>
-                <p>Pour <strong>{maxNbParticipants} participants</strong> max</p>
+            <div style="display: grid; gap: 1rem">
+                <GridSizeStats />
+                <GridPresetSelector large />
             </div>
-
-            <GridPresetSelector />
         </Section>
 
         <Section icon="bot" title="Comportement des bots" delay={1}>
@@ -68,7 +60,8 @@
                 <p>Soit <strong>{avgResponseTimeMs >= 1000 ? avgResponseTimeMs + 'ms' : avgResponseTimeScd + 's'}</strong></p>
             </div>
 
-            <strong>Delai de réponse</strong>
+            <p style:margin="0 0 .5rem"><strong>Delai de réponse</strong></p>
+            
             <RadioGroup>
                 <Radio bind:group={$botSpeedDelay}
                     label="Lent" value={BotDelay.Slow}

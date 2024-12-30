@@ -1,0 +1,98 @@
+<script lang="ts">
+    import type IPaginationItem
+        from "$core/interface/IPaginationItem";
+    import Icon from "$lib/shared/Icon.svelte";
+    import { rt_newGame } from "$core/routes";
+    import { push } from "svelte-spa-router";
+
+    interface Props {
+        compact?: boolean
+    }
+
+    let {
+        compact = true
+    }: Props = $props();
+
+    let selected = $state(0)
+    let pages: IPaginationItem[] = $state([
+        { variant: 'number', title: 'Grille de jeu', number: 1, path: '/grid' },
+        { variant: 'number', title: 'Participants', number: 2, path: '/participants' },
+        { variant: 'icon', title: 'Jouer', icon: 'play', path: '/recap' },
+    ])
+</script>
+
+<nav class="bx-pagination" class:compact>
+    {#each pages as { variant, title, number, icon, path }, index}
+        <button { title }
+            class:selected={selected === index}
+            onclick={() => push(rt_newGame + path)}
+        >
+            {#if variant === 'number' && number}
+                <p class:compact>{number}</p>
+            {:else if variant === 'icon' && icon}
+                <Icon {icon} size={ compact ? 20 : 24 } />
+            {/if}
+        </button>
+    {/each}
+</nav>
+
+<style>
+    .bx-pagination {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+
+        &.compact {
+            gap: .5rem;
+            button {
+                width: 3rem;
+            }
+        }
+        &:not(.compact) {
+            gap: 1rem;
+            button {
+                width: 3.5rem;
+            }
+        }
+
+        button {
+            box-shadow: 0 0 5px #00000011, 0 5px 10px #00000022;
+            border: 1px solid light-dark(#00000055, #ffffff55);
+            background: light-dark(#ffffff22, #ffffff22);
+            aspect-ratio: 1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: inherit;
+            transition: background .2s, transform .2s;
+            cursor: pointer;
+
+            p {
+                margin: 0;
+
+                &.compact {
+                    font-size: 1.5em;
+                    margin-top: -.15rem;
+                }
+                &:not(.compact) {
+                    font-size: 2em;
+                    margin-top: -.25rem;
+                }
+            }
+
+            &:hover {
+                background: light-dark(#00000022, #ffffff66);
+            }
+
+            &:active {
+                transform: scale(1.3);
+            }
+
+            &.selected {
+                background: light-dark(#0051ff, #fff);
+                color: light-dark(#fff, #000);
+            }
+        }
+    }
+</style>

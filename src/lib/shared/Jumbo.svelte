@@ -26,7 +26,7 @@
 
 <Responsive bind:size />
 
-<div class="jumbo" class:overlap={['xl', '2xl'].includes(size)}>
+<div class="jumbo gradient-grid" class:overlap={['xl', '2xl'].includes(size)}>
     <div class="content">
         {#if icon.length > 0 || title.length > 0 || subtitle.length > 0}
             <div class="identity"
@@ -60,35 +60,6 @@
 
 <style>
     .jumbo {
-        --cell_size: 200px;
-        --cell_border_width: 1px;
-        --cell_border_color: light-dark(#fff, #000);
-        --cell_border_color: light-dark(#00000056, #ffffff56);
-        background:
-            /* Background grid */
-            linear-gradient(
-                to right,
-                var(--cell_border_color) var(--cell_border_width),
-                transparent 1px
-            ),
-            linear-gradient(
-                to bottom,
-                var(--cell_border_color) var(--cell_border_width),
-                transparent 1px
-            ),
-            /* Background gradient */
-            linear-gradient(
-                to right,
-                light-dark(#e1adff, #7202a7),
-                light-dark(#79c0ff, #005b97),
-                light-dark(#8dead9, #00916c)
-            ),
-            /* Background color */
-            light-dark(#fff, #333);
-        background-size: 
-            var(--cell_size) var(--cell_size),
-            var(--cell_size) var(--cell_size),
-            100% 100%;
         background-position: center -1px;
 
         box-shadow:

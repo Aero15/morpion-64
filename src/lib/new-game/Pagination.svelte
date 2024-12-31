@@ -6,14 +6,15 @@
     import { push } from "svelte-spa-router";
 
     interface Props {
-        compact?: boolean
+        compact?: boolean,
+        selectedIndex?: number
     }
 
     let {
-        compact = false
+        compact = false,
+        selectedIndex = 0
     }: Props = $props();
 
-    let selected = $state(0)
     let nb = 0
     let pages: IPaginationItem[] = $state([
         //{ variant: 'number', title: 'Règles de jeu', number: ++nb, path: '/rules' },
@@ -26,7 +27,7 @@
 <nav class="bx-pagination" class:compact>
     {#each pages as { variant, title, number, icon, path }, index}
         <button { title }
-            class:selected={selected === index}
+            class:selected={selectedIndex === index}
             onclick={() => push(rt_newGame + path)}
         >
             {#if variant === 'number' && number}

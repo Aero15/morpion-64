@@ -1,9 +1,10 @@
 <script lang="ts">
-    import { slide } from "svelte/transition";
+    import { fade } from "svelte/transition";
     import TabBar from "$lib/shared/TabBar.svelte";
     import PageWrap from "$lib/global/PageWrap.svelte";
     import Responsive from "$lib/shared/Responsive.svelte";
     import Pagination from "$lib/new-game/Pagination.svelte";
+    import NavigButtons from "$lib/new-game/NavigButtons.svelte";
     import GridSizeStats from "$lib/settings/GridSizeStats.svelte";
     import type { BreakpointSize } from "$core/enums/BreakpointSize";
     import GridPresetSelector from "$lib/settings/GridPresetSelector.svelte";
@@ -15,10 +16,10 @@
         Settings: 1
     }
     let tabs = [
-        { name: 'Aperçu', icon: 'search', id: Tabs.Preview },
         { name: 'Réglages', icon: 'settings', id: Tabs.Settings },
+        { name: 'Aperçu', icon: 'search', id: Tabs.Preview },
     ]
-    let selectedId = $state(Tabs.Preview);
+    let selectedId = $state(Tabs.Settings);
 </script>
 
 <Responsive bind:size />
@@ -37,20 +38,24 @@
 
     <PageWrap>
         {#if selectedId == Tabs.Preview || !['sm', 'md'].includes(size)}
-            <div class="preview" in:slide={{duration: 200}}>
+            <div class="preview ng-paneContent" in:fade={{duration: 250}}>
                 {#if !['sm', 'md'].includes(size)}
-                    <div class="head inside">
-                        <Pagination />
+                    <div class="ng-head inside">
+                        <Pagination compact />
                         <h1>Grille de jeu</h1>
                     </div>
                 {/if}
 
                 <GridSizeStats />
+
+                {#if !['sm', 'md'].includes(size)}
+                    <NavigButtons />
+                {/if}
             </div>
         {/if}
 
         {#if selectedId == Tabs.Settings || !['sm', 'md'].includes(size)}
-            <div class="settings" in:slide={{duration: 200}}>
+            <div class="settings" in:fade={{duration: 250}}>
                 <GridPresetSelector large />
                 <!-- TODO: [checkbox] Ne plus jamais demander -->
             </div>

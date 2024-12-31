@@ -71,7 +71,7 @@
 <style>
     .bx-selected_players {
         display: grid;
-        padding: .5rem 0;
+        padding: 0;
         margin: 0;
         list-style: none;
 
@@ -80,10 +80,15 @@
             align-items: center;
             justify-content: space-between;
             gap: .5rem;
-            padding: .25rem .5rem .25rem .9rem;
+            padding: .25rem .25rem .25rem .5rem;
+            border: 1px solid transparent;
+            border-radius: 1rem;
+            transition: border-color .2s, background .2s, backdrop-filter .2s;
 
             &:hover {
-                background: light-dark(#ddd, #444);
+                background: light-dark(#00000022, #ffffff22);
+                border-color: light-dark(#00000055, #ffffff55);
+                backdrop-filter: blur(10px);
             }
 
             .identity {

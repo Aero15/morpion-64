@@ -3,6 +3,14 @@
     import { gridSize } from "$core/store/settings.svelte";
     import Icon from "$lib/shared/Icon.svelte";
 
+    interface Props {
+        large?: boolean
+    }
+
+    let {
+        large = false
+    }: Props = $props();
+
     let strGridSize: string = $derived(gridSize.x + 'x' + gridSize.y);
     let countCells: number = $derived(countCellsFor(gridSize));
     let maxPlayers: number = $derived(calcMaxNbParticipantsFrom(countCells));
@@ -25,7 +33,9 @@
 <main class="bx-grid_stats"
     class:vertical={gridOrientation === 'horizontal'}
     class:horizontal={gridOrientation === 'vertical'}
-    class:squared={gridOrientation === 'squared'}>
+    class:squared={gridOrientation === 'squared'}
+    style:--max_size={large ? '350px' : '250px'}
+>
     <div class="display">
         <div class="board"
             style:grid-template-rows={`repeat(${gridSize.y}, 1fr)`}

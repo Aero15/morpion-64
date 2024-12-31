@@ -46,7 +46,7 @@
                     </div>
                 {/if}
 
-                <GridSizeStats />
+                <GridSizeStats large={!['sm', 'md'].includes(size)} />
 
                 {#if !['sm', 'md'].includes(size)}
                     <NavigButtons />

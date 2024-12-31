@@ -214,7 +214,7 @@
                             {@render bxInfo({
                                 variant: 'emptyResult', icon: 'disable', iconSize: 100,
                                 title: 'Aucun joueur disponible',
-                                description: 'Vous pouvez des joueurs depuis la page de gestion des "Joueurs".'
+                                description: 'Vous pouvez créer des nouveaux joueurs depuis la page de gestion des "Joueurs".'
                             })}
                         {/if}
                     {/if}

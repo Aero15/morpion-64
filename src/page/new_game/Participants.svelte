@@ -3,18 +3,22 @@
     import TabBar from "$lib/shared/TabBar.svelte";
     import { fade, scale } from "svelte/transition";
     import PageWrap from "$lib/global/PageWrap.svelte";
+    import SearchBar from "$lib/shared/SearchBar.svelte";
     import Responsive from "$lib/shared/Responsive.svelte";
     import ListPlayers from "$lib/player/ListPlayers.svelte";
     import Pagination from "$lib/new-game/Pagination.svelte";
     import NavigButtons from "$lib/new-game/NavigButtons.svelte";
-    import { selectPlayerById } from "$core/helpers/Players.svelte";
     import type { BreakpointSize } from "$core/enums/BreakpointSize";
     import SelectedParticipants from "$lib/player/SelectedParticipants.svelte";
     import { listBots, selectedPlayers, listPlayers } from "$core/store/players.svelte";
+    import { filterListPlayersWith, selectPlayerById } from "$core/helpers/Players.svelte";
 
     let size: BreakpointSize = $state('sm');
 
     let pageIndex = 1
+
+    let searchValue: string = $state('')
+    let isSearching: boolean = $derived(searchValue.length > 0)
 
     // Global tabs
     let Tabs = {
@@ -38,7 +42,7 @@
         { name: 'Joueurs', icon: 'profile', id: FilterTabs.Humans },
         { name: 'Bots', icon: 'bot', id: FilterTabs.Bots },
     ]
-    let selectedFilterId = $state(FilterTabs.Humans);
+    let selectedFilterId = $state(FilterTabs.All);
 
     // List players
     let remainingBots = $derived(listBots.filter(bot => !selectedPlayers.includes(bot)))
@@ -55,6 +59,15 @@
         return []
     })
     let sortedPlayers = $derived(availablePlayers.toSorted((a, b) => a.name.localeCompare(b.name)))
+    let filteredPlayers = $derived(isSearching ? filterListPlayersWith(searchValue, sortedPlayers) : sortedPlayers)
+
+    interface BoxInfo {
+        variant: string
+        icon: string
+        title: string
+        description: string
+        iconSize?: number
+    }
 </script>
 
 <Responsive bind:size />
@@ -71,6 +84,18 @@
         </div>
     {/if}
 
+    {#snippet bxInfo(data: BoxInfo)}
+        <div class="info"
+            class:empty={data.variant == 'empty'}
+            class:emptyResult={data.variant == 'emptyResult'}
+            in:scale|global
+        >
+            <Icon icon={data.icon} size={data.iconSize} />
+            <p class="title"><strong>{data.title}</strong></p>
+            <p class="desc">{data.description}</p>
+        </div>
+    {/snippet}
+
     <PageWrap>
         {#if selectedId == Tabs.Preview || !['sm', 'md'].includes(size)}
             <div class="preview ng-paneContent" in:fade={{duration: 250}}>
@@ -82,11 +107,11 @@
                 {/if}
 
                 {#if selectedPlayers.length == 0}
-                    <div class="info empty" in:scale|global>
-                        <Icon icon="profile" size={100} />
-                        <p class="title"><strong>Aucun joueur selectionné</strong></p>
-                        <p class="desc">Choisissez un ou plusieurs joueur pour pouvoir lancer une partie.</p>
-                    </div>
+                    {@render bxInfo({
+                        variant: 'empty', icon: 'profile', iconSize: 100,
+                        title: 'Aucun joueur selectionné',
+                        description: 'Choisissez un ou plusieurs joueur pour pouvoir lancer une partie.'
+                    })}
                 {/if}
 
                 {#if selectedPlayers.length > 0}
@@ -107,10 +132,24 @@
                         bind:selectedId={selectedFilterId} />
                 </div>
 
+                <SearchBar bind:value={searchValue} placeholder="Rechercher un joueur" />
+
                 <div class="players">
-                    <ListPlayers
-                        players={sortedPlayers}
-                        onPlayerClick={selectPlayerById} />
+                    {#if filteredPlayers.length > 0}
+                        <ListPlayers
+                            players={filteredPlayers}
+                            onPlayerClick={selectPlayerById} />
+                    {/if}
+
+                    {#if filteredPlayers.length == 0}
+                        {#if isSearching}
+                            {@render bxInfo({
+                                variant: 'emptyResult', icon: 'search', iconSize: 100,
+                                title: 'Aucun joueur trouvé',
+                                description: 'Votre recherche ne donne aucun résultat.'
+                            })}
+                        {/if}
+                    {/if}
                 </div>
             </div>
         {/if}
@@ -133,11 +172,10 @@
             max-width: 300px;
             padding: 2rem;
             margin: auto;
-            aspect-ratio: 1;
 
             p {
                 &.title {
-                    margin: 1.5rem 0 .25rem;
+                    margin: 1.5rem 0 0;
                 }
 
                 &.desc {
@@ -150,6 +188,11 @@
                 border: 3px dashed light-dark(#000, #fff);
                 border-radius: 2rem;
                 backdrop-filter: blur(10px);
+                aspect-ratio: 1;
+            }
+
+            &.emptyResult :global(.icon) {
+                color: light-dark(#c47500, #ff9900);
             }
         }
     }

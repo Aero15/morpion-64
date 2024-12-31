@@ -32,11 +32,11 @@
     .bx-search-bar {
         display: grid;
         max-width: 600px;
-        padding: 0 1rem;
 
         &.overlap {
             margin: auto;
             margin-top: -1.5rem;
+            padding: 0 1rem;
 
             &.thick {
                 margin-top: -2rem;

@@ -113,7 +113,7 @@
         &:disabled {
             pointer-events: none;
             filter: grayscale(1);
-            opacity: .8;
+            opacity: .5;
         }
     }
 

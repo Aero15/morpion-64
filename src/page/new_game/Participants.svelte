@@ -1,5 +1,6 @@
 <script lang="ts">
     import Icon from "$lib/shared/Icon.svelte";
+    import Button from "$lib/form/Button.svelte";
     import TabBar from "$lib/shared/TabBar.svelte";
     import { fade, scale } from "svelte/transition";
     import PageWrap from "$lib/global/PageWrap.svelte";
@@ -7,11 +8,12 @@
     import Responsive from "$lib/shared/Responsive.svelte";
     import ListPlayers from "$lib/player/ListPlayers.svelte";
     import Pagination from "$lib/new-game/Pagination.svelte";
+    import { randomBetween } from "$core/helpers/Math.svelte";
     import NavigButtons from "$lib/new-game/NavigButtons.svelte";
     import type { BreakpointSize } from "$core/enums/BreakpointSize";
     import SelectedParticipants from "$lib/player/SelectedParticipants.svelte";
     import { listBots, selectedPlayers, listPlayers } from "$core/store/players.svelte";
-    import { filterListPlayersWith, selectPlayerById } from "$core/helpers/Players.svelte";
+    import { clearSelectedPlayers, filterListPlayersWith, selectPlayerById } from "$core/helpers/Players.svelte";
 
     let size: BreakpointSize = $state('sm');
 
@@ -39,7 +41,7 @@
     }
     let filterTabs = [
         { name: 'Tous', icon: 'asterisk', id: FilterTabs.All },
-        { name: 'Joueurs', icon: 'profile', id: FilterTabs.Humans },
+        { name: 'Joueurs', icon: 'user', id: FilterTabs.Humans },
         { name: 'Bots', icon: 'bot', id: FilterTabs.Bots },
     ]
     let selectedFilterId = $state(FilterTabs.All);
@@ -68,15 +70,63 @@
         description: string
         iconSize?: number
     }
+
+    function selectRandomBot() {
+        let index = randomBetween(0, remainingBots.length - 1)
+        selectedPlayers.push(remainingBots[index])
+    }
+
+    function selectRandomHuman() {
+        let index = randomBetween(0, remainingHumans.length - 1)
+        selectedPlayers.push(remainingHumans[index])
+    }
 </script>
 
 <Responsive bind:size />
+
+{#snippet headBar()}
+    <div class="head-bar">
+        <div class="status"></div>
+        <div class="actions">
+
+            <Button onclick={selectRandomHuman} center shape="squared"
+                title="Ajouter une joueur au hasard"
+                variant={remainingHumans.length < 1 ? 'flat' : 'primary'}
+                disabled={remainingHumans.length < 1}>
+                <Icon icon="user" size={20} />
+                <span class="expo">
+                    <Icon icon="plus" size={14} />
+                </span>
+            </Button>
+
+            <Button onclick={selectRandomBot} center shape="squared"
+                title="Ajouter un bot au hasard"
+                variant={remainingBots.length < 1 ? 'flat' : 'default'}
+                disabled={remainingBots.length < 1}>
+                <Icon icon="bot" size={20} />
+                <span class="expo">
+                    <Icon icon="plus" size={14} />
+                </span>
+            </Button>
+            
+            <Button center shape="squared"
+                title="Vider la sélection"
+                variant={selectedPlayers.length < 1 ? 'flat' : 'default'}
+                disabled={selectedPlayers.length < 1}
+                onclick={clearSelectedPlayers}>
+                <Icon icon="bin" size={20} />
+            </Button>
+        </div>
+    </div>
+{/snippet}
 
 <main id="pg-participants">
     {#if ['sm', 'md'].includes(size)}
         <div class="ng-head outside gradient-grid">
             <Pagination compact selectedIndex={pageIndex} />
             <h1>Participants</h1>
+
+            {@render headBar()}
 
             <div class="tabs">
                 <TabBar tabs={tabs} bind:selectedId />
@@ -103,6 +153,8 @@
                     <div class="ng-head inside">
                         <Pagination selectedIndex={pageIndex} compact />
                         <h1>Participants</h1>
+
+                        {@render headBar()}
                     </div>
                 {/if}
 
@@ -193,6 +245,35 @@
 
             &.emptyResult :global(.icon) {
                 color: light-dark(#c47500, #ff9900);
+            }
+        }
+
+        .head-bar {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+
+            .actions {
+                display: flex;
+                gap: .5rem;
+                justify-content: end;
+
+                :global(button) {
+                    position: relative;
+                    height: 3rem;
+
+                    &:not(.flat) {
+                        border-color: light-dark(#00000077, #ffffff77);
+                    }
+                }
+
+                .expo {
+                    position: absolute;
+                    inset: 0 0 auto auto;
+                    display: flex;
+                    align-items: center;
+                    padding: .25rem;
+                }
             }
         }
     }

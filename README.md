@@ -32,3 +32,8 @@ This project uses some dependencies, all listed there :
 - Svelte SPA Router
 - TypeScript
 - Vite + PWA Plugin
+
+# How to build it (to publish on a server)
+Just run this command in a terminal
+> npm run build
+This command will ask Vite.js to compile this app. You'll find the whole bundle in the "dist" folder.

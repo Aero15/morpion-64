@@ -36,4 +36,5 @@ export const routes = {
 export const routes_newGame = {
     ...createAsyncRoute('/grid',        () => import('$page/new_game/GridSize.svelte')),
     ...createAsyncRoute('/participants',() => import('$page/new_game/Participants.svelte')),
+    ...createAsyncRoute('/recap',       () => import('$page/new_game/Recap.svelte')),
 };

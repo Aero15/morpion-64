@@ -12,11 +12,28 @@
         icon: string,
         name: string
     }
+
+    let gridOrientation: 'horizontal' | 'vertical' | 'squared' = $derived.by(() => {
+        if (gridSize.x === gridSize.y)
+            return 'squared'
+        if (gridSize.x > gridSize.y)
+            return 'horizontal'
+        return 'vertical'
+    });
 </script>
 
-<main class="bx-grid_stats">
+<main class="bx-grid_stats"
+    class:vertical={gridOrientation === 'horizontal'}
+    class:horizontal={gridOrientation === 'vertical'}
+    class:squared={gridOrientation === 'squared'}>
     <div class="display">
-        <div class="board" style:grid-template-rows={`repeat(${gridSize.y}, 1fr)`}>
+        <div class="board"
+            style:grid-template-rows={`repeat(${gridSize.y}, 1fr)`}
+            style:aspect-ratio={`${gridSize.x} / ${gridSize.y}`}
+            class:horizontal={gridOrientation === 'horizontal'}
+            class:vertical={gridOrientation === 'vertical'}
+            class:squared={gridOrientation === 'squared'}
+        >
             {#each { length: gridSize.y }, rank}
                 <div class="row" style:grid-template-columns={`repeat(${gridSize.x}, 1fr)`}>
                     {#each { length: gridSize.x }, file}
@@ -27,10 +44,13 @@
         </div>
     </div>
 
-    <ul class="numbers">
+    <ul class="numbers"
+        class:vertical={gridOrientation === 'vertical'}
+        class:horizontal={gridOrientation === 'horizontal' || gridOrientation === 'squared'}
+    >
         {#snippet number_block(data: NumberData)}
             <li>
-                <Icon icon={data.icon} size={28} />
+                <Icon icon={data.icon} size={22} />
                 <div class="text">
                     <p class="value">{data.value}</p>
                     <p class="name"><strong>{data.name}</strong></p>
@@ -47,24 +67,41 @@
 <style>
     .bx-grid_stats {
         display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 1rem;
+        gap: 2rem;
 
-        --max_size: 300px;
+        &.horizontal {
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        &.squared,
+        &.vertical {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        --max_size: 250px;
 
         .display {
             display: flex;
             justify-content: center;
-            max-height: var(--max_size);
-            display: none;
+            align-items: center;
         }
 
         .board {
             max-width: var(--max_size);
             max-height: var(--max_size);
-            flex: 1;
             height: 100%;
+
+            &.vertical,
+            &.squared {
+                height: var(--max_size);
+            }
+
+            &.horizontal {
+                width: var(--max_size);
+            }
 
             &, .row {
                 display: grid;
@@ -74,12 +111,10 @@
             }
 
             .row {
-                background: linear-gradient(to top, red, blue);
                 flex: 1;
             }
 
             .cell {
-                display: none;
                 aspect-ratio: 1;
                 border-radius: 25%;
                 background: light-dark(#00000033, #ffffff33);
@@ -93,10 +128,18 @@
             padding: 0;
             margin: 0;
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 1rem;
-            margin: auto;
-            max-width: 400px;
+
+            &.horizontal {
+                margin: auto;
+                max-width: 400px;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 1rem;
+            }
+
+            &.vertical {
+                grid-template-rows: 1fr 1fr 1fr;
+                gap: 2rem;
+            }
 
             li {
                 display: grid;
@@ -112,9 +155,9 @@
             }
 
             :global(.icon) {
-                width: 3.5rem;
+                width: 2.5rem;
                 aspect-ratio: 1;
-                border-radius: 100%;
+                border-radius: 25%;
                 display: flex;
                 align-items: center;
                 justify-content: center;

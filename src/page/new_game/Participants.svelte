@@ -201,6 +201,14 @@
                                 description: 'Votre recherche ne donne aucun résultat.'
                             })}
                         {/if}
+
+                        {#if !isSearching}
+                            {@render bxInfo({
+                                variant: 'emptyResult', icon: 'cross', iconSize: 100,
+                                title: 'Aucun joueur disponible',
+                                description: 'Vous pouvez des joueurs depuis la page de gestion des "Joueurs".'
+                            })}
+                        {/if}
                     {/if}
                 </div>
             </div>

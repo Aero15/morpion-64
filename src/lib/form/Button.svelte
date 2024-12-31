@@ -33,7 +33,7 @@
     class:rounded={shape === 'rounded'}
     class:squared={shape === 'squared'}
 
-    disabled={ disabled ? true : false }
+    disabled={ disabled ? true : null }
     class:centered-content={center}
 
     {...restProps}
@@ -108,6 +108,12 @@
             border-color: rgba(0,0,0,.3);
             transform: translateY(2px);
             box-shadow: 0 0 0 rgba(0,0,0,.3), 0 0 10px rgba(0,0,0,.3) inset;
+        }
+
+        &:disabled {
+            pointer-events: none;
+            filter: grayscale(1);
+            opacity: .8;
         }
     }
 

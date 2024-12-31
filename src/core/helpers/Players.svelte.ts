@@ -141,8 +141,18 @@ export function clearSelectedPlayers() {
 
 // Select a player by id
 export function selectPlayerById(id: number) {
-    const player = listPlayers.find(player => player.id === id)
+    // Try to find the player among humans
+    let player = listPlayers.find(player => player.id === id)
+
+    if (!player) {
+        // Try to find the player among bots
+        player = listBots.find(player => player.id === id)
+    }
+
+    // Abort if player not found
     if (!player) return
+
+    // Select the player
     selectedPlayers.push(player)
 }
 

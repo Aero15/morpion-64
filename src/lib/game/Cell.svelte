@@ -42,7 +42,7 @@
 >
     {#if symbol}
         <div transition:scale style:color={color}>
-            <Icon icon={symbol} size={compact ? 32 : 64} />
+            <Icon icon={symbol} size={compact ? 44 : 64} />
         </div>
     {/if}
 </button>

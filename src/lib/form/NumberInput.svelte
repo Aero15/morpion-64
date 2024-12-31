@@ -133,13 +133,19 @@
         }
 
         button {
-            background: light-dark(#f4ceff, #005368);
+            background: light-dark(#fff, #222);
             position: relative;
             z-index: 1;
             aspect-ratio: 1;
             padding: .75rem;
+
             &:not(:disabled) {
                 cursor: crosshair;
+                background: light-dark(#f4ceff, #005368);
+            }
+
+            &:disabled {
+                cursor: not-allowed;
             }
         }
 

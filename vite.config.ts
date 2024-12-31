@@ -17,7 +17,7 @@ export default defineConfig({
         short_name: 'Morpion 64',
         description: "Tic tac toe game with a 64 grid",
         theme_color: '#5e0080',
-        orientation: 'portrait-primary',
+        orientation: 'any',
         lang: 'fr-FR',
         icons: [
           {

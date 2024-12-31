@@ -10,7 +10,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
-    --main_color: #0078c8;
+    --main_color: #004edf;
     --main_color_bright: #4aa1db;
 }
 
@@ -68,16 +68,29 @@ h1, h2, h3, h4, h5, h6, strong {
 }
 
 .ng-head {
-    padding: 1rem 1rem 0;
-    box-shadow: 0 -1px 0 light-dark(#00000055, #ffffff55) inset,
-        0 5px 30px rgba(0,0,0,.3);
-    background-position: center -1px;
-    display: grid;
-    gap: .5rem;
-
     h1 {
-        font-size: 2em;
-        margin: 0 0 .25rem;
+        text-shadow: 0 3px 5px #00000055;
+    }
+
+    &.outside {
+        padding: 1rem 1rem 0;
+        box-shadow: 0 -1px 0 light-dark(#00000055, #ffffff55) inset,
+            0 5px 30px rgba(0,0,0,.3);
+        background-position: center -1px;
+        display: grid;
+        gap: .5rem;
+    
+        h1 {
+            font-size: 2em;
+            margin: 0 0 .25rem;
+        }
+    }
+
+    &.inside {
+        h1 {
+            margin: 1rem 0;
+            font-size: 2.5em;
+        }
     }
 }
 

@@ -114,6 +114,7 @@
     @media (prefers-color-scheme: dark) {
         button {
             /* Color */
+            --main_color: #0078c8;
             &.primary {background: var(--main_color);}
             &.flat {background: transparent;}
             &.primary.flat {color: var(--main_color_bright);}

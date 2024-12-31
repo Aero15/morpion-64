@@ -79,7 +79,7 @@
 
     {#if players.length > 0 && maxScore < 1}
         <Button variant="primary" center
-            onclick={() => push('/opponents')}>
+            onclick={() => push('/new-game/grid')}>
             <Icon icon="play" />
             Lancer une partie
         </Button>

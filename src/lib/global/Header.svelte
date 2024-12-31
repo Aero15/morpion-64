@@ -17,7 +17,7 @@
 
     const pages: Page[] = [
         //{name: 'Accueil', path: '/', icon: 'home'},
-        {name: 'Jouer', path: '/opponents', icon: 'play'},
+        {name: 'Jouer', path: '/new-game/grid', icon: 'play'},
         {name: 'Classement', path: '/ranking', icon: 'podium'},
         {name: 'Joueurs', path: '/players', icon: 'user'},
         {name: 'Réglages', path: '/settings', icon: 'config'},

@@ -25,7 +25,7 @@
 
     let width: number
     let sections: PageItem[] = [
-        Page('/opponents', 'play', 'Jouer'),
+        Page('/new-game/grid', 'play', 'Jouer'),
         Page('/players', 'user', 'Joueurs'),
         Page('/ranking', 'podium', 'Classement'),
     ]

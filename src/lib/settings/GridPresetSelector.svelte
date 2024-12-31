@@ -45,7 +45,7 @@
         label="Minimale" value={presets[0]}
         description="Une grille en {presets[0]}, un très bon classique" />
     <Radio {onchange} bind:group={dimension}
-        label="Smartphone" value={presets[1]}
+        label="Verticale" value={presets[1]}
         description="Une grille en {presets[1]}, adapté aux smartphones" />
     <Radio {onchange} bind:group={dimension}
         label="Maximale" value={presets[2]}

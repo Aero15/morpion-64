@@ -59,7 +59,7 @@
 
         <div class="tiles grid grid-cols-3" in:fade>
             <Halo visibleOnHover>
-                <Button variant="primary" onclick={ () => push('/opponents') }>
+                <Button variant="primary" onclick={ () => push('/new-game/grid') }>
                     <div class="text">
                         <strong>Jouer !</strong>
                         {#if ['xl', '2xl'].includes(size)}

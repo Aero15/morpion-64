@@ -40,7 +40,9 @@
     <span></span>
 </Jumbo>
 
-<SearchBar bind:value={searchValue} placeholder="Rechercher un joueur" />
+<SearchBar overlap
+    bind:value={searchValue}
+    placeholder="Rechercher un joueur" />
 
 <PageWrap>
     <div id="pg-players">

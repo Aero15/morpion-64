@@ -67,6 +67,20 @@ h1, h2, h3, h4, h5, h6, strong {
     background-position: center top;
 }
 
+.ng-head {
+    padding: 1rem 1rem 0;
+    box-shadow: 0 -1px 0 light-dark(#00000055, #ffffff55) inset,
+        0 5px 30px rgba(0,0,0,.3);
+    background-position: center -1px;
+    display: grid;
+    gap: .5rem;
+
+    h1 {
+        font-size: 2em;
+        margin: 0 0 .25rem;
+    }
+}
+
 @media (prefers-color-scheme: light) {
     :root {
         color: #000;

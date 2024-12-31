@@ -418,8 +418,8 @@
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: .25rem;
-            height: 100%;
             padding: 0 1rem 1rem;
+            overflow: clip;
 
             :global(button) {
                 flex-flow: column;

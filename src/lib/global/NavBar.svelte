@@ -40,6 +40,7 @@
         border-top: 1px solid light-dark(#cfcfcf, #353535);
         display: flex;
         justify-content: center;
+        z-index: 5;
 
         ul {
             margin: 0;

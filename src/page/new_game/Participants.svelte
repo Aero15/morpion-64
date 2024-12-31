@@ -2,10 +2,10 @@
     import Icon from "$lib/shared/Icon.svelte";
     import Button from "$lib/form/Button.svelte";
     import TabBar from "$lib/shared/TabBar.svelte";
-    import { fade, scale } from "svelte/transition";
     import PageWrap from "$lib/global/PageWrap.svelte";
     import SearchBar from "$lib/shared/SearchBar.svelte";
     import Responsive from "$lib/shared/Responsive.svelte";
+    import { fade, scale, slide } from "svelte/transition";
     import ListPlayers from "$lib/player/ListPlayers.svelte";
     import Pagination from "$lib/new-game/Pagination.svelte";
     import { randomBetween } from "$core/helpers/Math.svelte";
@@ -155,7 +155,19 @@
                         <h1>Participants</h1>
 
                         {@render headBar()}
+
+                        {#if selectedPlayers.length > 0}
+                            <div in:slide
+                                class="players-selected"
+                                style:padding-top="2rem">
+                                <SelectedParticipants />
+                            </div>
+                        {/if}
                     </div>
+                {/if}
+
+                {#if selectedPlayers.length > 0 && ['sm', 'md'].includes(size)}
+                    <SelectedParticipants />
                 {/if}
 
                 {#if selectedPlayers.length == 0}
@@ -164,10 +176,6 @@
                         title: 'Aucun joueur selectionné',
                         description: 'Choisissez un ou plusieurs joueur pour pouvoir lancer une partie.'
                     })}
-                {/if}
-
-                {#if selectedPlayers.length > 0}
-                    <SelectedParticipants />
                 {/if}
 
                 {#if !['sm', 'md'].includes(size)}
@@ -204,7 +212,7 @@
 
                         {#if !isSearching}
                             {@render bxInfo({
-                                variant: 'emptyResult', icon: 'cross', iconSize: 100,
+                                variant: 'emptyResult', icon: 'disable', iconSize: 100,
                                 title: 'Aucun joueur disponible',
                                 description: 'Vous pouvez des joueurs depuis la page de gestion des "Joueurs".'
                             })}
@@ -282,6 +290,15 @@
                     align-items: center;
                     padding: .25rem;
                 }
+            }
+        }
+
+        @media (width >= 768px) {
+            .picker {
+                height: calc(100vh - 8rem);
+                display: flex;
+                flex-flow: column;
+                justify-content: start;
             }
         }
     }

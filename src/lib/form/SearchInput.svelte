@@ -6,12 +6,14 @@
 
     interface Props {
         placeholder?: string,
-        value?: string
+        value?: string,
+        thick?: boolean
     }
 
     let {
         placeholder = '',
-        value = $bindable('')
+        value = $bindable(''),
+        thick = false
     }: Props = $props();
 
     const iconSize = 20;
@@ -20,7 +22,7 @@
 
 <Responsive bind:size />
 
-<div class="bx-search-input" class:thick={!['sm'].includes(size)}>
+<div class="bx-search-input" class:thick={!['sm'].includes(size) && thick}>
     <div class="icon">
         <Icon icon="search" size={iconSize} />
     </div>

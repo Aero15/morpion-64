@@ -40,7 +40,7 @@
     <span></span>
 </Jumbo>
 
-<SearchBar overlap
+<SearchBar overlap thick
     bind:value={searchValue}
     placeholder="Rechercher un joueur" />
 

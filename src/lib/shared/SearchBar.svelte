@@ -6,13 +6,15 @@
     interface Props {
         value?: string,
         placeholder?: string,
-        overlap?: boolean
+        overlap?: boolean,
+        thick?: boolean
     }
 
     let {
         value = $bindable(''),
         placeholder = '',
-        overlap = false
+        overlap = false,
+        thick = false
     }: Props = $props();
 
     let size: BreakpointSize = $state('sm');
@@ -22,8 +24,8 @@
 
 <div class="bx-search-bar"
     class:overlap
-    class:thick={!['sm'].includes(size)}>
-    <SearchInput bind:value {placeholder} />
+    class:thick={!['sm'].includes(size) && thick}>
+    <SearchInput bind:value {placeholder} {thick} />
 </div>
 
 <style>

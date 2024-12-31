@@ -67,7 +67,6 @@
 <style>
     .bx-grid_stats {
         display: flex;
-        gap: 2rem;
 
         &.horizontal {
             flex-direction: row;
@@ -133,22 +132,37 @@
                 margin: auto;
                 max-width: 400px;
                 grid-template-columns: 1fr 1fr 1fr;
-                gap: 1rem;
+                gap: .5rem;
+                margin-top: -1rem;
+
+                li {
+                    display: grid;
+                    gap: .25rem;
+                    text-align: center;
+                    place-items: center;
+                }
             }
 
             &.vertical {
                 grid-template-rows: 1fr 1fr 1fr;
-                gap: 2rem;
+                gap: 1rem;
+                margin-left: -1rem;
+
+                li {
+                    display: flex;
+                    gap: 1rem;
+                    text-align: start;
+                    align-items: center;
+                    justify-content: start;
+
+                    p.value {
+                        margin-top: -.25rem;
+                    }
+                }
             }
 
             li {
-                display: grid;
-                gap: .25rem;
-                text-align: center;
-                place-items: center;
-
                 --tint: red;
-
                 &:nth-child(1) { --tint: light-dark(#ff9ee2, #cf0091); }
                 &:nth-child(2) { --tint: light-dark(#b7e4ff, #288cff); }
                 &:nth-child(3) { --tint: light-dark(#8affa2, #00a576); }
@@ -164,6 +178,7 @@
                 background: var(--tint, light-dark(#00000033, #ffffff33));
                 border: 1px solid light-dark(#00000077, #ffffff77);
                 backdrop-filter: blur(10px);
+                box-shadow: 0 2px 5px #00000044;
             }
 
             p {

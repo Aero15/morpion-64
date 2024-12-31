@@ -1,6 +1,7 @@
 <script lang="ts">
-    import { fade } from "svelte/transition";
+    import Icon from "$lib/shared/Icon.svelte";
     import TabBar from "$lib/shared/TabBar.svelte";
+    import { fade, scale } from "svelte/transition";
     import PageWrap from "$lib/global/PageWrap.svelte";
     import Responsive from "$lib/shared/Responsive.svelte";
     import ListPlayers from "$lib/player/ListPlayers.svelte";
@@ -80,7 +81,17 @@
                     </div>
                 {/if}
 
-                <SelectedParticipants />
+                {#if selectedPlayers.length == 0}
+                    <div class="info empty" in:scale|global>
+                        <Icon icon="profile" size={100} />
+                        <p class="title"><strong>Aucun joueur selectionné</strong></p>
+                        <p class="desc">Choisissez un ou plusieurs joueur pour pouvoir lancer une partie.</p>
+                    </div>
+                {/if}
+
+                {#if selectedPlayers.length > 0}
+                    <SelectedParticipants />
+                {/if}
 
                 {#if !['sm', 'md'].includes(size)}
                     <NavigButtons index={pageIndex} />
@@ -111,6 +122,35 @@
         .picker {
             display: grid;
             gap: 1rem;
+        }
+
+        .info {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            max-width: 300px;
+            padding: 2rem;
+            margin: auto;
+            aspect-ratio: 1;
+
+            p {
+                &.title {
+                    margin: 1.5rem 0 .25rem;
+                }
+
+                &.desc {
+                    margin: .25rem 0;
+                    font-size: .85em;
+                }
+            }
+
+            &.empty {
+                border: 3px dashed light-dark(#000, #fff);
+                border-radius: 2rem;
+                backdrop-filter: blur(10px);
+            }
         }
     }
 </style>

@@ -2,8 +2,14 @@
     import { listBots, selectedPlayers } from "$core/store/players.svelte";
     import { push } from "svelte-spa-router";
     import { onMount } from "svelte";
+    import { countCellsFor, calcMaxNbParticipantsFrom } from "$core/helpers/Grid.svelte";
+    import { gridSize } from "$core/store/settings.svelte";
 
     let remainingBots = $derived(listBots.filter(bot => !selectedPlayers.includes(bot)))
+
+    let strGridSize: string = $derived(gridSize.x + 'x' + gridSize.y);
+    let countCells: number = $derived(countCellsFor(gridSize));
+    let maxPlayers: number = $derived(calcMaxNbParticipantsFrom(countCells));
 
     onMount(() => {
         // Add a bot if only one player is selected
@@ -11,8 +17,10 @@
             selectedPlayers.push(remainingBots[0])
         }
 
-        // Abort if less than 2 players
-        if (selectedPlayers.length < 2)
+        // Abort if less than 2 players, or more than max allowed
+        let lessThan2Players = selectedPlayers.length < 2
+        let moreThanMaxPlayers = selectedPlayers.length > maxPlayers
+        if (lessThan2Players || moreThanMaxPlayers)
             return push('/new-game/participants')
 
         // Go to game

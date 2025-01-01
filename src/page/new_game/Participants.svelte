@@ -23,6 +23,7 @@
     import NavigButtons from "$lib/new-game/NavigButtons.svelte";
     import type { BreakpointSize } from "$core/enums/BreakpointSize";
     import SelectedParticipants from "$lib/player/SelectedParticipants.svelte";
+    import ProgressNbPlayers from "$lib/new-game/ProgressNbPlayers.svelte";
 
     let size: BreakpointSize = $state('sm');
 
@@ -95,9 +96,11 @@
 
 {#snippet headBar()}
     <div class="head-bar">
-        <div class="status"></div>
-        <div class="actions">
+        <div class="status">
+            <ProgressNbPlayers />
+        </div>
 
+        <div class="actions">
             <Button onclick={selectRandomHuman} center shape="squared"
                 title="Ajouter une joueur au hasard"
                 variant={remainingHumans.length < 1 ? 'flat' : 'primary'}
@@ -277,6 +280,12 @@
             display: flex;
             justify-content: space-between;
             gap: 1rem;
+
+            .status {
+                flex: 1;
+                display: flex;
+                align-items: center;
+            }
 
             .actions {
                 display: flex;

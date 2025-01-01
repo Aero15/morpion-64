@@ -75,10 +75,10 @@
 
         &:not(:disabled) {
             cursor: pointer;
-            background: light-dark(#d1d1d1, #525252);
+            background: light-dark(#00000033, #ffffff33);
 
             &:hover {
-                background: light-dark(#9c9c9c, #888);
+                background: light-dark(#00000077, #ffffff77);
                 border-color: light-dark(#000, #fff);
             }
 

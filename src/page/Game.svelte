@@ -2,13 +2,11 @@
     import { onMount } from "svelte";
     import Grid from "$lib/game/Grid.svelte";
     import Icon from "$lib/shared/Icon.svelte";
-    import Jumbo from "$lib/shared/Jumbo.svelte";
     import Winner from "$lib/game/Winner.svelte";
     import ToolBox from "$lib/game/ToolBox.svelte";
     import { GameView } from "$core/enums/GameView";
     import Bot from "$core/entity/player/Bot.svelte";
     import { fade, scale, slide } from "svelte/transition";
-    import PageWrap from "$lib/global/PageWrap.svelte";
     import Panel from "$lib/shared/panel/Panel.svelte";
     import BottomBar from "$lib/game/BottomBar.svelte";
     import GameStatus from "$lib/game/GameStatus.svelte";
@@ -54,13 +52,7 @@
 
 <Responsive bind:size />
 
-{#if !['sm', 'md', 'lg'].includes(size)}
-    <Jumbo>
-        <div style:padding-top="100px"></div>
-    </Jumbo>
-{/if}
-
-<main id="pg-game"
+<main id="pg-game" class="gradient-grid"
     class:sm={size == 'sm'}
     class:center={currentView == GameView.Game}
 >
@@ -71,77 +63,75 @@
             limit={size == 'sm' ? 2 : 3} />
     </div>
 
-    <PageWrap>
-        <div id="gameCenter" class:with-jumbo={!['sm', 'md', 'lg'].includes(size)}>
-            <aside class="panel">
-                <Panel>
-                    <PanelSection icon="play" open
-                        title={game.endTime === undefined ? "Partie en cours" : "Partie terminée"} >
-                        <div class="pane-content">
-                            <GameStatus bind:game />
-                        </div>
-                    </PanelSection>
-
-                    <PanelSection title="Classement" icon="podium" variant="transparent" bind:open={displayRanking}>
-                        <div class="pane-content">
-                            <Leaderboard bind:game compact limit={3} />
-                        </div>
-                    </PanelSection>
-                </Panel>
-
-                <Panel>
-                    <PanelSection title={game.endTime === undefined ? "Ordre de passage" : "Résultat"} icon="profile" open>
-                        <div class="pane-content">
-                            {#if game.endTime === undefined}
-                                <PlayerTurn bind:game compact />
-                            {/if}
-                            {#if game.endTime !== undefined}
-                                <Winner bind:game />
-                            {/if}
-                        </div>
-                    </PanelSection>
-
-                    {#if game.endTime === undefined}
-                        <PanelSection title="Outils" icon="menu_dots" variant="tinted" open>
-                            <div class="pane-content">
-                                {#if !botIsPlaying}
-                                    <ToolBox bind:game />
-                                {:else}
-                                    <div class="info" transition:slide>
-                                        <Icon icon="bot" size={34} />
-                                        <p><strong>{game.players.getCurrentPlayer()?.name}</strong> est en train de jouer...</p>
-                                    </div>
-                                {/if}
-                            </div>
-                        </PanelSection>
-                    {/if}
-                </Panel>
-            </aside>
-
-            <div class="page" in:scale
-                class:game={size != 'sm' || (['sm'].includes(size) && currentView == GameView.Game)}
-                class:leaderboard={size == 'sm' && currentView == GameView.Leaderboard}
-            >
-                {#if size != 'sm' || (['sm'].includes(size) && currentView == GameView.Game)}
-                    <div in:fade class="tab-game">
-                        <Grid bind:game
-                            flat={size == 'sm'}
-                            compact={['sm', 'md', 'lg'].includes(size)} />
+    <div id="gameCenter">
+        <aside class="panel">
+            <Panel>
+                <PanelSection icon="play" open
+                    title={game.endTime === undefined ? "Partie en cours" : "Partie terminée"} >
+                    <div class="pane-content">
+                        <GameStatus bind:game />
                     </div>
-                {/if}
-                
-                {#if ['sm'].includes(size) && currentView == GameView.Leaderboard}
-                    <div in:fade class="tab-leaderboard">
-                        <div class="title">
-                            <Icon icon="podium" size={24} />
-                            <h2>Classement</h2>
-                        </div>
-                        <Leaderboard bind:game hightlightFirstRows />
+                </PanelSection>
+
+                <PanelSection title="Classement" icon="podium" variant="transparent" bind:open={displayRanking}>
+                    <div class="pane-content">
+                        <Leaderboard bind:game compact limit={3} />
                     </div>
+                </PanelSection>
+            </Panel>
+
+            <Panel>
+                <PanelSection title={game.endTime === undefined ? "Ordre de passage" : "Résultat"} icon="profile" open>
+                    <div class="pane-content">
+                        {#if game.endTime === undefined}
+                            <PlayerTurn bind:game compact />
+                        {/if}
+                        {#if game.endTime !== undefined}
+                            <Winner bind:game />
+                        {/if}
+                    </div>
+                </PanelSection>
+
+                {#if game.endTime === undefined}
+                    <PanelSection title="Outils" icon="menu_dots" variant="transparent" open>
+                        <div class="pane-content">
+                            {#if !botIsPlaying}
+                                <ToolBox bind:game />
+                            {:else}
+                                <div class="info" transition:slide>
+                                    <Icon icon="bot" size={34} />
+                                    <p><strong>{game.players.getCurrentPlayer()?.name}</strong> est en train de jouer...</p>
+                                </div>
+                            {/if}
+                        </div>
+                    </PanelSection>
                 {/if}
-            </div>
+            </Panel>
+        </aside>
+
+        <div class="page" in:scale
+            class:game={size != 'sm' || (['sm'].includes(size) && currentView == GameView.Game)}
+            class:leaderboard={size == 'sm' && currentView == GameView.Leaderboard}
+        >
+            {#if size != 'sm' || (['sm'].includes(size) && currentView == GameView.Game)}
+                <div in:fade class="tab-game">
+                    <Grid bind:game
+                        flat={size == 'sm'}
+                        compact={['sm', 'md', 'lg'].includes(size)} />
+                </div>
+            {/if}
+            
+            {#if ['sm'].includes(size) && currentView == GameView.Leaderboard}
+                <div in:fade class="tab-leaderboard">
+                    <div class="title">
+                        <Icon icon="podium" size={24} />
+                        <h2>Classement</h2>
+                    </div>
+                    <Leaderboard bind:game hightlightFirstRows />
+                </div>
+            {/if}
         </div>
-    </PageWrap>
+    </div>
 
     {#if size == 'sm'}
         <BottomBar bind:game bind:currentView />
@@ -150,6 +140,27 @@
 
 <style>
     #pg-game {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        background-position: center center;
+
+        &.sm {
+            padding: 105px 0 76px;
+            min-height: calc(100vh - (105px + 76px));
+            flex-direction: column;
+            justify-content: center;
+
+            &.center {
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        &:not(.sm) {
+            justify-content: center;
+        }
+
         .top-bar {
             position: fixed;
             inset: 0 0 auto;
@@ -160,17 +171,10 @@
             align-items: start;
             flex-flow: row-reverse;
             justify-content: space-between;
-            background: light-dark(#fff, #323232);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 15px #00000033;
+            background: light-dark(#ffffff33, #00000033);
             border-bottom: 1px solid light-dark(#00000055, #ffffff55);
-        }
-        &.sm {
-            padding: 100px 0 76px;
-            min-height: calc(100vh - 200px);
-
-            &.center {
-                display: flex;
-                align-items: center;
-            }
         }
 
         #gameCenter {
@@ -227,34 +231,27 @@
     }
 
     @media (width >= 640px) {
-        #pg-game :global(.page-wrap) {
-            display: flex;
-            justify-content: center;
-        }
-        
         #pg-game .top-bar { display: none; }
 
         #pg-game #gameCenter {
             grid-template-columns: 300px 1fr;
             align-items: start;
-            gap: 1rem;
+
+            &, .panel {
+                gap: 1rem;
+            }
 
             .panel {
                 display: grid;
                 place-content: start stretch;
-                gap: 1rem;
             }
         }
     }
 
     @media (width >= 1024px) {
-        #pg-game {
-            margin-top: calc(-96px - 150px);
-
-            #gameCenter {
-                &.with-jumbo, .panel {
-                    gap: 2rem;
-                }
+        #pg-game #gameCenter {
+            &, .panel {
+                gap: 2rem;
             }
         }
     }

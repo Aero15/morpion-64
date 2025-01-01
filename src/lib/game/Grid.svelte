@@ -78,6 +78,7 @@
         --radius : 2rem;
 
         position: relative;
+        backdrop-filter: blur(15px);
 
         &:not(.flat) {
             border-radius: var(--radius);
@@ -123,14 +124,18 @@
         }
 
         &.halo:not(.flat) {
+            box-shadow:
+                0 0 3rem light-dark(#ffffff55, #00000055) inset,
+                0 0 0 2px light-dark(#fff, #000);
+
             &::before, &::after {
                 padding: var(--border-width);
             }
             &::before {
-                opacity: 1;
+                opacity: 0;
             }
             &::after {
-                opacity: .9;
+                opacity: .3;
                 filter: blur(2.5rem);
             }
         }

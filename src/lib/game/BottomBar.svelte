@@ -108,8 +108,8 @@
             backdrop-filter: blur(10px);
 
             &.with-halo {
-                background: light-dark(#ffffff99, #00000099);
-                border: 1px solid light-dark(#000000aa, #ffffffaa);
+                background: light-dark(#fff, #000);
+                border: 1px solid transparent;
             }
             &:not(.with-halo) {
                 background: light-dark(#ffffff17, #00000017);

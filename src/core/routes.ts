@@ -20,7 +20,6 @@ export const routes = {
     ...createAsyncRoute('/players',     () => import('$page/Players.svelte')),
     ...createAsyncRoute('/players/:id', () => import('$page/Profile.svelte')),
 
-    ...createAsyncRoute('/opponents',   () => import('$page/Opponents.svelte')),
     ...createAsyncRoute(rt_newGame,     () => import('$page/NewGame.svelte')),
     ...createAsyncRoute(rt_newGame+'/:section',     () => import('$page/NewGame.svelte')),
     ...createAsyncRoute('/game',        () => import('$page/Game.svelte')),

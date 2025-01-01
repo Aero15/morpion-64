@@ -1,4 +1,14 @@
 <script lang="ts">
+    import {
+        clearSelectedPlayers,
+        filterListPlayersWith,
+        selectPlayerById
+    } from "$core/helpers/Players.svelte";
+    import {
+        listBots,
+        selectedPlayers,
+        listPlayers
+    } from "$core/store/players.svelte";
     import Icon from "$lib/shared/Icon.svelte";
     import Button from "$lib/form/Button.svelte";
     import TabBar from "$lib/shared/TabBar.svelte";
@@ -9,11 +19,10 @@
     import ListPlayers from "$lib/player/ListPlayers.svelte";
     import Pagination from "$lib/new-game/Pagination.svelte";
     import { randomBetween } from "$core/helpers/Math.svelte";
+    import type Player from "$core/entity/player/Player.svelte";
     import NavigButtons from "$lib/new-game/NavigButtons.svelte";
     import type { BreakpointSize } from "$core/enums/BreakpointSize";
     import SelectedParticipants from "$lib/player/SelectedParticipants.svelte";
-    import { listBots, selectedPlayers, listPlayers } from "$core/store/players.svelte";
-    import { clearSelectedPlayers, filterListPlayersWith, selectPlayerById } from "$core/helpers/Players.svelte";
 
     let size: BreakpointSize = $state('sm');
 
@@ -47,9 +56,9 @@
     let selectedFilterId = $state(FilterTabs.All);
 
     // List players
-    let remainingBots = $derived(listBots.filter(bot => !selectedPlayers.includes(bot)))
-    let remainingHumans = $derived(listPlayers.filter(player => !selectedPlayers.includes(player)))
-    let availablePlayers = $derived.by(() => {
+    let remainingBots: Player[] = $derived(listBots.filter(bot => !selectedPlayers.includes(bot)))
+    let remainingHumans: Player[] = $derived(listPlayers.filter(player => !selectedPlayers.includes(player)))
+    let availablePlayers: Player[] = $derived.by(() => {
         switch (selectedFilterId) {
             case FilterTabs.All:
                 return [...remainingBots, ...remainingHumans]

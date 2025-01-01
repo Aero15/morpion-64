@@ -1,7 +1,11 @@
 <script lang="ts">
+    import {
+        createBotPlayer, createHumanPlayer,
+        deletePlayerById, findPlayerById, updatePlayer
+    } from "$core/helpers/Players.svelte";
     import { onMount } from "svelte";
     import { fade } from "svelte/transition";
-    import { pop, push } from "svelte-spa-router";
+    import { pop } from "svelte-spa-router";
     import Icon from "$lib/shared/Icon.svelte";
     import Input from "$lib/form/Input.svelte";
     import Button from "$lib/form/Button.svelte";
@@ -18,10 +22,6 @@
     import { randomSymbol } from "$core/helpers/Symbols.svelte";
     import SelectDifficulty from "$lib/form/SelectDifficulty.svelte";
     import SelectTypePlayer from "$lib/form/SelectTypePlayer.svelte";
-    import {
-        createBotPlayer, createHumanPlayer,
-        deletePlayerById, findPlayerById, updatePlayer
-    } from "$core/helpers/Players.svelte";
     import Jumbo from "$lib/shared/Jumbo.svelte";
     import AvatarPreview from "$lib/player/AvatarPreview.svelte";
     import Panel from "$lib/shared/panel/Panel.svelte";

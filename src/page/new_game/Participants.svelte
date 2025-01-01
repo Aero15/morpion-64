@@ -9,6 +9,7 @@
         selectedPlayers,
         listPlayers
     } from "$core/store/players.svelte";
+    import { onMount } from "svelte";
     import Icon from "$lib/shared/Icon.svelte";
     import Button from "$lib/form/Button.svelte";
     import TabBar from "$lib/shared/TabBar.svelte";
@@ -22,8 +23,8 @@
     import type Player from "$core/entity/player/Player.svelte";
     import NavigButtons from "$lib/new-game/NavigButtons.svelte";
     import type { BreakpointSize } from "$core/enums/BreakpointSize";
-    import SelectedParticipants from "$lib/player/SelectedParticipants.svelte";
     import ProgressNbPlayers from "$lib/new-game/ProgressNbPlayers.svelte";
+    import SelectedParticipants from "$lib/player/SelectedParticipants.svelte";
 
     let size: BreakpointSize = $state('sm');
 
@@ -90,6 +91,12 @@
         let index = randomBetween(0, remainingHumans.length - 1)
         selectedPlayers.push(remainingHumans[index])
     }
+
+    onMount(() => {
+        if (selectedPlayers.length > 0) {
+            selectedId = Tabs.Preview
+        }
+    })
 </script>
 
 <Responsive bind:size />
@@ -186,7 +193,7 @@
                     {@render bxInfo({
                         variant: 'empty', icon: 'profile', iconSize: 100,
                         title: 'Aucun joueur selectionné',
-                        description: 'Choisissez un ou plusieurs joueur pour pouvoir lancer une partie.'
+                        description: 'Choisissez un ou plusieurs joueurs pour pouvoir lancer une partie.'
                     })}
                 {/if}
 

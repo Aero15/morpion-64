@@ -39,27 +39,29 @@ h1, h2, h3, h4, h5, h6, strong {
     --cell_border_width: 1px;
     --cell_border_color: light-dark(#fff, #000);
     --cell_border_color: light-dark(#00000056, #ffffff56);
+    --grid_gradient_x: linear-gradient(
+        to right,
+        var(--cell_border_color) var(--cell_border_width),
+        transparent 1px
+    );
+    --grid_gradient_y: linear-gradient(
+        to bottom,
+        var(--cell_border_color) var(--cell_border_width),
+        transparent 1px
+    );
+    --color_gradient: linear-gradient(
+        to right,
+        light-dark(#e1adff, #7202a7),
+        light-dark(#79c0ff, #005b97),
+        light-dark(#8dead9, #00916c)
+    );
 
     background:
         /* Background grid */
-        linear-gradient(
-            to right,
-            var(--cell_border_color) var(--cell_border_width),
-            transparent 1px
-        ),
-        linear-gradient(
-            to bottom,
-            var(--cell_border_color) var(--cell_border_width),
-            transparent 1px
-        ),
+        var(--grid_gradient_x), var(--grid_gradient_y),
         /* Background gradient */
-        linear-gradient(
-            to right,
-            light-dark(#e1adff, #7202a7),
-            light-dark(#79c0ff, #005b97),
-            light-dark(#8dead9, #00916c)
-        ),
-        /* Background color */
+        var(--color_gradient),
+        /* Fallback color */
         light-dark(#fff, #333);
     background-size: 
         var(--cell_size) var(--cell_size),

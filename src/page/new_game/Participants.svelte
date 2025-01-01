@@ -130,7 +130,7 @@
             
             <Button center shape="squared"
                 title="Vider la sélection"
-                variant={selectedPlayers.length < 1 ? 'flat' : 'default'}
+                variant={selectedPlayers.length < 1 ? 'flat' : 'primary-red'}
                 disabled={selectedPlayers.length < 1}
                 onclick={clearSelectedPlayers}>
                 <Icon icon="bin" size={20} />

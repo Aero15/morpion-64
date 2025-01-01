@@ -11,6 +11,7 @@
     import { listBots, listPlayers, selectedPlayers } from '$core/store/players.svelte';
     import { gridSize } from '$core/store/settings.svelte';
     import ListBubbles from '$lib/player/ListBubbles.svelte';
+    import Jumbo from '$lib/shared/Jumbo.svelte';
 
     interface Link {
         icon: string,
@@ -30,6 +31,12 @@
 </script>
 
 <Responsive bind:size />
+
+{#if !['sm', 'md', 'lg'].includes(size)}
+    <div id="homeJumbo">
+        <Jumbo><div style:height="8rem"></div></Jumbo>
+    </div>
+{/if}
 
 {#snippet link(
     icon: string, label: string,
@@ -53,8 +60,10 @@
             {#if ['xl', '2xl'].includes(size)}
                 <h1>Morpion <span>64</span></h1>
             {/if}
-            <p>
+            <p class="catchphrase">
                 <strong>Plus grand, plus fun, plus stratégique !</strong>
+            </p>
+            <p>
                 Choisis ta couleur, ton symbole et défie tes amis,
                 ou joue contre des bots sur des grilles de 3x3 à 8x8.
             </p>
@@ -184,14 +193,25 @@
         &.cols-2 {
             grid-template-columns: 1fr 1fr;
             gap: 3rem;
-            padding-top: 5rem;
+            margin-top: -10rem;
         }
+    }
+
+    #homeJumbo :global(.jumbo) {
+        --color_gradient: linear-gradient(
+            to right,
+            light-dark(#b6fffb, #005457),
+            light-dark(#e2e2e2, #474747),
+            light-dark(#9ec6ff, #00275e),
+            light-dark(#e2e2e2, #474747),
+            light-dark(#f8caf3, #5f0054)
+        );
     }
 
     .ident {
         display: grid;
         gap: 0rem;
-        place-content: center;
+        place-content: start center;
         overflow: hidden;
 
         &.align-center {
@@ -200,12 +220,12 @@
         }
 
         &.align-right { 
-            place-items: end;
-            text-align: end;
+            place-items: center;
+            text-align: center;
         }
 
         img {
-            max-width: clamp(100px, 16vw, 200px);
+            max-width: clamp(100px, 16vw, 250px);
         }
 
         h1 {
@@ -223,7 +243,16 @@
 
         p {
             max-width: 400px;
-            font-size: clamp(.9rem, 2vw, 1rem);
+            margin: 0;
+
+            &.catchphrase {
+                margin: 1rem 0 .25rem;
+                font-size: clamp(.9rem, 2vw, 1rem);
+            }
+
+            &:not(.catchphrase) {
+                font-size: clamp(.8rem, 2vw, .9rem);
+            }
         }
     }
 
@@ -234,6 +263,8 @@
         grid-template-columns: 1fr 1fr 1fr;
         max-width: 500px;
         flex: 1 1 0;
+        position: relative;
+        z-index: 1;
 
         .huge-block {
             grid-column: 1/4;

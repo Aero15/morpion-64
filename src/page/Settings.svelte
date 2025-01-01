@@ -26,8 +26,8 @@
         ResponseTime: 1,
     }
     let tabs = [
-        { name: 'Plateau de jeu', icon: 'squares', id: Tabs.GridSize },
-        { name: 'Temps de réponse', icon: 'bot', id: Tabs.ResponseTime },
+        { name: 'Plateau de jeu', icon: 'layout', id: Tabs.GridSize },
+        { name: 'Temps de réponse', icon: 'clock', id: Tabs.ResponseTime },
     ]
     let selectedId = $state(Tabs.GridSize);
 

@@ -5,7 +5,7 @@
 </script>
 
 <main in:fade>
-    <Icon icon="bot" size={100} />
+    <Icon icon="bot2" size={100} />
     <h2>Rien à voir par ici</h2>
     <p>Erreur 404 : page non trouvée</p>
 

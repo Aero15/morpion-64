@@ -10,10 +10,10 @@ export let selectedPlayers: Player[] = $state([])
 
 // Liste des bots
 export let listBots: Player[] = $state([
-    new Bot("Cortana", Symbol.Percent, Color.Pink, Difficulty.Peaceful),
+    new Bot("Cortana", Symbol.Hash, Color.Pink, Difficulty.Peaceful),
     new Bot("Alexa", Symbol.Square, Color.Blue, Difficulty.Easy),
     new Bot("Siri", Symbol.Circle, Color.Orange, Difficulty.Medium),
-    new Bot("Bixbi", Symbol.Triangle, '#00ff00', Difficulty.Hard),
+    new Bot("Bixbi", Symbol.Cloud, '#00ff00', Difficulty.Hard),
     new Bot("Jarvis", Symbol.Bot, Color.Red, Difficulty.Impossible)
 ])
 

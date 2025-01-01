@@ -56,7 +56,7 @@
                 {#if displayType}
                     <div class="type">
                         {#if type == PlayerType.Bot}
-                            <Icon icon="bot" size={16} />
+                            <Icon icon="bot2" size={16} />
                             <p>Bot</p>
                         {/if}
                         {#if type == PlayerType.Human}

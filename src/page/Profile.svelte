@@ -59,12 +59,12 @@
         { name: 'Symbole', icon: 'compass', id: Tabs.Symbol },
         { name: 'Couleur', icon: 'palette', id: Tabs.Color },
         { name: 'Identité', icon: 'write', id: Tabs.Rename },
-        { name: 'Difficulté', icon: 'bot', id: Tabs.Difficulty },
+        { name: 'Difficulté', icon: 'filters', id: Tabs.Difficulty },
     ]
     let tabsPC = [
         { name: 'Apparence', icon: 'palette', id: Tabs.Look },
         { name: 'Identité', icon: 'write', id: Tabs.Rename },
-        { name: 'Difficulté', icon: 'bot', id: Tabs.Difficulty },
+        { name: 'Difficulté', icon: 'filters', id: Tabs.Difficulty },
     ]
 
     let size: BreakpointSize = $state('sm')
@@ -154,7 +154,7 @@
 
             <div class="type">
                 {#if type == PlayerType.Bot}
-                    <Icon icon="bot" size={16} />
+                    <Icon icon="bot2" size={16} />
                     <p>Bot</p>
                 {/if}
                 {#if type == PlayerType.Human}

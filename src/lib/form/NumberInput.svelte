@@ -56,7 +56,7 @@
             disabled={!canDecrement}
             onclick={decrement}
             title="Décrémenter">
-            <Icon icon="minus" size={16} />
+            <Icon icon="line" size={16} />
         </button>
     
         <button class="increment"

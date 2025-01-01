@@ -96,14 +96,14 @@
                 {/if}
             </Collapse>
             
-            <Collapse title="Bots" icon="bot" open
+            <Collapse title="Bots" icon="bot2" open
                 subtitle={ bots.length + ' résultats' }
             >
                 {#if bots.length > 0}
                     <ListPlayers players={bots} {onPlayerClick} />
                 {:else}
                     <div class="empty">
-                        <Icon icon="bot" size={64} />
+                        <Icon icon="bot2" size={64} />
                         <p>Aucun bot à afficher</p>
                         <Button variant="primary" center
                             onclick={openEditor}>

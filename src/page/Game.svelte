@@ -99,7 +99,7 @@
                                 <ToolBox bind:game />
                             {:else}
                                 <div class="info" transition:slide>
-                                    <Icon icon="bot" size={34} />
+                                    <Icon icon="bot2" size={34} />
                                     <p><strong>{game.players.getCurrentPlayer()?.name}</strong> est en train de jouer...</p>
                                 </div>
                             {/if}

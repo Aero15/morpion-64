@@ -53,7 +53,7 @@
     let filterTabs = [
         { name: 'Tous', icon: 'asterisk', id: FilterTabs.All },
         { name: 'Joueurs', icon: 'user', id: FilterTabs.Humans },
-        { name: 'Bots', icon: 'bot', id: FilterTabs.Bots },
+        { name: 'Bots', icon: 'bot2', id: FilterTabs.Bots },
     ]
     let selectedFilterId = $state(FilterTabs.All);
 
@@ -122,7 +122,7 @@
                 title="Ajouter un bot au hasard"
                 variant={remainingBots.length < 1 ? 'flat' : 'default'}
                 disabled={remainingBots.length < 1}>
-                <Icon icon="bot" size={20} />
+                <Icon icon="bot2" size={20} />
                 <span class="expo">
                     <Icon icon="plus" size={14} />
                 </span>

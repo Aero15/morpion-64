@@ -9,13 +9,13 @@
     function getIconFor(item: Difficulty): string {
         switch (item) {
             case Difficulty.Peaceful:
-                return 'emoji';
+                return 'cloud';
             case Difficulty.Easy:
-                return 'check';
+                return 'emoji';
             case Difficulty.Medium:
                 return 'user';
             case Difficulty.Hard:
-                return 'bot';
+                return 'bot2';
             case Difficulty.Impossible:
                 return 'disable';
             default:

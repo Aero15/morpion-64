@@ -39,7 +39,7 @@
     let tabs = [
         { name: 'Général', icon: 'asterisk', id: Categories.General },
         { name: 'Humains', icon: 'user', id: Categories.Humans },
-        { name: 'Bots', icon: 'bot', id: Categories.Bots },
+        { name: 'Bots', icon: 'bot2', id: Categories.Bots },
     ]
 
     let size: BreakpointSize = $state('sm')

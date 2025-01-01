@@ -42,7 +42,7 @@
 
     {#if type === PlayerType.Bot}
         <div class="bubble">
-            <Icon icon="bot" size={ compact ? 16 : 18 } />
+            <Icon icon="bot2" size={ compact ? 16 : 18 } />
         </div>
     {/if}
 </div>

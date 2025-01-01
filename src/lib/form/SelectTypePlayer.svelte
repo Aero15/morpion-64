@@ -11,7 +11,7 @@
             case PlayerType.Human:
                 return 'user';
             case PlayerType.Bot:
-                return 'bot';
+                return 'bot2';
             default:
                 return 'question';
         }

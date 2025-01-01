@@ -8,6 +8,9 @@
     import Responsive from '$lib/shared/Responsive.svelte';
     import type { BreakpointSize } from '$core/enums/BreakpointSize';
     import PageWrap from '$lib/global/PageWrap.svelte';
+    import { listBots, listPlayers, selectedPlayers } from '$core/store/players.svelte';
+    import { gridSize } from '$core/store/settings.svelte';
+    import ListBubbles from '$lib/player/ListBubbles.svelte';
 
     interface Link {
         icon: string,
@@ -58,17 +61,110 @@
         </div>
 
         <div class="tiles grid grid-cols-3" in:fade>
-            <Halo visibleOnHover>
-                <Button variant="primary" onclick={ () => push('/new-game/grid') }>
+            {#snippet small_link(
+                icon: string,
+                iconSize: number,
+                path: string,
+                title: string,
+                legend?: string,
+            )}
+                <a href={path} class="link-item">
+                    <Icon {icon} size={iconSize} />
+
                     <div class="text">
-                        <strong>Jouer !</strong>
-                        {#if ['xl', '2xl'].includes(size)}
-                            <p>Lancer une nouvelle partie entre amis ou des bots</p>
+                        {#if title.length > 0}
+                            <p class="title"><strong>{title}</strong></p>
+                        {/if}
+                        {#if legend && legend.length > 0}
+                            <p class="legend">{legend}</p>
                         {/if}
                     </div>
-                    <Icon icon="play" />
-                </Button>
-            </Halo>
+                </a>
+            {/snippet}
+
+            <div class="huge-block">
+                <Halo visibleOnHover borderWidth="1rem" cornerRadius="1rem">
+                    <div class="bx-tile huge">
+                        {#if selectedPlayers.length > 1}
+                            <a href="#/new-game/recap" class="big-link">
+                                <div class="head">
+                                    <div class="text">
+                                        <p class="title"><strong>Rejouer</strong></p>
+                                        <p class="legend">Relancer la dernière partie</p>
+                                    </div>
+    
+                                    <Icon icon="replay" size={['xl', '2xl'].includes(size) ? 80 : 46} />
+                                </div>
+    
+                                <div class="foot">
+                                    <ListBubbles players={selectedPlayers} compact />
+
+                                    <div class="gridSize">
+                                        <Icon icon="expand_diagonal" size={28} />
+                                        <p>{gridSize.x}x{gridSize.y}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        {:else}
+                            <a href="#/new-game/grid" class="big-link">
+                                <div class="head">
+                                    <div class="text">
+                                        <p class="title"><strong>Nouvelle partie</strong></p>
+                                        <p class="legend">Démarrer une toute nouvelle partie</p>
+                                    </div>
+    
+                                    <Icon icon="dice" size={['xl', '2xl'].includes(size) ? 80 : 46} />
+                                </div>
+
+                                <div class="foot">
+                                    <div class="numbers">
+                                        <div class="number-item humans">
+                                            <div class="bubbles">
+                                                <Icon icon="user" size={20} />
+                                                <p class="count">{listPlayers.length}</p>
+                                            </div>
+                                            <p class="label">Joueurs</p>
+                                        </div>
+                                        <div class="number-item bots">
+                                            <div class="bubbles">
+                                                <Icon icon="bot2" size={20} />
+                                                <p class="count">{listBots.length}</p>
+                                            </div>
+                                            <p class="label">Bots</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="gridSize">
+                                        <Icon icon="expand_diagonal" size={28} />
+                                        <p>{gridSize.x}x{gridSize.y}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        {/if}
+    
+                        {#if selectedPlayers.length > 0 /*|| listBots.length > 1*/}
+                            <div class="small-links">
+                                {#if selectedPlayers.length > 0}
+                                    {@render small_link(
+                                        'play', 28, '#/new-game/participants', 'Nouvelle partie',
+                                        'Sélectionnez vos adversaires'
+                                    )}
+                                {/if}
+                                <!-- {#if listBots.length > 1}
+                                    {@render small_link(
+                                        'bot', 28, '#/new-game/bots', 'Combat entre bots',
+                                        'Lancer une partie entre bots'
+                                    )}
+                                {/if} -->
+                                {@render small_link(
+                                    'settings', 28, '#/new-game/grid', 'Nouvelle configuration',
+                                    'Redimensionnez la grille de jeu'
+                                )}
+                            </div>
+                        {/if}
+                    </div>
+                </Halo>
+            </div>
             
             {#each links as {icon, label, path, variant, iconSize}}
                 {@render link(icon, label, path, variant, iconSize)}
@@ -139,12 +235,175 @@
         max-width: 500px;
         flex: 1 1 0;
 
+        .huge-block {
+            grid-column: 1/4;
+            display: grid;
+        }
+
+        .bx-tile {
+            border-radius: 1rem;
+            overflow: clip;
+
+            a {
+                color: inherit;
+                text-decoration: none;
+
+                &:hover, &:focus-visible {
+                    background: light-dark(#00000033, #ffffff33);
+                }
+
+                &:active {
+                    background: light-dark(#00000055, #ffffff55);
+                }
+            }
+
+            &.huge {
+                background: light-dark(#93d4ff, #0078c8);
+                background: linear-gradient(
+                    to left,
+                    light-dark(#b39eff, #6f00b9),
+                    light-dark(#50b9ff, #005f9e),
+                    light-dark(#93d4ff, #0078c8)
+                );
+                /*background: light-dark(#0078c8, #0078c8);
+                background: linear-gradient(
+                    to right bottom,
+                    #caffde,
+                    #fff,
+                    #d2e5ff,
+                    #fff,
+                    #f3cfef
+                );*/
+                background-repeat: no-repeat;
+                box-shadow: 0 3px 15px #00000033;
+
+                .big-link {
+                    display: flex;
+                    flex-flow: column;
+                    justify-content: space-between;
+                    gap: 3rem;
+                    padding: clamp(1rem, 2vw, 2rem);
+                    min-height: clamp(8rem, 16vw, 12rem);
+
+                    .head, .foot {
+                        display: flex;
+                        justify-content: space-between;
+                    }
+
+                    .head {
+                        align-items: start;
+
+                        p {
+                            margin: 0;
+
+                            &.title {
+                                font-size: clamp(1.2em, 3vw, 2.5em);
+                                margin-top: -.35em;
+                            }
+
+                            &.legend {
+                                font-size: clamp(.8em, 3vw, .9em);
+                            }
+                        }
+                    }
+
+                    .foot {
+                        align-items: end;
+
+                        .gridSize {
+                            display: flex;
+                            flex-flow: column;
+                            align-items: center;
+                            gap: .5rem;
+                            font-size: .9em;
+
+                            p {
+                                margin: -.5em 0 0;
+                            }
+                        }
+
+                        .numbers {
+                            display: flex;
+                            align-items: center;
+                            gap: 1.5rem;
+
+                            .number-item {
+                                display: flex;
+                                flex-flow: column;
+                                align-items: center;
+                                text-align: center;
+                                --tint: lime;
+
+                                &.humans {
+                                    --tint: light-dark(#ffa229, #d87a00);
+                                }
+                                &.bots {
+                                    --tint: light-dark(#ff76f8, #d800cd);
+                                }
+
+                                .bubbles {
+                                    display: flex;
+                                    align-items: center;
+                                    gap: .5rem;
+
+                                    :global(.icon) {
+                                        width: 2rem;
+                                        aspect-ratio: 1;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        background: var(--tint);
+                                        border-radius: 100%;
+                                        border: 1px solid light-dark(#00000077, #ffffff77);
+                                    }
+
+                                    .count {
+                                        font-size: 1.5rem;
+                                    }
+                                }
+
+                                p {
+                                    margin: 0;
+
+                                    &.label {
+                                        font-size: clamp(.8rem, 3vw, .9rem);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .small-links {
+                display: grid;
+
+                .link-item {
+                    display: flex;
+                    align-items: center;
+                    padding: .75rem 1rem;
+                    gap: .75rem;
+                    border-top: 1px solid light-dark(#00000055, #ffffff55);
+                    transition: background .2s;
+
+                    .text {
+                        p {
+                            margin: 0;
+
+                            &.title {font-size: .9em;}
+                            &.legend {font-size: .8em;}
+                        }
+                    }
+                }
+            }
+        }
+
         :global {
-            .halo {
+            /*.halo {
                 grid-column: 1/4;
                 aspect-ratio: 16/9;
                 display: grid;
-            }
+            }*/
 
             button {
                 &:first-child {

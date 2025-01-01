@@ -3,13 +3,18 @@
     import { fade } from "svelte/transition";
 
     interface Props {
-        icon: string,
+        icon?: string,
         title: string,
         delay?: number,
         children: () => any
     }
 
-    let { icon, title, delay = 0, children }: Props = $props();
+    let {
+        icon = '',
+        title = '',
+        delay = 0,
+        children
+    }: Props = $props();
 </script>
 
 <section in:fade={{
@@ -17,7 +22,9 @@
     duration: 250
 }}>
     <div class="head">
-        <Icon {icon} size={32} />
+        {#if icon.length > 0}
+            <Icon {icon} size={32} />
+        {/if}
         <h2>{title}</h2>
     </div>
 

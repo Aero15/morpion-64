@@ -65,7 +65,8 @@ export default defineConfig({
       $core: '/src/core',
       $css: '/src/assets/css',
       $png: '/src/assets/png',
-      $svg: '/src/assets/svg'
+      $svg: '/src/assets/svg',
+      $i18n: '/src/i18n'
     }
   }
 })

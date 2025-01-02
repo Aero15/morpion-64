@@ -12,6 +12,7 @@
     import { gridSize } from '$core/store/settings.svelte';
     import ListBubbles from '$lib/player/ListBubbles.svelte';
     import Jumbo from '$lib/shared/Jumbo.svelte';
+    import { _ } from 'svelte-i18n';
 
     interface Link {
         icon: string,
@@ -61,12 +62,9 @@
                 <h1>Morpion <span>64</span></h1>
             {/if}
             <p class="catchphrase">
-                <strong>Plus grand, plus fun, plus stratégique !</strong>
+                <strong>{ $_('home.catchphrase') }</strong>
             </p>
-            <p>
-                Choisis ta couleur, ton symbole et défie tes amis,
-                ou joue contre des bots sur des grilles de 3x3 à 8x8.
-            </p>
+            <p>{ $_('home.introduction') }</p>
         </div>
 
         <div class="tiles grid grid-cols-3" in:fade>

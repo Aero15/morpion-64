@@ -9,3 +9,6 @@ export let maxGridSize: Point = new Point(8, 8)
 
 // Bot response delay
 export let botSpeedDelay = writable(BotDelay.Fast)
+
+// Language
+export let current_language = $state('auto')

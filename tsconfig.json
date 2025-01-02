@@ -32,7 +32,10 @@
       "$png/*": ["./src/assets/png/*"],
 
       "$svg": ["./src/assets/svg"],
-      "$svg/*": ["./src/assets/svg/*"]
+      "$svg/*": ["./src/assets/svg/*"],
+
+      "$i18n": ["./src/i18n"],
+      "$i18n/*": ["./src/i18n/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte"],

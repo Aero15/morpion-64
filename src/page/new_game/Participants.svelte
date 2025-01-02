@@ -10,6 +10,7 @@
         listPlayers
     } from "$core/store/players.svelte";
     import { onMount } from "svelte";
+    import { push } from "svelte-spa-router";
     import Icon from "$lib/shared/Icon.svelte";
     import Button from "$lib/form/Button.svelte";
     import TabBar from "$lib/shared/TabBar.svelte";
@@ -237,6 +238,18 @@
                             })}
                         {/if}
                     {/if}
+
+                    <div class="newPlayer">
+                        <Button
+                            onclick={() => push('/players/0')}
+                        >
+                            <Icon icon="plus" size={28} />
+                            <div class="text">
+                                <p class="title"><strong>Créer un joueur</strong></p>
+                                <p class="legend">Mon nom ne figure pas dans la liste</p>
+                            </div>
+                        </Button>
+                    </div>
                 </div>
             </div>
         {/if}
@@ -248,6 +261,27 @@
         .picker {
             display: grid;
             gap: 1rem;
+
+            .newPlayer {
+                display: flex;
+                justify-content: center;
+                margin-top: 1rem;
+
+                p {
+                    margin: 0;
+
+                    &.title {font-size: .9em;}
+                    &.legend {font-size: .8em;}
+                }
+
+                :global(button) {
+                    gap: 1rem;
+                    display: flex;
+                    align-items: center;
+                    padding: 1rem 1.5rem;
+                    text-align: start;
+                }
+            }
         }
 
         .info {

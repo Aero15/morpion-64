@@ -31,7 +31,7 @@ export default class Bot extends Player {
         this._strategySettings = StrategyFactory.getStrategy(difficulty);
     }
   
-    // Getter et Setter pour difficulty
+    // Getter and Setter for difficulty
     get difficulty(): Difficulty {
         return this._difficulty;
     }
@@ -40,7 +40,7 @@ export default class Bot extends Player {
         this._difficulty = value;
     }
 
-    // Getter et Setter pour strategySettings
+    // Getter and Setter for strategySettings
     get strategySettings(): StrategySettings {
         return this._strategySettings;
     }
@@ -86,13 +86,13 @@ export default class Bot extends Player {
         position: Point,
         game: GameEngine
     ): void {
-        // Calcul du delai
+        // Calculation of the delay
         let delayInterval = getBotSpeedDelay()
         let minDelay = delayInterval.x;
         let maxDelay = delayInterval.y;
         let delay = randomBetween(minDelay, maxDelay);
 
-        // Placer le symbole apres le delai
+        // Put the symbol after the delay
         setTimeout(() => {
             game.placeAt(position);
         }, delay);

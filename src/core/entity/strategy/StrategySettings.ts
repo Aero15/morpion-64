@@ -31,22 +31,22 @@ export default class StrategySettings {
         this._strategyRanges = [...value];
     }
 
-    // Méthode privée de validation
+    // Validation
     private validateStrategyRanges(): void {
-        // Validation des valeurs individuelles
+        // Validation of individual values
         for (const range of this._strategyRanges) {
             if (range.minimum < 0) {
-                throw new Error('Le minimum() ne peut pas être négatif');
+                throw new Error('[StrategySettings] The minimum value cannot be negative');
             }
             if (range.maximum < range.minimum) {
-                throw new Error('Le maximum() doit être supérieur ou égal au minimum()');
+                throw new Error('[StrategySettings] The maximum value must be greater than or equal to the minimum');
             }
             if (range.maximum > 100) {
-                throw new Error('Le maximum() ne peut pas dépasser 100');
+                throw new Error('[StrategySettings] The maximum value cannot exceed 100');
             }
         }
 
-        // Validation des chevauchements
+        // Validation of overlaps between ranges
         const sortedRanges = [...this._strategyRanges].sort((a, b) => a.minimum - b.minimum);
         
         for (let i = 0; i < sortedRanges.length - 1; i++) {
@@ -54,15 +54,17 @@ export default class StrategySettings {
             const nextRange = sortedRanges[i + 1];
             
             if (currentRange.maximum > nextRange.minimum) {
+                let current = `(${currentRange.minimum}-${currentRange.maximum})`;
+                let next = `(${nextRange.minimum}-${nextRange.maximum})`;
                 throw new Error(
-                    `Chevauchement détecté entre les stratégies (${this.difficulty}) : ` +
-                    `${StrategyTask[currentRange.task]} (${currentRange.minimum}-${currentRange.maximum}) et ` +
-                    `${StrategyTask[nextRange.task]} (${nextRange.minimum}-${nextRange.maximum})`
+                    `[StrategySettings] Overlap detected between strategies (${this.difficulty}) : ` +
+                    `${StrategyTask[currentRange.task]} ${current} and ` +
+                    `${StrategyTask[nextRange.task]} ${next}`
                 );
             }
         }
 
-        // Validation optionnelle : vérifier que les plages couvrent exactement 0-100
+        // Optional validation: check that the ranges cover exactly 0-100
         const hasGaps = sortedRanges.length > 0 && (
             sortedRanges[0].minimum > 0 ||
             sortedRanges[sortedRanges.length - 1].maximum < 100 ||
@@ -72,23 +74,23 @@ export default class StrategySettings {
         );
 
         if (hasGaps) {
-            throw new Error('Les plages de stratégies doivent couvrir l\'ensemble des valeurs de 0 à 100 sans gaps');
+            throw new Error('Strategy ranges should cover the entire range from 0 to 100 without gaps');
         }
     }
 
-    // Méthode pour ajouter une nouvelle stratégie
+    // Add a new strategy range
     public addStrategyRange(range: StrategyRange): void {
         const newRanges = [...this._strategyRanges, range];
         this._strategyRanges = newRanges;
         this.validateStrategyRanges();
     }
 
-    // Méthode pour supprimer une stratégie
+    // Remove a strategy range
     public removeStrategyRange(task: StrategyTask): void {
         this._strategyRanges = this._strategyRanges.filter(range => range.task !== task);
     }
 
-    // Retourne une stratégie aleatoire
+    // Returns a random strategy
     public getRandomStrategy(): StrategyTask {
         const random = Math.random() * 100;
         const rangeStrategy = this.strategyRanges

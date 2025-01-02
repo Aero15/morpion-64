@@ -10,22 +10,22 @@ export default class Point {
         this._y = y;
     }
   
-    // Getter pour x
+    // Getter for x
     get x(): number {
         return this._x;
     }
   
-    // Setter pour x
+    // Setter for x
     set x(value: number) {
         this._x = value;
     }
   
-    // Getter pour y
+    // Getter for y
     get y(): number {
         return this._y;
     }
   
-    // Setter pour y
+    // Setter for y
     set y(value: number) {
         this._y = value;
     }

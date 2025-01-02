@@ -3,10 +3,10 @@ import Point from "$core/entity/board/Point.svelte";
 import type IStrategicPositions from "$core/interface/IStrategicPositions";
 
 /**
- * Recherche des positions stratégiques pour aligner 3 symboles (symbol/couleur).
- * @param symbol Le symbole à chercher.
- * @param color La couleur associée au symbole.
- * @returns Une liste de positions stratégiques pour aligner 3 symboles ou une liste vide.
+ * Search for strategic positions to align 3 symbols (& color).
+ * @param symbol The symbol to find.
+ * @param color The color associated with the symbol.
+ * @returns The list of strategic positions  to align 3 symbols, or an empty list if there is no result.
  */
 export function findStrategicPositions(
     board: GameBoard,
@@ -16,10 +16,10 @@ export function findStrategicPositions(
     const positionsToCompleteTwoSymbols: Point[] = [];
     const positionsToCompleteOneSymbol: Point[] = [];
 
-    // Vérification des lignes, colonnes et diagonales
+    // Checking lines, columns and diagonals
     for (let row = 0; row < board.rows; row++) {
         for (let col = 0; col < board.cols; col++) {
-            // Vérifie chaque direction
+            // Check each direction
             if (col <= board.cols - board.nbSymbolsInRow) {
                 checkLine(board, row, col, 0, 1, symbol, color, positionsToCompleteTwoSymbols, positionsToCompleteOneSymbol);  // Horizontal
             }
@@ -35,14 +35,14 @@ export function findStrategicPositions(
         }
     }
 
-    // Supprimer les doublons dans les deux listes
+    // Return the list of strategic positions
     return {
         twoSymbolsPositions: removeDuplicatePositions(positionsToCompleteTwoSymbols),
         oneSymbolPositions: removeDuplicatePositions(positionsToCompleteOneSymbol)
     };
 }
 
-// Vérifie une ligne (horizontale, verticale, diagonale) pour 1 ou 2 symboles et cases vides
+// Check a line (horizontal, vertical, diagonal) for 1 or 2 symbols and empty cells
 function checkLine(
     board: GameBoard,
     startRow: number, startCol: number,
@@ -55,43 +55,43 @@ function checkLine(
     let emptyCount = 0;
     const emptyPositions: Point[] = [];
 
-    // Parcours la ligne et compte les symboles et les cases vides
+    // Parse a line and count symbols and empty cells
     for (let i = 0; i < board.nbSymbolsInRow; i++) {
         const row = startRow + i * rowIncrement;
         const col = startCol + i * colIncrement;
         const cell = board.getCellAt(new Point(row, col));
 
         if (cell?.symbol === symbol && cell.color === color) {
-            symbolCount++;  // Comptabilise les symboles trouvés
+            symbolCount++;  // Count the number of symbols
         } else if (cell?.isEmpty()) {
-            emptyCount++;  // Comptabilise les cases vides
-            emptyPositions.push(new Point(row, col));  // Enregistre la position vide
+            emptyCount++;  // Count the number of empty cells
+            emptyPositions.push(new Point(row, col));  // Save the position of the empty cell
         }
     }
 
-    // Si 2 symboles et 1 case vide, c'est une position pour compléter l'alignement
+    // If there are 2 same symbols and 1 empty cell, it's a position to complete the alignment
     if (symbolCount === 2 && emptyCount === 1) {
-        positionsToCompleteTwoSymbols.push(emptyPositions[0]);  // Ajouter la case vide
+        positionsToCompleteTwoSymbols.push(emptyPositions[0]); // Add the position of the empty cell
     }
 
-    // Si 1 symbole et 2 cases vides, c'est une position pour compléter l'alignement avec 2 symboles
+    // If there is 1 symbol and 2 empty cells, it's another position to complete the alignment
     if (symbolCount === 1 && emptyCount === 2) {
-        positionsToCompleteOneSymbol.push(...emptyPositions);  // Ajouter les deux positions vides
+        positionsToCompleteOneSymbol.push(...emptyPositions); // Add the positions of the empty cells
     }
 }
 
-// Méthode pour supprimer les doublons dans la liste des positions
+// Remove duplicate positions from the list
 function removeDuplicatePositions(
     positions: Point[]
 ): Point[] {
-    const uniquePositions = new Set<string>(); // Utilise un Set pour éliminer les doublons
+    const uniquePositions = new Set<string>(); // Using a Set to store unique positions
     const result: Point[] = [];
 
     for (const position of positions) {
-        const positionKey = `${position.x},${position.y}`;  // Création d'une clé unique pour chaque position
+        const positionKey = `${position.x},${position.y}`; // Create a unique key for each position
         if (!uniquePositions.has(positionKey)) {
-            uniquePositions.add(positionKey);  // Si la position n'a pas encore été rencontrée, on l'ajoute
-            result.push(position);  // Ajoute la position dans la liste finale
+            uniquePositions.add(positionKey); // If the position is unique, add it to the Set
+            result.push(position);  // Add the position to the result
         }
     }
 

@@ -22,11 +22,12 @@ export default class GameBoard {
             rows < minGridSize.x || rows > maxGridSize.x ||
             cols < minGridSize.y || cols > maxGridSize.y
         ) {
-            const min = minGridSize.x
-            const max = maxGridSize.x
+            const minX = minGridSize.x,     minY = minGridSize.y
+            const maxX = maxGridSize.x,     maxY = maxGridSize.y
+            const min  = `${minX}x${minY}`, max  = `${maxX}x${maxY}`
             throw new Error(`
-                Le nombre de lignes et de colonnes doit
-                être compris entre ${min} et ${max}.
+                The number of rows and columns must be between
+                ${min} and ${max}.
             `);
         }
 
@@ -61,55 +62,55 @@ export default class GameBoard {
         return this._nbSymbolsInRow;
     }
   
-    // Méthode pour placer un symbole à une position donnée
+    // Place symbol at position
     placeSymbolAt(
         position: Point,
         symbol: Symbol,
         color: Color | string
     ): void {
         const cell = this.getCellAt(position);
+        // Do check
         if (!cell) {
-            throw new Error("Position invalide.");
+            throw new Error("Invalid position.");
         }
         if (!cell.isEmpty()) {
-            throw new Error("La cellule est déjà remplie.");
+            throw new Error("The cell is already filled.");
         }
 
+        // Update cell symbol and color
         const { x, y } = position;
-        this._grid[x][y].symbol = symbol; // Place le symbole dans la cellule
+        this._grid[x][y].symbol = symbol;
         this._grid[x][y].color = color;
     }
 
     setEmptyAt(position: Point): void {
         const cell = this.getCellAt(position);
         if (!cell) {
-            throw new Error("Position invalide.");
+            throw new Error("Invalid position.");
         }
         const { x, y } = position;
         this._grid[x][y].clear();
     }
   
-    // Méthode pour obtenir le symbole à une position donnée
     getSymbolAt(position: Point): string | undefined {
         const cell = this.getCellAt(position);
-        return cell ? cell.symbol : undefined; // Retourne le symbole ou undefined si la cellule est vide
+        return cell ? cell.symbol : undefined;
     }
 
-    // Méthode pour obtenir la couleur à une position donnée
     getColorAt(position: Point): string | undefined {
         const cell = this.getCellAt(position);
-        return cell ? cell.color : undefined; // Retourne le symbole ou undefined si la cellule est vide
+        return cell ? cell.color : undefined;
     }
   
-    // Méthode pour obtenir la cellule à une position donnée
     getCellAt(position: Point): Cell | undefined {
         const { x, y } = position;
         if (this._grid[x] && this._grid[x][y]) {
-            return this._grid[x][y];
+            return this._grid[x][y]; // Return the cell if it exists
         }
-        return undefined; // Retourne undefined si la position est invalide
+        return undefined; // Return undefined if not
     }
 
+    // Return all empty positions in the board
     getEmptyPositions(): Point[] {
         const emptyPositions: Point[] = [];
         for (const row of this._grid) {
@@ -130,7 +131,7 @@ export default class GameBoard {
         this._grid[x][y].highlighted = highlight
     }
 
-    // Effacer la surbrillance des cellules
+    // Remove all highlight in the board
     clearHighlight(): void {
         for (const row of this._grid) {
             for (const cell of row) {
@@ -140,10 +141,10 @@ export default class GameBoard {
     }
 
     /**
-     * Recherche des positions stratégiques pour aligner 3 symboles (symbol/couleur).
-     * @param symbol Le symbole à chercher.
-     * @param color La couleur associée au symbole.
-     * @returns Une liste de positions stratégiques pour aligner 3 symboles ou une liste vide.
+     * Search for strategic positions to align 3 symbols (symbol and color).
+     * @param symbol The symbol to find.
+     * @param color The color associated with the symbol.
+     * @returns A list of strategic positions to align 3 symbols or an empty list.
      */
     findStrategicPositions(
         symbol: string,

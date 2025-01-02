@@ -18,16 +18,16 @@ export default class Cell {
         this._symbol = symbol;
         this._color = color;
 
-        // Remplir la date si un symbole est fourni
+        // Save timestamp if symbol is set
         this._filledAt = this._symbol ? new Date() : undefined;
     }
   
-    // Getter pour position
+    // Getter for position
     get position(): Point {
       return this._position;
     }
   
-    // Getter et Setter pour symbol
+    // Getter and Setter for symbol
     get symbol(): string | undefined {
       return this._symbol;
     }
@@ -35,11 +35,11 @@ export default class Cell {
     set symbol(value: Symbol | undefined) {
       this._symbol = value;
 
-      // Met à jour filledAt en conséquence
+      // Update filledAt
       this._filledAt = value ? new Date() : undefined;
     }
 
-    // Getter et Setter pour color
+    // Getter and Setter for color
     get color(): Color | string | undefined {
       return this._color;
     }
@@ -48,7 +48,7 @@ export default class Cell {
       this._color = value;
     }
 
-    // Getter et Setter pour highlighted
+    // Getter and Setter for highlighted
     get highlighted(): boolean {
       return this._highlighted;
     }
@@ -57,12 +57,12 @@ export default class Cell {
       this._highlighted = value;
     }
   
-    // Getter pour filledAt
+    // Getter for filledAt
     get filledAt(): Date | undefined {
       return this._filledAt;
     }
   
-    // Méthode pour vérifier si la cellule est vide
+    // Return true if the cell is empty
     isEmpty(): boolean {
       return this._symbol === undefined;
     }

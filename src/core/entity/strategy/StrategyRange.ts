@@ -17,42 +17,39 @@ export default class StrategyRange {
         this._task = task;
     }
 
-    // Getter pour la valeur minimum
+    // Getter for the minimum value
     get minimum(): number {
         return this._minimum;
     }
 
-    // Setter pour la valeur minimum
     set minimum(minimum: number) {
         this._minimum = minimum;
     }
 
-    // Getter pour la valeur maximum
+    // Getter for the maximum value
     get maximum(): number {
         return this._maximum;
     }
 
-    // Setter pour la valeur maximum
     set maximum(maximum: number) {
         this._maximum = maximum;
     }
 
-    // Getter pour la tâche (StrategyTask)
+    // Getter for the task (StrategyTask)
     get task(): StrategyTask {
         return this._task;
     }
 
-    // Setter pour la tâche
     set task(task: StrategyTask) {
         this._task = task;
     }
 
-    // Retourne le range sous forme de tableau [minimum, maximum]
+    // Returns the range as an array [minimum, maximum]
     public getRange(): [number, number] {
         return [this.minimum, this.maximum];
     }
 
-    // Indique si le nombre fait partie du range
+    // Indicates whether the transmitted number is part of the range
     public isInRange(number: number): boolean {
         return number >= this.minimum && number <= this.maximum;
     }

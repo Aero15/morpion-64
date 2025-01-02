@@ -17,11 +17,10 @@ export default class HumanPlayer extends Player {
         );
     }
   
-    // Implémentation de la méthode abstraite play
     play(game: GameEngine): void {
         let cells = game.board.getEmptyPositions();
         if (cells.length < 1) {
-            throw new Error("Le plateau est plein");
+            throw new Error("The board is full.");
         }
 
         let index = Math.floor(Math.random() * cells.length);

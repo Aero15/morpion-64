@@ -5,10 +5,10 @@ import { Color } from "$core/enums/Color"
 import { Difficulty } from "$core/enums/Difficulty"
 import { Symbol } from "$core/enums/Symbol"
 
-// Liste des participants du jeu
+// Selected players for a new game
 export let selectedPlayers: Player[] = $state([])
 
-// Liste des bots
+// List of bots
 export let listBots: Player[] = $state([
     new Bot("Cortana", Symbol.Hash, Color.Pink, Difficulty.Peaceful),
     new Bot("Alexa", Symbol.Square, Color.Blue, Difficulty.Easy),
@@ -17,7 +17,7 @@ export let listBots: Player[] = $state([
     new Bot("Jarvis", Symbol.Bot, Color.Red, Difficulty.Impossible)
 ])
 
-// Liste des joueurs
+// List of players
 export let listPlayers: Player[] = $state([
     new Human("Zétoile ✨", Symbol.Asterisk, Color.Coral),
     new Human("Denise", Symbol.Tennis, Color.Lavender),

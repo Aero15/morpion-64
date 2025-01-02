@@ -5,39 +5,39 @@ import type IWinnerInfo from "$core/interface/IWInnerInfo";
 export function findWinner(
     board: GameBoard
 ): IWinnerInfo | undefined {
-    // Vérification des lignes
+    // Check rows
     for (let row = 0; row < board.rows; row++) {
         for (let col = 0; col <= board.cols - board.nbSymbolsInRow; col++) {
-            const winner = findWinnerByDirection(board, row, col, 0, 1); // Vérifie horizontalement
+            const winner = findWinnerByDirection(board, row, col, 0, 1); // Check horizontally
             if (winner) return winner;
         }
     }
 
-    // Vérification des colonnes
+    // Check columns
     for (let col = 0; col < board.cols; col++) {
         for (let row = 0; row <= board.rows - board.nbSymbolsInRow; row++) {
-            const winner = findWinnerByDirection(board, row, col, 1, 0); // Vérifie verticalement
+            const winner = findWinnerByDirection(board, row, col, 1, 0); // Check vertically
             if (winner) return winner;
         }
     }
 
-    // Vérification des diagonales descendante "\"
+    // Checking the downward diagonals "\"
     for (let row = 0; row <= board.rows - board.nbSymbolsInRow; row++) {
         for (let col = 0; col <= board.cols - board.nbSymbolsInRow; col++) {
-            const winner = findWinnerByDirection(board, row, col, 1, 1); // Vérifie diagonale descendante
+            const winner = findWinnerByDirection(board, row, col, 1, 1); // Check diagonal
             if (winner) return winner;
         }
     }
 
-    // Vérification des diagonales montante "/"
+    // Checking the rising diagonals "/"
     for (let row = 0; row <= board.rows - board.nbSymbolsInRow; row++) {
         for (let col = board.nbSymbolsInRow - 1; col < board.cols; col++) {
-            const winner = findWinnerByDirection(board, row, col, 1, -1); // Vérifie diagonale montante
+            const winner = findWinnerByDirection(board, row, col, 1, -1); // Check diagonal
             if (winner) return winner;
         }
     }
 
-    // Aucun gagnant
+    // No winner
     return undefined;
 }
 
@@ -48,24 +48,24 @@ export function findWinnerByDirection(
     rowIncrement: number,
     colIncrement: number
 ): IWinnerInfo | null {
-    // Récupère le symbole et la couleur de la première case
+    // Get the symbol and color of the first cell
     const firstCell = board.getCellAt(new Point(startRow, startCol))!;
-    if (!firstCell.symbol || !firstCell.color) return null;  // Vérifie si la case est vide
+    if (!firstCell.symbol || !firstCell.color) return null;  // Check if the cell is empty
 
     const { symbol, color } = firstCell;
     const winningPositions: { x: number; y: number }[] = [{ x: startRow, y: startCol }];
 
-    // Vérifie les autres cases dans la direction spécifiée
+    // Check other cells in the specified direction
     for (let i = 1; i < board.nbSymbolsInRow; i++) {
         const row = startRow + i * rowIncrement;
         const col = startCol + i * colIncrement;
         const cell = board.grid[row][col];
 
         if (cell.symbol !== symbol || cell.color !== color) {
-            return null;  // Si une case ne correspond pas, on arrête
+            return null;  // If a cell does not match, we stop
         }
 
-        winningPositions.push({ x: row, y: col });  // Ajoute la position à la liste des gagnants
+        winningPositions.push({ x: row, y: col });  // Add position to winners list
     }
 
     return { symbol, color, positions: winningPositions };

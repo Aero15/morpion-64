@@ -1,5 +1,5 @@
 # Morpion 64
-This app is a 🕹️ tic tac toe 🎲 game with a (8x8) 64 grid size.
+This app is a 🕹️ tic tac toe 🎲 game with a 8x8 grid size (64 cells).
 
 ![Game in progress in Morpion 64](https://github.com/Aero15/morpion-64/blob/main/wiki/game.png?raw=true)
 
@@ -26,14 +26,21 @@ Still have many things to do, 👁️👄👁️ look at zis :
 - More symbols 😻 (animals, fruits and chess)
 - More 💋💄 colors (or gradients) for players
 
-## Tech stack
+## [DEV] Tech stack
 This project uses some dependencies, all listed there :
 - Svelte 5 (of course)
 - Svelte SPA Router
 - TypeScript
 - Vite + PWA Plugin
 
-# How to build it (to publish on a server)
+## [DEV] How to run it
+**Requirements**: Node.js
+> npm run dev
+
+Tested with Node.js v23.1.0
+
+## [DEV] How to build it
 Just run this command in a terminal
 > npm run build
+
 This command will ask Vite.js to compile this app. You'll find the whole bundle in the "dist" folder.

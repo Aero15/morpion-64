@@ -50,7 +50,7 @@
             <Button variant="primary" center
                 onclick={openEditor}>
                 <Icon icon="plus" />
-                Créer un joueur
+                Créer son compte
             </Button>
         </div>
 
@@ -68,7 +68,7 @@
                         <Button variant="primary" center
                             onclick={openEditor}>
                             <Icon icon="plus" />
-                            Créer un joueur
+                            Créer son compte
                         </Button>
                     </div>
                 </PanelSection>
@@ -90,7 +90,7 @@
                         <Button variant="primary" center
                             onclick={openEditor}>
                             <Icon icon="plus" />
-                            Créer un joueur
+                            Créer son compte
                         </Button>
                     </div>
                 {/if}

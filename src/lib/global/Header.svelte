@@ -16,7 +16,6 @@
     }
 
     const pages: Page[] = [
-        //{name: 'Accueil', path: '/', icon: 'home'},
         {name: 'Jouer', path: '/new-game/grid', icon: 'play'},
         {name: 'Classement', path: '/ranking', icon: 'podium'},
         {name: 'Joueurs', path: '/players', icon: 'user'},
@@ -45,7 +44,7 @@
 
         {#if size == 'sm'}
             <button class="menu" onclick={() => push('/menu')}>
-                <Icon icon="menu_dots" size={20} />
+                <Icon icon="menu" size={20} />
             </button>
         {/if}
     </div>

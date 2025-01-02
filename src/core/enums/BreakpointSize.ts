@@ -1,6 +1,6 @@
 export type BreakpointSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 
-// Définition des breakpoints Tailwind CSS (en pixels)
+// Tailwind CSS Breakpoints
 export const breakpoints: Record<BreakpointSize, number> = {
     'sm': 640,
     'md': 768,

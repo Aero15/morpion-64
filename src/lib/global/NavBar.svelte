@@ -13,7 +13,7 @@
         {name: 'Joueurs', path: '/players', icon: 'user'},
         {name: 'Jouer', path: '/new-game/grid', icon: 'play'},
         {name: 'Classement', path: '/ranking', icon: 'podium'},
-        {name: 'Menu', path: '/menu', icon: 'menu_dots'},
+        {name: 'Menu', path: '/menu', icon: 'menu'},
         //{name: 'Réglages', path: '/settings', icon: 'config'},
         //{name: 'A propos', path: '/about', icon: 'info'},
     ]

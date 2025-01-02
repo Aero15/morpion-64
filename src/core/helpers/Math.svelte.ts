@@ -1,4 +1,4 @@
-// Calcul de la moyenne à partir d'une liste de nombres
+// Calculate the average from a list of numbers
 export function calcAvg(
     values: number[]
 ): number {
@@ -7,7 +7,7 @@ export function calcAvg(
     ) / values.length
 }
 
-// Nombre aleatoire entre deux nombres
+// Random number between two numbers
 export function randomBetween(
     min: number,
     max: number

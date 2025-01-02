@@ -26,10 +26,10 @@
     }: Props = $props();
 
     let isEmpty = $derived(symbol === undefined);
-    let disabled = $derived( // Désactiver la cellule lorsque :
-        (eraserEnabled && isEmpty) || // le mode effaceur est activé et la cellule est vide
-        (!eraserEnabled && !isEmpty) || // le mode effaceur n'est pas activé et la cellule n'est pas vide
-        lock // la cellule est bloquée
+    let disabled = $derived( // Disable cell while:
+        (eraserEnabled && isEmpty) || // eraser mode is activated and the cell is empty
+        (!eraserEnabled && !isEmpty) || // eraser mode is not activated and the cell is not empty
+        lock // is locked
     );
 </script>
 

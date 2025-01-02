@@ -1,6 +1,6 @@
 import { wrap } from 'svelte-spa-router/wrap';
 
-// Create a route asynchronously
+// Create an async route
 function createAsyncRoute (
     path: string,
     component: any

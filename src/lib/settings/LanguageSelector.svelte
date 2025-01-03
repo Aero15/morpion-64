@@ -2,12 +2,13 @@
     import { language } from "$core/store/settings.svelte";
     import RadioGroup from "$lib/form/RadioGroup.svelte";
     import Radio from "$lib/form/Radio.svelte";
+    import { _ } from "svelte-i18n";
 </script>
 
 <RadioGroup>
     <Radio bind:group={language.current}
-        label="Système" value="auto"
-        description="Langue définie dans le système" />
+        label={ $_('settings.language.auto.name') } value="auto"
+        description={ $_('settings.language.auto.legend') } />
     <Radio bind:group={language.current}
         label="English" value="en" />
     <Radio bind:group={language.current}

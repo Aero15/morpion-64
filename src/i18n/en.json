@@ -5,6 +5,16 @@
     "introduction": "Choose your color, your symbol and challenge your friends, or play against bots on grids from 3x3 to 8x8."
   },
   "settings": {
-    "title": "Settings"
+    "title": "Settings",
+    "game_board": {
+      "title": "Game board"
+    },
+    "language": {
+      "title": "Language",
+      "auto": {
+        "name": "System",
+        "legend": "Depending on your system/web browser configuration"
+      }
+    }
   }
 }

@@ -28,11 +28,6 @@
         ResponseTime: 1,
         Language: 2,
     }
-    let tabs = $state([
-        { name: 'Plateau de jeu', icon: 'layout', id: Tabs.GridSize },
-        { name: 'Temps de réponse', icon: 'clock', id: Tabs.ResponseTime },
-        { name: 'Langue', icon: 'i18n', id: Tabs.Language },
-    ])
     let selectedId = $state(Tabs.GridSize);
 
     function speedToText(speed: Point): string {
@@ -47,7 +42,11 @@
 </Jumbo>
 
 <div class="tabs">
-    <TabBar tabs={tabs} bind:selectedId variant="rounded" />
+    <TabBar variant="rounded" bind:selectedId tabs={[
+        { name: $_('settings.game_board.title'), icon: 'layout', id: Tabs.GridSize },
+        { name: 'Temps de réponse', icon: 'clock', id: Tabs.ResponseTime },
+        { name: $_('settings.language.title'), icon: 'i18n', id: Tabs.Language },
+    ]} />
 </div>
 
 <PageWrap>
@@ -86,9 +85,11 @@
         {/if}
 
         {#if selectedId == Tabs.Language}
-            <Section title="Langue">
-                <LanguageSelector />
-            </Section>
+            <div class="language"><div>
+                <Section title={ $_('settings.language.title') }>
+                    <LanguageSelector />
+                </Section>
+            </div></div>
         {/if}
     </div>
 </PageWrap>
@@ -108,7 +109,8 @@
         margin: -2rem 0;
     }
 
-    .response-time {
+    .response-time,
+    .language {
         display: flex;
         justify-content: center;
         div { max-width: 600px; flex: 1; }

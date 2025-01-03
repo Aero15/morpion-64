@@ -5,6 +5,16 @@
     "introduction": "Choisis ta couleur, ton symbole et défie tes amis, ou joue contre des bots sur des grilles de 3x3 à 8x8."
   },
   "settings": {
-    "title": "Réglages"
+    "title": "Réglages",
+    "game_board": {
+      "title": "Plateau de jeu"
+    },
+    "language": {
+      "title": "Langue",
+      "auto": {
+        "name": "Système",
+        "legend": "Selon la configuration de votre système/navigateur web"
+      }
+    }
   }
 }

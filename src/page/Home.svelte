@@ -21,12 +21,12 @@
         variant?: string,
         iconSize?: number
     }
-    let links: Link[] = [
+    let links: Link[] = $state([
         {icon: 'user', label: 'Gérer les joueurs', path: '/players'},
         {icon: 'podium', label: 'Classement', path: '/ranking'},
-        {icon: 'config', label: 'Réglages', path: '/settings'},
+        {icon: 'config', label: $_('settings.title'), path: '/settings'},
         {icon: 'info', label: 'Infos', path: '/about'},
-    ]
+    ])
 
     let size: BreakpointSize = $state('sm');
 </script>

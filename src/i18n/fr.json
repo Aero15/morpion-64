@@ -1,7 +1,10 @@
 {
-    "home": {
-        "title": "Accueil",
-        "catchphrase": "Plus grand, plus fun, plus stratégique !",
-        "introduction": "Choisis ta couleur, ton symbole et défie tes amis, ou joue contre des bots sur des grilles de 3x3 à 8x8."
-    }
+  "home": {
+    "title": "Accueil",
+    "catchphrase": "Plus grand, plus fun, plus stratégique !",
+    "introduction": "Choisis ta couleur, ton symbole et défie tes amis, ou joue contre des bots sur des grilles de 3x3 à 8x8."
+  },
+  "settings": {
+    "title": "Réglages"
+  }
 }

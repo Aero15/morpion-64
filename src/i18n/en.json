@@ -1,7 +1,10 @@
 {
-    "home": {
-        "title": "Home",
-        "catchphrase": "See bigger, have fun and be strategic!",
-        "introduction": "Choose your color, your symbol and challenge your friends, or play against bots on grids from 3x3 to 8x8."
-    }
+  "home": {
+    "title": "Home",
+    "catchphrase": "See bigger, have fun and be strategic!",
+    "introduction": "Choose your color, your symbol and challenge your friends, or play against bots on grids from 3x3 to 8x8."
+  },
+  "settings": {
+    "title": "Settings"
+  }
 }

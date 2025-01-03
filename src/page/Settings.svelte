@@ -8,18 +8,19 @@
     import {
         botSpeedDelay
     } from "$core/store/settings.svelte";
+    import { _ } from "svelte-i18n";
     import Radio from "$lib/form/Radio.svelte";
     import Jumbo from "$lib/shared/Jumbo.svelte";
+    import TabBar from "$lib/shared/TabBar.svelte";
     import Section from "$lib/shared/Section.svelte";
     import PageWrap from "$lib/global/PageWrap.svelte";
     import RadioGroup from "$lib/form/RadioGroup.svelte";
+    import Responsive from "$lib/shared/Responsive.svelte";
     import type Point from "$core/entity/board/Point.svelte";
     import GridSizeStats from "$lib/settings/GridSizeStats.svelte";
-    import GridPresetSelector from "$lib/settings/GridPresetSelector.svelte";
     import type { BreakpointSize } from "$core/enums/BreakpointSize";
-    import Responsive from "$lib/shared/Responsive.svelte";
-    import TabBar from "$lib/shared/TabBar.svelte";
-  import LanguageSelector from "$lib/settings/LanguageSelector.svelte";
+    import LanguageSelector from "$lib/settings/LanguageSelector.svelte";
+    import GridPresetSelector from "$lib/settings/GridPresetSelector.svelte";
 
     let size: BreakpointSize = $state('sm');
     let Tabs = {
@@ -27,11 +28,11 @@
         ResponseTime: 1,
         Language: 2,
     }
-    let tabs = [
+    let tabs = $state([
         { name: 'Plateau de jeu', icon: 'layout', id: Tabs.GridSize },
         { name: 'Temps de réponse', icon: 'clock', id: Tabs.ResponseTime },
         { name: 'Langue', icon: 'i18n', id: Tabs.Language },
-    ]
+    ])
     let selectedId = $state(Tabs.GridSize);
 
     function speedToText(speed: Point): string {
@@ -41,7 +42,7 @@
 
 <Responsive bind:size />
 
-<Jumbo icon="config" title="Réglages">
+<Jumbo icon="config" title={ $_('settings.title') }>
     <span></span>
 </Jumbo>
 

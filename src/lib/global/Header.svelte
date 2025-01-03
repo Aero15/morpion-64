@@ -1,10 +1,11 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import favicon from '/favicon.svg';
     import Icon from "$lib/shared/Icon.svelte";
     import { fade, slide } from 'svelte/transition';
-    import { location, pop, push } from "svelte-spa-router";
     import { app_version } from '$core/store/application';
     import Responsive from '$lib/shared/Responsive.svelte';
+    import { location, pop, push } from "svelte-spa-router";
     import type { BreakpointSize } from '$core/enums/BreakpointSize';
     
     let size: BreakpointSize = $state('sm');
@@ -15,13 +16,13 @@
         icon: string,
     }
 
-    const pages: Page[] = [
+    const pages: Page[] = $state([
         {name: 'Jouer', path: '/new-game/grid', icon: 'play'},
         {name: 'Classement', path: '/ranking', icon: 'podium'},
         {name: 'Joueurs', path: '/players', icon: 'user'},
-        {name: 'Réglages', path: '/settings', icon: 'config'},
+        {name: $_('settings.title'), path: '/settings', icon: 'config'},
         {name: 'A propos', path: '/about', icon: 'info'},
-    ]
+    ])
 </script>
 
 <Responsive bind:size />

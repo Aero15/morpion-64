@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { _ } from "svelte-i18n";
     import { fade } from "svelte/transition";
     import TabBar from "$lib/shared/TabBar.svelte";
     import PageWrap from "$lib/global/PageWrap.svelte";
@@ -15,10 +16,10 @@
         Preview: 0,
         Settings: 1
     }
-    let tabs = [
-        { name: 'Réglages', icon: 'settings', id: Tabs.Settings },
+    let tabs = $state([
+        { name: $_('settings.title'), icon: 'settings', id: Tabs.Settings },
         { name: 'Aperçu', icon: 'search', id: Tabs.Preview },
-    ]
+    ])
     let selectedId = $state(Tabs.Settings);
 </script>
 

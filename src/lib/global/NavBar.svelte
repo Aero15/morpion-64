@@ -1,34 +1,29 @@
 <script lang="ts">
-    import Icon from "$lib/shared/Icon.svelte";
     import { location } from "svelte-spa-router";
-
-    interface Page {
-        name: string,
-        path: string,
-        icon: string,
-    }
-
-    const pages: Page[] = [
-        {name: 'Accueil', path: '/', icon: 'home'},
-        {name: 'Joueurs', path: '/players', icon: 'user'},
-        {name: 'Jouer', path: '/new-game/grid', icon: 'play'},
-        {name: 'Classement', path: '/ranking', icon: 'podium'},
-        {name: 'Menu', path: '/menu', icon: 'menu'},
-        //{name: 'Réglages', path: '/settings', icon: 'config'},
-        //{name: 'A propos', path: '/about', icon: 'info'},
-    ]
+    import Icon from "$lib/shared/Icon.svelte";
+    import { _ } from "svelte-i18n";
 </script>
+
+{#snippet item(
+    name: string,
+    path: string,
+    icon: string,
+)}
+    <li>
+        <a href={'#' + path} class:current={$location == path}>
+            <Icon {icon} size={18} />
+            <p>{name}</p>
+        </a>
+    </li>
+{/snippet}
 
 <nav>
     <ul>
-        {#each pages as {name, path, icon}}
-            <li>
-                <a href={'#' + path} class:current={$location == path}>
-                    <Icon {icon} size={18} />
-                    <p>{name}</p>
-                </a>
-            </li>
-        {/each}
+        {@render item($_('home.title'), '/', 'home')}
+        {@render item('Joueurs', '/players', 'user')}
+        {@render item('Jouer', '/new-game/grid', 'play')}
+        {@render item('Classement', '/ranking', 'podium')}
+        {@render item('Menu', '/menu', 'menu')}
     </ul>
 </nav>
 

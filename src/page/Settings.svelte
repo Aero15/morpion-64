@@ -19,15 +19,18 @@
     import type { BreakpointSize } from "$core/enums/BreakpointSize";
     import Responsive from "$lib/shared/Responsive.svelte";
     import TabBar from "$lib/shared/TabBar.svelte";
+  import LanguageSelector from "$lib/settings/LanguageSelector.svelte";
 
     let size: BreakpointSize = $state('sm');
     let Tabs = {
         GridSize: 0,
         ResponseTime: 1,
+        Language: 2,
     }
     let tabs = [
         { name: 'Plateau de jeu', icon: 'layout', id: Tabs.GridSize },
         { name: 'Temps de réponse', icon: 'clock', id: Tabs.ResponseTime },
+        { name: 'Langue', icon: 'i18n', id: Tabs.Language },
     ]
     let selectedId = $state(Tabs.GridSize);
 
@@ -79,6 +82,12 @@
                     </Section>
                 </div>
             </div>
+        {/if}
+
+        {#if selectedId == Tabs.Language}
+            <Section title="Langue">
+                <LanguageSelector />
+            </Section>
         {/if}
     </div>
 </PageWrap>

@@ -246,7 +246,7 @@
                             <Icon icon="plus" size={28} />
                             <div class="text">
                                 <p class="title"><strong>Créer un joueur</strong></p>
-                                <p class="legend">Mon nom ne figure pas dans la liste</p>
+                                <p class="legend">Cliquez ici si vous ne figurez pas dans la liste</p>
                             </div>
                         </Button>
                     </div>

@@ -7,17 +7,36 @@
   "settings": {
     "title": "Réglages",
     "game_board": {
-      "title": "Plateau de jeu",
       "size": "Taille",
       "cells": "Cellules",
-      "max_players": "Joueurs max"
+      "max_players": "Joueurs max",
+      "title": "Taille de la grille",
+      "minimum": {
+        "name": "Minimale",
+        "legend": "Une grille en {size}, un très bon classique"
+      },
+      "vertical": {
+        "name": "Verticale",
+        "legend": "Une grille en {size}, adapté aux smartphones"
+      },
+      "maximum": {
+        "name": "Maximale",
+        "legend": "Une grille en {size}, la folie des grandeurs"
+      },
+      "custom": "Personnalisée",
+      "width": "Largeur",
+      "height": "Hauteur",
+      "columns": "colonnes",
+      "rows": "lignes"
     },
     "language": {
       "title": "Langue",
       "auto": {
         "name": "Système",
-        "legend": "Selon la configuration de votre système/navigateur web"
+        "legend": "Selon la configuration de votre système ou navigateur web"
       }
-    }
+    },
+    "default": "Par défaut",
+    "options": "Options"
   }
 }

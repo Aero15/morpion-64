@@ -1,8 +1,11 @@
 <script lang="ts">
-    import { gridSize, maxGridSize, minGridSize } from "$core/store/settings.svelte";
+    import {
+        gridSize, maxGridSize, minGridSize
+    } from "$core/store/settings.svelte";
     import NumberInput from "$lib/form/NumberInput.svelte";
-    import Radio from "$lib/form/Radio.svelte";
     import RadioGroup from "$lib/form/RadioGroup.svelte";
+    import Radio from "$lib/form/Radio.svelte";
+    import { _ } from "svelte-i18n";
 
     interface Props {
         large?: boolean
@@ -39,30 +42,32 @@
 
 <RadioGroup>
     {#if large}
-        <p><strong>Par défaut</strong></p>
+        <p><strong>{ $_('settings.default') }</strong></p>
     {/if}
     <Radio {onchange} bind:group={dimension}
-        label="Minimale" value={presets[0]}
-        description="Une grille en {presets[0]}, un très bon classique" />
+        label={ $_('settings.game_board.minimum.name') } value={presets[0]}
+        description={ $_('settings.game_board.minimum.legend', { values: { size: presets[0] } }) } />
     <Radio {onchange} bind:group={dimension}
-        label="Verticale" value={presets[1]}
-        description="Une grille en {presets[1]}, adapté aux smartphones" />
+        label={ $_('settings.game_board.vertical.name') } value={presets[1]}
+        description={ $_('settings.game_board.vertical.legend', { values: { size: presets[1] } }) } />
     <Radio {onchange} bind:group={dimension}
-        label="Maximale" value={presets[2]}
-        description="Une grille en {presets[2]}, pour la folie des grandeurs" />
+        label={ $_('settings.game_board.maximum.name') } value={presets[2]}
+        description={ $_('settings.game_board.maximum.legend', { values: { size: presets[2] } }) } />
 
     {#if large}
-        <p style="margin-top: 1rem;"><strong>Options</strong></p>
+        <p style="margin-top: 1rem;"><strong>{ $_('settings.options') }</strong></p>
     {/if}
     <Radio {onchange} bind:group={dimension}
-        label="Personnalisée" value="custom">
+        label={ $_('settings.game_board.custom') } value="custom">
         <div class="forms">
             <NumberInput centerLegend
-                label="Largeur" legend="colonnes"
+                label={ $_('settings.game_board.width') }
+                legend={ $_('settings.game_board.columns') }
                 min={minGridSize.x} max={maxGridSize.x}
                 bind:value={gridSize.x} />
             <NumberInput centerLegend
-                label="Hauteur" legend="lignes"
+                label={ $_('settings.game_board.height') }
+                legend={ $_('settings.game_board.rows') }
                 min={minGridSize.y} max={maxGridSize.y}
                 bind:value={gridSize.y} />
         </div>

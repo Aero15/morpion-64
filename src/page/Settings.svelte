@@ -52,7 +52,7 @@
 <PageWrap>
     <div id="pg-settings">
         {#if selectedId == Tabs.GridSize}
-            <Section title="Dimension du plateau">
+            <Section title={ $_('settings.game_board.title') }>
                 <div class="grid grid-size">
                     <GridSizeStats large={['xl', '2xl'].includes(size)} />
                     <GridPresetSelector large />

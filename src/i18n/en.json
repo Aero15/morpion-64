@@ -7,17 +7,36 @@
   "settings": {
     "title": "Settings",
     "game_board": {
-      "title": "Game board",
       "size": "Size",
       "cells": "Cells",
-      "max_players": "Max players"
+      "max_players": "Max players",
+      "title": "Grid size",
+      "minimum": {
+        "name": "Minimum",
+        "legend": "A {size} grid, a very good classic"
+      },
+      "vertical": {
+        "name": "Vertical",
+        "legend": "An {size} grid, designed for smartphones"
+      },
+      "maximum": {
+        "name": "Maximum",
+        "legend": "An {size} grid to bring the whole world together"
+      },
+      "custom": "Custom",
+      "width": "Width",
+      "height": "Height",
+      "columns": "columns",
+      "rows": "rows"
     },
     "language": {
       "title": "Language",
       "auto": {
         "name": "System",
-        "legend": "Depending on your system/web browser configuration"
+        "legend": "Depending on your system or web browser configuration"
       }
-    }
+    },
+    "default": "Default",
+    "options": "Options"
   }
 }

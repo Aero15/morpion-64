@@ -7,7 +7,10 @@
   "settings": {
     "title": "Settings",
     "game_board": {
-      "title": "Game board"
+      "title": "Game board",
+      "size": "Size",
+      "cells": "Cells",
+      "max_players": "Max players"
     },
     "language": {
       "title": "Language",

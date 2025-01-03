@@ -7,7 +7,10 @@
   "settings": {
     "title": "Réglages",
     "game_board": {
-      "title": "Plateau de jeu"
+      "title": "Plateau de jeu",
+      "size": "Taille",
+      "cells": "Cellules",
+      "max_players": "Joueurs max"
     },
     "language": {
       "title": "Langue",

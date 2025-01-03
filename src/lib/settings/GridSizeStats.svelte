@@ -2,6 +2,7 @@
     import { calcMaxNbParticipantsFrom, countCellsFor } from "$core/helpers/Grid.svelte";
     import { gridSize } from "$core/store/settings.svelte";
     import Icon from "$lib/shared/Icon.svelte";
+    import { _ } from "svelte-i18n";
 
     interface Props {
         large?: boolean
@@ -68,9 +69,9 @@
             </li>
         {/snippet}
 
-        {@render number_block({value: strGridSize, icon: "expand_diagonal", name: "Taille"})}
-        {@render number_block({value: countCells, icon: "squares", name: "Cellules"})}
-        {@render number_block({value: maxPlayers, icon: "user", name: "Joueurs max"})}
+        {@render number_block({value: strGridSize, icon: "expand_diagonal", name: $_('settings.game_board.size')})}
+        {@render number_block({value: countCells, icon: "squares", name: $_('settings.game_board.cells')})}
+        {@render number_block({value: maxPlayers, icon: "user", name: $_('settings.game_board.max_players')})}
     </ul>
 </main>
 

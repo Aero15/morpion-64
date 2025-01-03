@@ -30,6 +30,8 @@
     import TabBar from "$lib/shared/TabBar.svelte";
     import Responsive from "$lib/shared/Responsive.svelte";
     import type { BreakpointSize } from "$core/enums/BreakpointSize";
+    import { listBots, listPlayers } from "$core/store/players.svelte";
+    import type HumanPlayer from "$core/entity/player/Human.svelte";
 
     let { params }: { params: any } = $props();
 
@@ -43,8 +45,6 @@
     let difficulty: Difficulty = $state(Difficulty.Peaceful)
     let color_and_symbol: string = $derived(color+' '+symbol)
 
-    // Transitions options
-    const duration: number = 200
     const delay: number = 100
 
     let Tabs = {
@@ -114,12 +114,17 @@
 
         // Update a player
         if (id > 0) {
+            const player = findPlayerById(id)
             switch (type) {
                 case PlayerType.Bot:
                     updatePlayer({ id, name, symbol, color, type, difficulty } as Bot)
+                    const indexB = listBots.indexOf(player as Bot)
+                    listPlayers[indexB].score = score
                     break;
                 case PlayerType.Human:
                     updatePlayer({ id, name, symbol, color, type } as Player)
+                    const indexH = listPlayers.indexOf(player as HumanPlayer)
+                    listPlayers[indexH].score = score
                     break;
             }
         }
@@ -133,6 +138,15 @@
         if (ok) {
             deletePlayerById(id)
             pop()
+        }
+    }
+
+    // Reset score
+    function resetScore() {
+        const ok = confirm('Voulez-vous vraiment réinitialiser votre score à 0 ?')
+
+        if (ok && id > 0) {
+            score = 0
         }
     }
 </script>
@@ -211,7 +225,7 @@
                 </PanelSection>
         
                 <PanelSection title="Actions" icon="play" open variant="transparent">
-                    <div class="actions">
+                    <div class="actions squared">
                         {#if name.length > 0}
                             <Button variant="primary" center shape="squared"
                                 onclick={save}>
@@ -237,6 +251,16 @@
                             </Button>
                         {/if}
                     </div>
+                    
+                    {#if id > 0}
+                        <div class="actions list">
+                            <Button center variant="default"
+                                onclick={resetScore}>
+                                <Icon icon="numbers" size={18} />
+                                <p>Réinitialiser le score</p>
+                            </Button>
+                        </div>
+                    {/if}
                 </PanelSection>
             </Panel>
         </div>
@@ -269,6 +293,16 @@
                             placeholder="Pseudo du joueur"
                             bind:value={name} />
                     </div>
+                    
+                    {#if id > 0 && ['sm'].includes(size)}
+                        <div class="actions list">
+                            <Button center variant="default"
+                                onclick={resetScore}>
+                                <Icon icon="numbers" size={18} />
+                                <p>Réinitialiser le score</p>
+                            </Button>
+                        </div>
+                    {/if}
                 </div>
             {/if}
 
@@ -416,19 +450,36 @@
 
         .actions {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
             gap: .25rem;
-            padding: 0 1rem 1rem;
             overflow: clip;
 
-            :global(button) {
-                flex-flow: column;
-                gap: .25rem;
+            &.squared {
+                grid-template-columns: 1fr 1fr 1fr;
+                padding: 0 1rem .25rem;
+
+                :global(button) {
+                    flex-flow: column;
+                    gap: .25rem;
+                }
 
                 p {
                     margin: 0 -10px;
                     font-size: .78em;
                     width: 80px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+
+            &.list {
+                padding: 0 1rem 1rem;
+
+                p {
+                    margin: .25rem 0;
+                    font-size: .8em;
+                    width: 210px;
+                    text-align: start;
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;

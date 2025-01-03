@@ -1,6 +1,6 @@
 <script lang="ts">
     import {
-        current_language
+        language
     } from '$core/store/settings.svelte';
     import {
         register, init, getLocaleFromNavigator
@@ -9,7 +9,7 @@
     register('en', () => import('$i18n/en.json'));
     register('fr', () => import('$i18n/fr.json'));
 
-    let locale: string | null = $derived(current_language === 'auto' ? getLocaleFromNavigator() : current_language)
+    let locale: string | null = $derived(language.current === 'auto' ? getLocaleFromNavigator() : language.current)
 
     $effect(() => {
         loadLocale(locale)
@@ -21,4 +21,6 @@
             initialLocale: locale,
         });
     }
+
+    loadLocale(locale)
 </script>

@@ -92,7 +92,7 @@
             <div class="huge-block">
                 <Halo visibleOnHover borderWidth="1rem" cornerRadius="1rem">
                     <div class="bx-tile huge">
-                        {#if selectedPlayers.length > 1}
+                        {#if selectedPlayers.length >= 1}
                             <a href="#/new-game/recap" class="big-link">
                                 <div class="head">
                                     <div class="text">

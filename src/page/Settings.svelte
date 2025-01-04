@@ -1,26 +1,16 @@
 <script lang="ts">
-    import {
-        BotDelay,
-        defaultBotSpeedDelay,
-        fastBotSpeedDelay,
-        slowBotSpeedDelay
-    } from "$core/enums/Bot";
-    import {
-        botSpeedDelay
-    } from "$core/store/settings.svelte";
     import { _ } from "svelte-i18n";
-    import Radio from "$lib/form/Radio.svelte";
     import Jumbo from "$lib/shared/Jumbo.svelte";
     import TabBar from "$lib/shared/TabBar.svelte";
     import Section from "$lib/shared/Section.svelte";
     import PageWrap from "$lib/global/PageWrap.svelte";
-    import RadioGroup from "$lib/form/RadioGroup.svelte";
     import Responsive from "$lib/shared/Responsive.svelte";
     import type Point from "$core/entity/board/Point.svelte";
     import GridSizeStats from "$lib/settings/GridSizeStats.svelte";
     import type { BreakpointSize } from "$core/enums/BreakpointSize";
     import LanguageSelector from "$lib/settings/LanguageSelector.svelte";
     import GridPresetSelector from "$lib/settings/GridPresetSelector.svelte";
+    import BotResponseDelaySelector from "$lib/settings/BotResponseDelaySelector.svelte";
 
     let size: BreakpointSize = $state('sm');
     let Tabs = {
@@ -29,10 +19,6 @@
         Language: 2,
     }
     let selectedId = $state(Tabs.GridSize);
-
-    function speedToText(speed: Point): string {
-        return `Entre ${speed.x / 1000} et ${speed.y / 1000} secondes`;
-    }
 </script>
 
 <Responsive bind:size />
@@ -64,21 +50,7 @@
             <div class="response-time">
                 <div>
                     <Section title="Comportement des bots">
-                        <p style:margin="0 0 .5rem"><strong>Delai de réponse</strong></p>
-                        
-                        <RadioGroup>
-                            <Radio bind:group={$botSpeedDelay}
-                                label="Lent" value={BotDelay.Slow}
-                                description={ speedToText(slowBotSpeedDelay) } />
-        
-                            <Radio bind:group={$botSpeedDelay}
-                                label="Normal" value={BotDelay.Default}
-                                description={ speedToText(defaultBotSpeedDelay) } />
-        
-                            <Radio bind:group={$botSpeedDelay}
-                                label="Rapide" value={BotDelay.Fast}
-                                description={ speedToText(fastBotSpeedDelay) } />
-                        </RadioGroup>
+                        <BotResponseDelaySelector />
                     </Section>
                 </div>
             </div>

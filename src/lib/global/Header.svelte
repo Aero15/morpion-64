@@ -18,7 +18,7 @@
 
     const pages: Page[] = $state([
         {name: 'Jouer', path: '/new-game/grid', icon: 'play'},
-        {name: 'Classement', path: '/ranking', icon: 'podium'},
+        {name: $_('ranking.title'), path: '/ranking', icon: 'podium'},
         {name: 'Joueurs', path: '/players', icon: 'user'},
         {name: $_('settings.title'), path: '/settings', icon: 'config'},
         {name: $_('about.title'), path: '/about', icon: 'info'},

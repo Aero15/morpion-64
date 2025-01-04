@@ -15,6 +15,7 @@
     import type { BreakpointSize } from "$core/enums/BreakpointSize";
     import PanelSection from "$lib/shared/panel/PanelSection.svelte";
     import Collapse from "$lib/shared/Collapse.svelte";
+    import { _ } from "svelte-i18n";
 
     let size: BreakpointSize = $state('sm')
     let searchValue: string = $state('')
@@ -50,25 +51,25 @@
             <Button variant="primary" center
                 onclick={openEditor}>
                 <Icon icon="plus" />
-                Créer son compte
+                { $_('players.create_profile') }
             </Button>
         </div>
 
         <div class="panel" in:scale={{duration: 250}}>
             <Panel>
-                <PanelSection title="Informations" icon="info" open>
+                <PanelSection title={ $_('common.informations') } icon="info" open>
                     <div class="infos">
                         <Icon icon={ isSearching ? 'search' : 'user' } size={100} />
                         <h3>{subtitle}</h3>
                     </div>
                 </PanelSection>
 
-                <PanelSection title="Actions" icon="play" open variant="tinted">
+                <PanelSection title={ $_('common.actions') } icon="play" open variant="tinted">
                     <div class="actions">
                         <Button variant="primary" center
                             onclick={openEditor}>
                             <Icon icon="plus" />
-                            Créer son compte
+                            { $_('players.create_profile') }
                         </Button>
                     </div>
                 </PanelSection>
@@ -78,7 +79,7 @@
         <div in:fade={{duration: 200, delay: 100}} class="sections"
             class:space={ !['sm', 'md', 'lg'].includes(size) }
             class:cols-2={ ['xl', '2xl'].includes(size) }>
-            <Collapse title="Joueurs" icon="user" open
+            <Collapse title={ $_('players.sections.humans') } icon="user" open
                 subtitle={ humans.length + ' résultats' }
             >
                 {#if humans.length > 0}
@@ -90,13 +91,13 @@
                         <Button variant="primary" center
                             onclick={openEditor}>
                             <Icon icon="plus" />
-                            Créer son compte
+                            { $_('players.create_profile') }
                         </Button>
                     </div>
                 {/if}
             </Collapse>
             
-            <Collapse title="Bots" icon="bot2" open
+            <Collapse title={ $_('players.sections.bots') } icon="bot2" open
                 subtitle={ bots.length + ' résultats' }
             >
                 {#if bots.length > 0}

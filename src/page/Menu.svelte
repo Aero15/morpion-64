@@ -28,7 +28,7 @@
     let sections: PageItem[] = [
         Page('/new-game/grid', 'play', 'Jouer'),
         Page('/players', 'user', 'Joueurs'),
-        Page('/ranking', 'podium', 'Classement'),
+        Page('/ranking', 'podium', $_('ranking.title')),
     ]
     let other_pages: PageItem[] = [
         Page('/settings', 'settings', $_('settings.title')),

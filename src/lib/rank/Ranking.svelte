@@ -1,10 +1,11 @@
 <script lang="ts">
+    import { displayPlayersWithoutScore } from "$core/store/settings.svelte";
     import { improveContrast } from "$core/helpers/Colors.svelte";
     import type Player from "$core/entity/player/Player.svelte";
     import { PlayerType } from "$core/enums/PlayerType";
     import Icon from "$lib/shared/Icon.svelte";
-    import { fade, scale } from "svelte/transition";
-  import { displayPlayersWithoutScore } from "$core/store/settings.svelte";
+    import { scale } from "svelte/transition";
+    import { _ } from "svelte-i18n";
 
     interface Props {
         players: Player[],
@@ -59,11 +60,11 @@
                     <div class="type">
                         {#if type == PlayerType.Bot}
                             <Icon icon="bot2" size={16} />
-                            <p>Bot</p>
+                            <p>{ $_('players.sections.bots') }</p>
                         {/if}
                         {#if type == PlayerType.Human}
                             <Icon icon="user" size={16} />
-                            <p>Humain</p>
+                            <p>{ $_('players.sections.humans') }</p>
                         {/if}
                     </div>
                 {/if}

@@ -32,6 +32,7 @@
     import type { BreakpointSize } from "$core/enums/BreakpointSize";
     import { listBots, listPlayers } from "$core/store/players.svelte";
     import type HumanPlayer from "$core/entity/player/Human.svelte";
+    import { _ } from "svelte-i18n";
 
     let { params }: { params: any } = $props();
 
@@ -224,7 +225,7 @@
                     {@render profileInfos(true)}
                 </PanelSection>
         
-                <PanelSection title="Actions" icon="play" open variant="transparent">
+                <PanelSection title={ $_('common.actions') } icon="play" open variant="transparent">
                     <div class="actions squared">
                         {#if name.length > 0}
                             <Button variant="primary" center shape="squared"

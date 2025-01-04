@@ -22,7 +22,7 @@
         {@render item($_('home.title'), '/', 'home')}
         {@render item('Joueurs', '/players', 'user')}
         {@render item('Jouer', '/new-game/grid', 'play')}
-        {@render item('Classement', '/ranking', 'podium')}
+        {@render item($_('ranking.title'), '/ranking', 'podium')}
         {@render item('Menu', '/menu', 'menu')}
     </ul>
 </nav>

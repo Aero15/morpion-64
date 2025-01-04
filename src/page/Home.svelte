@@ -23,7 +23,7 @@
     }
     let links: Link[] = $state([
         {icon: 'user', label: 'Gérer les joueurs', path: '/players'},
-        {icon: 'podium', label: 'Classement', path: '/ranking'},
+        {icon: 'podium', label: $_('ranking.title'), path: '/ranking'},
         {icon: 'config', label: $_('settings.title'), path: '/settings'},
         {icon: 'info', label: $_('about.title'), path: '/about'},
     ])
@@ -116,8 +116,8 @@
                             <a href="#/new-game/grid" class="big-link">
                                 <div class="head">
                                     <div class="text">
-                                        <p class="title"><strong>Nouvelle partie</strong></p>
-                                        <p class="legend">Démarrer une toute nouvelle partie</p>
+                                        <p class="title"><strong>{ $_('home.new_game.title') }</strong></p>
+                                        <p class="legend">{ $_('home.new_game.legend') }</p>
                                     </div>
     
                                     <Icon icon="dice" size={['xl', '2xl'].includes(size) ? 80 : 46} />
@@ -130,14 +130,14 @@
                                                 <Icon icon="user" size={20} />
                                                 <p class="count">{listPlayers.length}</p>
                                             </div>
-                                            <p class="label">Joueurs</p>
+                                            <p class="label">{ $_('players.sections.humans') }</p>
                                         </div>
                                         <div class="number-item bots">
                                             <div class="bubbles">
                                                 <Icon icon="bot2" size={20} />
                                                 <p class="count">{listBots.length}</p>
                                             </div>
-                                            <p class="label">Bots</p>
+                                            <p class="label">{ $_('players.sections.bots') }</p>
                                         </div>
                                     </div>
 
@@ -153,7 +153,8 @@
                             <div class="small-links">
                                 {#if selectedPlayers.length > 0}
                                     {@render small_link(
-                                        'play', 28, '#/new-game/participants', 'Nouvelle partie',
+                                        'play', 28, '#/new-game/participants',
+                                        $_('home.new_game.title'),
                                         'Sélectionnez vos adversaires'
                                     )}
                                 {/if}

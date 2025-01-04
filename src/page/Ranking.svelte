@@ -13,15 +13,16 @@
     import Icon from "$lib/shared/Icon.svelte";
     import { scale } from "svelte/transition";
     import { push } from "svelte-spa-router";
+    import { _ } from "svelte-i18n";
 
     let players = $derived.by(() => {
         let results = [];
-        
-        if (selectedTab === Categories.Humans || selectedTab === Categories.General) {
+
+        if ([Categories.Humans, Categories.General].includes(selectedTab)) {
             results.push(...listPlayers)
         }
 
-        if (selectedTab === Categories.Bots || selectedTab === Categories.General) {
+        if ([Categories.Bots, Categories.General].includes(selectedTab)) {
             results.push(...listBots)
         }
 
@@ -38,15 +39,15 @@
     }
     let selectedTab = $state(Categories.General)
     let tabs = [
-        { name: 'Général', icon: 'asterisk', id: Categories.General },
-        { name: 'Humains', icon: 'user', id: Categories.Humans },
-        { name: 'Bots', icon: 'bot2', id: Categories.Bots },
+        { name: $_('ranking.categories.general'), icon: 'asterisk', id: Categories.General },
+        { name: $_('players.sections.humans'), icon: 'user', id: Categories.Humans },
+        { name: $_('players.sections.bots'), icon: 'bot2', id: Categories.Bots },
     ]
 
     let size: BreakpointSize = $state('sm')
 
     function resetAllScores() {
-        if (confirm('Voulez-vous vraiment réinitialiser les scores ?')) {
+        if (confirm($_('ranking.confirm_reset_score'))) {
             listPlayers.forEach(player => player.score = 0)
             listBots.forEach(bot => bot.score = 0)
         }
@@ -60,7 +61,7 @@
 <Responsive bind:size />
 
 {#if size != 'sm'}
-    <Jumbo icon="podium" title="Classement">
+    <Jumbo icon="podium" title={ $_('ranking.title') }>
         <span></span>
     </Jumbo>
 {/if}
@@ -71,28 +72,28 @@
             <Button center variant="primary"
                 onclick={toggleDisplayPlayersWithoutScore}>
                 <Icon icon="hide" size={20} />
-                <p>Masquer les joueurs sans score</p>
+                <p>{ $_('ranking.hide_players_without_score') }</p>
             </Button>
         {:else}
             <Button center variant="primary"
                 onclick={toggleDisplayPlayersWithoutScore}>
                 <Icon icon="eye" size={20} />
-                <p>Afficher les joueurs sans score</p>
+                <p>{ $_('ranking.show_players_without_score') }</p>
             </Button>
         {/if}
 
         <Button center
             onclick={resetAllScores}>
             <Icon icon="bin" size={20} />
-            <p>Réinitialiser les scores</p>
+            <p>{ $_('ranking.reset_scores') }</p>
         </Button>
     {/if}
 
     {#if players.length < 1}
         <Button variant="primary" center
-            onclick={() => push('/players')}>
+            onclick={() => push('/players/0')}>
             <Icon icon="plus" size={20} />
-            <p>Créer des joueurs</p>
+            <p>{ $_('players.create_profile') }</p>
         </Button>
     {/if}
 
@@ -100,7 +101,7 @@
         <Button variant="primary" center
             onclick={() => push('/new-game/grid')}>
             <Icon icon="play" size={20} />
-            <p>Lancer une partie</p>
+            <p>{ $_('home.new_game.title') }</p>
         </Button>
     {/if}
 {/snippet}
@@ -118,7 +119,7 @@
 
         <div class="panel" in:scale={{duration: 250}}>
             <Panel>
-                <PanelSection title="Informations" icon="info" open>
+                <PanelSection title={ $_('common.informations') } icon="info" open>
                     <div class="infos">
                         <Icon icon="podium" size={100} />
                     </div>
@@ -134,12 +135,12 @@
                             </div>
                         {/snippet}
 
-                        {@render score(maxScore, 'Maximum')}
-                        {@render score(avgScore, 'Moyenne')}
+                        {@render score(maxScore, $_('ranking.maximum'))}
+                        {@render score(avgScore, $_('ranking.average'))}
                     </div>
                 </PanelSection>
 
-                <PanelSection title="Actions" icon="play" variant="tinted" open>
+                <PanelSection title={ $_('common.actions') } icon="play" variant="tinted" open>
                     <div class="actions">
                         {@render actions()}
                     </div>

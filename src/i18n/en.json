@@ -2,7 +2,11 @@
   "home": {
     "title": "Home",
     "catchphrase": "See bigger, have fun and be strategic!",
-    "introduction": "Choose your color, your symbol and challenge your friends, or play against bots on grids from 3x3 to 8x8."
+    "introduction": "Choose your color, your symbol and challenge your friends, or play against bots on grids from 3x3 to 8x8.",
+    "new_game": {
+      "title": "New game",
+      "legend": "Start a new game"
+    }
   },
   "settings": {
     "title": "Settings",
@@ -67,5 +71,28 @@
     "vite": "Vite.js is a project build tool that provides a fast and easy build experience.",
     "nodejs": "Node.js is a working environment for the JavaScript programming language.",
     "typescript": "Typescript is an object-oriented programming language (based on Javascript) that offers more modern and robust features."
+  },
+  "ranking": {
+    "categories": {
+      "general": "General"
+    },
+    "title": "Ranking",
+    "average": "Average",
+    "maximum": "Maximum",
+    "reset_scores": "Reset scores",
+    "show_players_without_score": "Show players without score",
+    "hide_players_without_score": "Show players without score",
+    "confirm_reset_score": "Do you really want to reset the scores?"
+  },
+  "players": {
+    "sections": {
+      "humans": "Humans",
+      "bots": "Bots"
+    },
+    "create_profile": "Create my profile"
+  },
+  "common": {
+    "actions": "Actions",
+    "informations": "Informations"
   }
 }

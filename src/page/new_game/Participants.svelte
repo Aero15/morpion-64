@@ -9,6 +9,7 @@
         selectedPlayers,
         listPlayers
     } from "$core/store/players.svelte";
+    import { _ } from "svelte-i18n";
     import { onMount } from "svelte";
     import { push } from "svelte-spa-router";
     import Icon from "$lib/shared/Icon.svelte";
@@ -53,8 +54,8 @@
     }
     let filterTabs = [
         { name: 'Tous', icon: 'asterisk', id: FilterTabs.All },
-        { name: 'Joueurs', icon: 'user', id: FilterTabs.Humans },
-        { name: 'Bots', icon: 'bot2', id: FilterTabs.Bots },
+        { name: $_('players.sections.humans'), icon: 'user', id: FilterTabs.Humans },
+        { name: $_('players.sections.bots'), icon: 'bot2', id: FilterTabs.Bots },
     ]
     let selectedFilterId = $state(FilterTabs.All);
 
@@ -245,7 +246,7 @@
                         >
                             <Icon icon="plus" size={28} />
                             <div class="text">
-                                <p class="title"><strong>Créer un joueur</strong></p>
+                                <p class="title"><strong>{ $_('players.create_profile') }</strong></p>
                                 <p class="legend">Cliquez ici si vous ne figurez pas dans la liste</p>
                             </div>
                         </Button>

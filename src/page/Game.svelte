@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { _ } from "svelte-i18n";
     import { onMount } from "svelte";
     import Grid from "$lib/game/Grid.svelte";
     import Icon from "$lib/shared/Icon.svelte";
@@ -73,7 +74,12 @@
                     </div>
                 </PanelSection>
 
-                <PanelSection title="Classement" icon="podium" variant="transparent" bind:open={displayRanking}>
+                <PanelSection
+                    title={ $_('ranking.title') }
+                    icon="podium"
+                    variant="transparent"
+                    bind:open={displayRanking}
+                >
                     <div class="pane-content">
                         <Leaderboard bind:game compact limit={3} />
                     </div>
@@ -125,7 +131,7 @@
                 <div in:fade class="tab-leaderboard">
                     <div class="title">
                         <Icon icon="podium" size={24} />
-                        <h2>Classement</h2>
+                        <h2>{ $_('ranking.title') }</h2>
                     </div>
                     <Leaderboard bind:game hightlightFirstRows />
                 </div>

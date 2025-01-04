@@ -4,7 +4,6 @@
     import type Player from "$core/entity/player/Player.svelte";
     import { PlayerType } from "$core/enums/PlayerType";
     import Icon from "$lib/shared/Icon.svelte";
-    import { scale } from "svelte/transition";
     import { _ } from "svelte-i18n";
 
     interface Props {
@@ -33,8 +32,8 @@
 </script>
 
 <ul class="bx-ranking" class:tiles={tilesMode}>
-    {#each $displayPlayersWithoutScore ? filtered : ranking as { id, color, name, symbol, score, type }, index}
-        <li in:scale|global={{delay: 25 * index}}>
+    {#each $displayPlayersWithoutScore ? ranking : filtered as { id, color, name, symbol, score, type }, index}
+        <li>
             <a href="#/players/{id}"
                 class:gold={index === 0}
                 class:silver={index === 1}

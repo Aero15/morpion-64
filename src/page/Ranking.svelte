@@ -148,7 +148,7 @@
             </Panel>
         </div>
         
-        {#key selectedTab}
+        {#key selectedTab || $displayPlayersWithoutScore}
             <Ranking {players} displayType tilesMode />
         {/key}
     </div>

@@ -7,19 +7,21 @@
         repository_display_hostname,
         repository_url, creation_date
     } from "$core/store/application";
+    import { _, getLocaleFromNavigator } from "svelte-i18n";
     import logo from "/favicon.svg";
+    import nodeLogo from '$png/node.png';
+    import tsLogo from '$png/typescript.png';
+    import viteLogo from '$svg/logo/vite.svg';
     import Icon from "$lib/shared/Icon.svelte";
-    import Section from "$lib/shared/Section.svelte";
-    import { ProjectStatus } from "$core/enums/ProjectStatus";
-    import { fade, scale } from "svelte/transition";
-    import svelteLogo from '$svg/logo/svelte.svg'
-    import viteLogo from '$svg/logo/vite.svg'
-    import tsLogo from '$png/typescript.png'
-    import nodeLogo from '$png/node.png'
-    import type IDevTool from "$core/interface/IDevTool";
-    import PageWrap from "$lib/global/PageWrap.svelte";
     import Jumbo from "$lib/shared/Jumbo.svelte";
+    import svelteLogo from '$svg/logo/svelte.svg';
+    import { fade, scale } from "svelte/transition";
+    import Section from "$lib/shared/Section.svelte";
+    import PageWrap from "$lib/global/PageWrap.svelte";
+    import type IDevTool from "$core/interface/IDevTool";
     import Responsive from "$lib/shared/Responsive.svelte";
+    import { language } from "$core/store/settings.svelte";
+    import { ProjectStatus } from "$core/enums/ProjectStatus";
     import type { BreakpointSize } from "$core/enums/BreakpointSize";
 
     const date_format_options = {
@@ -29,32 +31,28 @@
         day: 'numeric',
     };
 
+    let locale = $derived(language.current === 'auto' ? getLocaleFromNavigator() : language.current);
+
     const dev_tools: IDevTool[] = [
         {
             logo: svelteLogo, name: "Svelte", url: "https://svelte.dev/",
             darkTint: '#882b0c', brightTint: '#f2a58d',
-            description: "Svelte est un framework d'interface utilisateur\
-            permettant de concevoir des applications web incroyablement\
-            concis qui effectuent un travail minimal dans le navigateur."
+            description: $_('about.svelte')
         },
         {
             logo: viteLogo, name: "Vite.js", url: "https://vitejs.dev/",
             darkTint: '#936d00', brightTint: '#eace77',
-            description: "Vite.js est un outil de construction de projet\
-            qui offre une expérience de construction rapide et facile."
+            description: $_('about.vite')
         },
         {
             logo: tsLogo, name: "Typescript", url: "https://www.typescriptlang.org/",
             darkTint: '#024775', brightTint: '#97d5ff', 
-            description: "Typescript est un langage de programmation\
-            orienté objet (basé sur le Javascript) qui offre des fonctionnalités\
-            plus modernes et plus robustes."
+            description: $_('about.typescript')
         },
         {
             logo: nodeLogo, name: "Node.js", url: "https://nodejs.org/",
             darkTint: '#295c1a', brightTint: '#adea96', 
-            description: "Node.js est un environnement de travail\
-            pour le langage de programmation JavaScript."
+            description: $_('about.nodejs')
         }
     ]
 
@@ -63,11 +61,11 @@
     let projectStatus = $derived.by(() => {
         switch ($project_status) {
             case ProjectStatus.InProgress:
-                return "En développement";
+                return $_('about.project_status.under_development');
             case ProjectStatus.Completed:
-                return "En production";
+                return $_('about.project_status.production');
             case ProjectStatus.Abandoned:
-                return "Abandonné";
+                return $_('about.project_status.abandoned');
         }
     })
 </script>
@@ -79,15 +77,22 @@
         class:center={['sm', 'md'].includes(size)}
         class:cols={!['sm', 'md'].includes(size)}
     >
-        <img src={logo} alt="Logo de Morpion 64" in:scale|global={{delay: 150}} />
+        <img src={logo} in:scale|global={{delay: 150}}
+            alt={ $_('about.app_logo', { values: { name: 'Morpion 64' } }) }
+        />
 
         <div class="ident">
             <h3>Morpion <span>64</span></h3>
-            <p class="version">Version : <strong>{$app_version}</strong></p>
+            <p class="version">
+                <strong>
+                    { $_('about.version_number', {
+                        values: { version: $app_version }
+                    }) }
+                </strong>
+            </p>
 
             <p class="description">
-                Le jeu de Morpion revisité avec une touche de modernité !
-                Jouez sur des grilles de 3x3 à 8x8 et personnalisez votre expérience avec des symboles et couleurs uniques pour chaque joueur.
+                { $_('about.introduction') }
             </p>
         </div>
     </div>
@@ -109,21 +114,21 @@
 
 <PageWrap>
     <ul class="infos">
-        {@render info(0, 'clock', 'Mis à jour le', $last_update.toLocaleDateString('fr-FR', date_format_options))}
-        {@render info(1, 'plus', 'Créé le', $creation_date.toLocaleDateString('fr-FR', date_format_options))}
-        {@render info(2, 'profile', 'Développé par', $organisation_name, $organisation_url)}
-        {@render info(3, 'info', 'Etat du projet', projectStatus)}
-        {@render info(4, 'duplicate', 'Licence', $license_name, $license_url)}
-        {@render info(5, 'asterisk', 'Repository', $repository_display_hostname, $repository_url)}
+        {@render info(0, 'clock', $_('about.updated_on'), $last_update.toLocaleDateString(locale, date_format_options))}
+        {@render info(1, 'plus', $_('about.created_on'), $creation_date.toLocaleDateString(locale, date_format_options))}
+        {@render info(2, 'profile', $_('about.developed_by'), $organisation_name, $organisation_url)}
+        {@render info(3, 'info', $_('about.project_status.title'), projectStatus)}
+        {@render info(4, 'duplicate', $_('about.license'), $license_name, $license_url)}
+        {@render info(5, 'asterisk', $_('about.repository'), $repository_display_hostname, $repository_url)}
     </ul>
 
-    <Section icon="info" title="Stack technique" delay={1}>
+    <Section icon="info" title={ $_('about.tech_stack') } delay={1}>
         <ul class="tech_stack">
             {#snippet tech_stack(logo: string, name: string, description: string, url?: string, darkTint?: string, brightTint?: string)}
                 <li style:--dark-tint={darkTint} style:--bright-tint={brightTint}>
                     <a href={url}>
                         <div class="text">
-                            <img src={logo} alt={name} />
+                            <img src={logo} alt={ $_('about.app_logo', { values: { name } }) } />
                             <p class="name"><strong>{name}</strong></p>
                             <p class="description">{description}</p>
                         </div>

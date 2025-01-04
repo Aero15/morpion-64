@@ -1,9 +1,10 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import logo from '/favicon.svg';
     import Icon from "$lib/shared/Icon.svelte";
+    import Jumbo from '$lib/shared/Jumbo.svelte';
     import Roller from "$lib/shared/Roller.svelte";
     import { app_name } from "$core/store/application";
-    import Jumbo from '$lib/shared/Jumbo.svelte';
 
     interface PageItem {
         name: string
@@ -30,8 +31,8 @@
         Page('/ranking', 'podium', 'Classement'),
     ]
     let other_pages: PageItem[] = [
-        Page('/settings', 'settings', 'Paramètres'),
-        Page('/about', 'info', 'A propos'),
+        Page('/settings', 'settings', $_('settings.title')),
+        Page('/about', 'info', $_('about.title')),
     ]
 </script>
 
@@ -42,8 +43,7 @@
         <div class="ident">
             <a href="#/">
                 <img src={logo} class="logo"
-                    alt={ `Logo de ${$app_name}` }
-                    title={ `Logo de ${$app_name}` }
+                    alt={ $_('about.app_logo', { values: { name: 'Morpion 64' } }) }
                 />
                 <h1>{$app_name}</h1>
             </a>
@@ -59,7 +59,7 @@
         >
             {#each sections as {name, icon, path}}
                 <a href={`#${path}`}>
-                    <Icon {icon} size={18} />
+                    <Icon {icon} size={24} />
                     <p>{ name }</p>
                 </a>
             {/each}

@@ -45,5 +45,27 @@
       "normal": "Normal",
       "delay_between": "Between {min} and {max} seconds"
     }
+  },
+  "about": {
+    "title": "About",
+    "version_number": "Version {version}",
+    "app_logo": "Logo of {name}",
+    "introduction": "Morpion 64 is the tic-tac-toe game (\"morpion\" in French), rethinked with a modern touch! Play on 3x3 to 8x8 grids and customize your experience with unique symbols and colors for each player.",
+    "updated_on": "Updated on",
+    "created_on": "Created on",
+    "developed_by": "Developed by",
+    "project_status": {
+      "title": "Project status",
+      "under_development": "Under development",
+      "production": "Production",
+      "abandoned": "Abandoned"
+    },
+    "license": "License",
+    "repository": "Repository",
+    "tech_stack": "Tech stack",
+    "svelte": "Svelte is a framework for building incredibly concise web applications that do minimal work in the browser.",
+    "vite": "Vite.js is a project build tool that provides a fast and easy build experience.",
+    "nodejs": "Node.js is a working environment for the JavaScript programming language.",
+    "typescript": "Typescript is an object-oriented programming language (based on Javascript) that offers more modern and robust features."
   }
 }

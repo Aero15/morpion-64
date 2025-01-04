@@ -21,7 +21,7 @@
         {name: 'Classement', path: '/ranking', icon: 'podium'},
         {name: 'Joueurs', path: '/players', icon: 'user'},
         {name: $_('settings.title'), path: '/settings', icon: 'config'},
-        {name: 'A propos', path: '/about', icon: 'info'},
+        {name: $_('about.title'), path: '/about', icon: 'info'},
     ])
 </script>
 
@@ -40,7 +40,8 @@
         
         <a class="identity" href="#/">
             <h1>Morpion <span>64</span></h1>
-            <img src={favicon} alt="Logo de Morpion 64" />
+            <img src={favicon}
+                alt={ $_('about.app_logo', { values: { name: 'Morpion 64' } }) } />
         </a>
 
         {#if size == 'sm'}
@@ -67,7 +68,11 @@
 
     {#if size != 'sm'}
         <div class="version" in:fade style:flex={['sm', 'md', 'lg'].includes(size) ? 'inherit' : '1'}>
-            <p><a href="#/about">Version : <strong>{$app_version}</strong></a></p>
+            <p><a href="#/about"><strong>
+                { $_('about.version_number', {
+                    values: { version: $app_version }
+                }) }
+            </strong></a></p>
         </div>
     {/if}
 </header>

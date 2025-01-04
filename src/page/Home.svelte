@@ -25,7 +25,7 @@
         {icon: 'user', label: 'Gérer les joueurs', path: '/players'},
         {icon: 'podium', label: 'Classement', path: '/ranking'},
         {icon: 'config', label: $_('settings.title'), path: '/settings'},
-        {icon: 'info', label: 'Infos', path: '/about'},
+        {icon: 'info', label: $_('about.title'), path: '/about'},
     ])
 
     let size: BreakpointSize = $state('sm');
@@ -57,7 +57,7 @@
             class:align-right={['xl', '2xl'].includes(size)}
             in:scale={{delay: 150, duration: 500}}
         >
-            <img src={favicon} alt="Logo de Morpion 64" />
+            <img src={favicon} alt={ $_('about.app_logo', { values: { name: 'Morpion 64' } }) } />
             {#if ['xl', '2xl'].includes(size)}
                 <h1>Morpion <span>64</span></h1>
             {/if}

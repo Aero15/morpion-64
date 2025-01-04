@@ -45,5 +45,27 @@
       "normal": "Normal",
       "delay_between": "Entre {min} et {max} secondes"
     }
+  },
+  "about": {
+    "title": "A propos",
+    "version_number": "Version {version}",
+    "app_logo": "Logo de {name}",
+    "introduction": "Le jeu du morpion revisité avec une touche de modernité ! Jouez sur des grilles de 3x3 à 8x8 et personnalisez votre expérience avec des symboles et couleurs uniques pour chaque joueur.",
+    "updated_on": "Mise à jour le",
+    "created_on": "Créé le",
+    "developed_by": "Développé par",
+    "project_status": {
+      "title": "Etat du projet",
+      "under_development": "En développement",
+      "production": "En production",
+      "abandoned": "Abandonné"
+    },
+    "license": "Licence",
+    "repository": "Dépot Git",
+    "tech_stack": "Couche technique",
+    "svelte": "Svelte est un framework permettant de concevoir des applications web incroyablement concis qui effectuent un travail minimal dans le navigateur.",
+    "vite": "Vite.js est un outil de compilation de projet qui offre une expérience de construction rapide et facile.",
+    "typescript": "Typescript est un langage de programmation orienté objet (basé sur le Javascript) qui offre des fonctionnalités plus modernes et plus robustes.",
+    "nodejs": "Node.js est un environnement de travail pour le langage de programmation JavaScript."
   }
 }

@@ -12,3 +12,6 @@ export let botSpeedDelay = writable(BotDelay.Fast)
 
 // Language
 export let language = $state({current: 'auto'})
+
+// Ranking
+export let displayPlayersWithoutScore = writable(false)

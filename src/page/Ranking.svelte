@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { displayPlayersWithoutScore } from "$core/store/settings.svelte";
     import { listBots, listPlayers } from "$core/store/players.svelte";
     import PanelSection from "$lib/shared/panel/PanelSection.svelte";
     import type { BreakpointSize } from "$core/enums/BreakpointSize";
@@ -50,6 +51,10 @@
             listBots.forEach(bot => bot.score = 0)
         }
     }
+
+    function toggleDisplayPlayersWithoutScore() {
+        displayPlayersWithoutScore.set(!$displayPlayersWithoutScore)
+    }
 </script>
 
 <Responsive bind:size />
@@ -62,26 +67,40 @@
 
 {#snippet actions()}
     {#if maxScore > 0}
-        <Button variant="primary" center
+        {#if $displayPlayersWithoutScore}
+            <Button center variant="primary"
+                onclick={toggleDisplayPlayersWithoutScore}>
+                <Icon icon="hide" size={20} />
+                <p>Masquer les joueurs sans score</p>
+            </Button>
+        {:else}
+            <Button center variant="primary"
+                onclick={toggleDisplayPlayersWithoutScore}>
+                <Icon icon="eye" size={20} />
+                <p>Afficher les joueurs sans score</p>
+            </Button>
+        {/if}
+
+        <Button center
             onclick={resetAllScores}>
-            <Icon icon="bin" />
-            Réinitialiser les scores
+            <Icon icon="bin" size={20} />
+            <p>Réinitialiser les scores</p>
         </Button>
     {/if}
 
     {#if players.length < 1}
         <Button variant="primary" center
             onclick={() => push('/players')}>
-            <Icon icon="plus" />
-            Créer des joueurs
+            <Icon icon="plus" size={20} />
+            <p>Créer des joueurs</p>
         </Button>
     {/if}
 
     {#if players.length > 0 && maxScore < 1}
         <Button variant="primary" center
             onclick={() => push('/new-game/grid')}>
-            <Icon icon="play" />
-            Lancer une partie
+            <Icon icon="play" size={20} />
+            <p>Lancer une partie</p>
         </Button>
     {/if}
 {/snippet}
@@ -120,7 +139,7 @@
                     </div>
                 </PanelSection>
 
-                <PanelSection title="Actions" icon="play" variant="tinted">
+                <PanelSection title="Actions" icon="play" variant="tinted" open>
                     <div class="actions">
                         {@render actions()}
                     </div>
@@ -143,13 +162,25 @@
         .toolbar { display: grid; }
         .actions {
             display: grid;
-            gap: .25rem;
             padding: 0 1rem 1rem;
         }
 
         .toolbar, .actions {
+            gap: .25rem;
+
+            p {
+                margin: 0;
+                font-size: .9em;
+                text-align: start;
+                width: calc(100% - 2rem);
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+
             :global(button) {
-                padding: 1rem 1.2rem;
+                padding: .75rem 1rem;
+                justify-content: start;
             }
         }
 

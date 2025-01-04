@@ -4,6 +4,7 @@
     import { PlayerType } from "$core/enums/PlayerType";
     import Icon from "$lib/shared/Icon.svelte";
     import { fade, scale } from "svelte/transition";
+  import { displayPlayersWithoutScore } from "$core/store/settings.svelte";
 
     interface Props {
         players: Player[],
@@ -18,6 +19,7 @@
     }: Props = $props();
 
     let ranking = $derived(players.toSorted((a, b) => b.score - a.score))
+    let filtered = $derived(ranking.filter(player => player.score > 0))
 
     function improveColor(color: string) {
         let { light, dark } = improveContrast(color);
@@ -30,7 +32,7 @@
 </script>
 
 <ul class="bx-ranking" class:tiles={tilesMode}>
-    {#each ranking as { id, color, name, symbol, score, type }, index}
+    {#each $displayPlayersWithoutScore ? filtered : ranking as { id, color, name, symbol, score, type }, index}
         <li in:scale|global={{delay: 25 * index}}>
             <a href="#/players/{id}"
                 class:gold={index === 0}

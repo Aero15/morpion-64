@@ -1,8 +1,9 @@
 <script lang="ts">
-    import { rt_newGame } from "$core/routes";
     import Button from "$lib/form/Button.svelte";
     import Icon from "$lib/shared/Icon.svelte";
+    import { rt_newGame } from "$core/routes";
     import { push } from "svelte-spa-router";
+    import { _ } from "svelte-i18n";
 
     interface Props {
         index?: number,
@@ -27,27 +28,27 @@
 
 <main class="bx-navigBar" class:fixed>
     <div class="start">
-        <Button center title="Abandonner" variant="flat"
+        <Button center title={ $_('common.leave') } variant="flat"
             shape={noLabels ? 'squared' : 'default'}
             onclick={abandon}>
             <Icon icon="cross" size={18} />
             {#if !noLabels}
-                <p>Abandonner</p>
+                <p>{ $_('common.leave') }</p>
             {/if}
         </Button>
     </div>
 
     <div class="end">
         {#if index > 0}
-            <Button center title="Revenir en arrière" shape="squared"
+            <Button center title={ $_('common.go_back') } shape="squared"
                 onclick={previous}>
                 <Icon icon="arrow_left" size={18} />
             </Button>
         {/if}
 
-        <Button center title="Continuer" variant="primary"
+        <Button center title={ $_('common.continue') } variant="primary"
             onclick={next}>
-            <p>Continuer</p>
+            <p>{ $_('common.continue') }</p>
             <Icon icon="arrow_right" size={18} />
         </Button>
     </div>

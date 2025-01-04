@@ -93,6 +93,9 @@
   },
   "common": {
     "actions": "Actions",
-    "informations": "Informations"
+    "informations": "Informations",
+    "leave": "Leave",
+    "continue": "Continue",
+    "go_back": "Go back"
   }
 }

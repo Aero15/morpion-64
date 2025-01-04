@@ -23,7 +23,10 @@
     let bots: Player[] = $derived(isSearching ? filterListPlayersWith(searchValue, listBots) : listBots)
     let humans: Player[] = $derived(isSearching ? filterListPlayersWith(searchValue, listPlayers) : listPlayers)
     let globalCount: number = $derived(bots.length + humans.length)
-    let subtitle: string = $derived(isSearching ? `${globalCount} joueurs trouvés` : `${globalCount} joueurs`)
+    let subtitle: string = $derived(isSearching ?
+        $_('players.search.count_players_found', {values: { count: globalCount }}) :
+        $_('players.count_players', {values: { count: globalCount }})
+    )
 
     function openEditor() {
         push('/players/0')
@@ -36,14 +39,13 @@
 
 <Responsive bind:size />
 
-<Jumbo icon="user" title="Joueurs"
-    subtitle="Gestion des joueurs">
+<Jumbo icon="user" title={ $_('players.title') } >
     <span></span>
 </Jumbo>
 
 <SearchBar overlap thick
     bind:value={searchValue}
-    placeholder="Rechercher un joueur" />
+    placeholder={ $_('players.search.placeholder') } />
 
 <PageWrap>
     <div id="pg-players">
@@ -80,14 +82,14 @@
             class:space={ !['sm', 'md', 'lg'].includes(size) }
             class:cols-2={ ['xl', '2xl'].includes(size) }>
             <Collapse title={ $_('players.sections.humans') } icon="user" open
-                subtitle={ humans.length + ' résultats' }
+                subtitle={ $_('players.search.count_results', {values: { count: humans.length }}) }
             >
                 {#if humans.length > 0}
                     <ListPlayers players={humans} {onPlayerClick} />
                 {:else}
                     <div class="empty">
                         <Icon icon="user" size={64} />
-                        <p>Aucun joueur à afficher</p>
+                        <p>{ $_('players.no_players_to_display') }</p>
                         <Button variant="primary" center
                             onclick={openEditor}>
                             <Icon icon="plus" />
@@ -98,18 +100,18 @@
             </Collapse>
             
             <Collapse title={ $_('players.sections.bots') } icon="bot2" open
-                subtitle={ bots.length + ' résultats' }
+                subtitle={ $_('players.search.count_results', {values: { count: bots.length }}) }
             >
                 {#if bots.length > 0}
                     <ListPlayers players={bots} {onPlayerClick} />
                 {:else}
                     <div class="empty">
                         <Icon icon="bot2" size={64} />
-                        <p>Aucun bot à afficher</p>
+                        <p>{ $_('players.no_bots_to_display') }</p>
                         <Button variant="primary" center
                             onclick={openEditor}>
                             <Icon icon="plus" />
-                            Créer un bot
+                            { $_('players.create_bot') }
                         </Button>
                     </div>
                 {/if}

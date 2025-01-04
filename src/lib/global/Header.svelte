@@ -19,7 +19,7 @@
     const pages: Page[] = $state([
         {name: $_('assistant.play'), path: '/new-game/grid', icon: 'play'},
         {name: $_('ranking.title'), path: '/ranking', icon: 'podium'},
-        {name: 'Joueurs', path: '/players', icon: 'user'},
+        {name: $_('players.title'), path: '/players', icon: 'user'},
         {name: $_('settings.title'), path: '/settings', icon: 'config'},
         {name: $_('about.title'), path: '/about', icon: 'info'},
     ])
@@ -33,6 +33,7 @@
     <div class="start" style:flex={['md', 'lg'].includes(size) ? 'inherit' : '1'}>
         {#if $location != '/'}
             <button class="goBack" onclick={pop}
+                title={ $_('common.go_back') }
                 transition:slide={{axis: 'x', duration: 200}}>
                 <Icon icon="arrow_left" size={20} />
             </button>
@@ -45,7 +46,8 @@
         </a>
 
         {#if size == 'sm'}
-            <button class="menu" onclick={() => push('/menu')}>
+            <button class="menu" onclick={() => push('/menu')}
+                title={ $_('common.menu') }>
                 <Icon icon="menu" size={20} />
             </button>
         {/if}

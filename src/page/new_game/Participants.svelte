@@ -215,7 +215,8 @@
                         bind:selectedId={selectedFilterId} />
                 </div>
 
-                <SearchBar bind:value={searchValue} placeholder="Rechercher un joueur" />
+                <SearchBar bind:value={searchValue}
+                    placeholder={ $_('players.search.placeholder') } />
 
                 <div class="players">
                     {#if filteredPlayers.length > 0}

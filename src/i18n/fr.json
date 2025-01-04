@@ -99,7 +99,17 @@
       "humans": "Humains",
       "bots": "Bots"
     },
-    "create_profile": "Créer mon profil"
+    "create_profile": "Créer mon profil",
+    "title": "Joueurs",
+    "search": {
+      "placeholder": "Rechercher un joueur",
+      "count_players_found": "{count} joueurs trouvés",
+      "count_results": "{count} résultats"
+    },
+    "count_players": "{count} joueurs",
+    "create_bot": "Créer un bot",
+    "no_players_to_display": "Aucun joueur à afficher",
+    "no_bots_to_display": "Aucun bot à afficher"
   },
   "common": {
     "actions": "Actions",
@@ -107,7 +117,8 @@
     "leave": "Abandonner",
     "continue": "Continuer",
     "go_back": "Revenir en arrière",
-    "preview": "Aperçu"
+    "preview": "Aperçu",
+    "menu": "Menu"
   },
   "assistant": {
     "grid_size": {

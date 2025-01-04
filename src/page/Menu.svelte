@@ -27,7 +27,7 @@
     let width: number
     let sections: PageItem[] = [
         Page('/new-game/grid', 'play', $_('assistant.play')),
-        Page('/players', 'user', 'Joueurs'),
+        Page('/players', 'user', $_('players.title')),
         Page('/ranking', 'podium', $_('ranking.title')),
     ]
     let other_pages: PageItem[] = [

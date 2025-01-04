@@ -99,7 +99,17 @@
       "humans": "Humans",
       "bots": "Bots"
     },
-    "create_profile": "Create my profile"
+    "create_profile": "Create my profile",
+    "title": "Players",
+    "search": {
+      "placeholder": "Find a player",
+      "count_players_found": "{count} players found",
+      "count_results": "{count} results"
+    },
+    "create_bot": "Create a bot",
+    "count_players": "{count} players",
+    "no_players_to_display": "No players to display",
+    "no_bots_to_display": "No bots to display"
   },
   "common": {
     "actions": "Actions",
@@ -107,7 +117,8 @@
     "leave": "Leave",
     "continue": "Continue",
     "go_back": "Go back",
-    "preview": "Preview"
+    "preview": "Preview",
+    "menu": "Menu"
   },
   "assistant": {
     "grid_size": {

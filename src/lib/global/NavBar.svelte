@@ -20,10 +20,10 @@
 <nav>
     <ul>
         {@render item($_('home.title'), '/', 'home')}
-        {@render item('Joueurs', '/players', 'user')}
+        {@render item($_('players.title'), '/players', 'user')}
         {@render item($_('assistant.play'), '/new-game/grid', 'play')}
         {@render item($_('ranking.title'), '/ranking', 'podium')}
-        {@render item('Menu', '/menu', 'menu')}
+        {@render item($_('common.menu'), '/menu', 'menu')}
     </ul>
 </nav>
 

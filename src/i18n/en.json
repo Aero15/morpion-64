@@ -6,7 +6,17 @@
     "new_game": {
       "title": "New game",
       "legend": "Start a new game"
-    }
+    },
+    "replay": {
+      "title": "Replay",
+      "legend": "Relaunch the last game",
+      "select_opponents": "Select your opponents"
+    },
+    "change_settings": {
+      "title": "Change configuration",
+      "legend": "Resize the game grid"
+    },
+    "manage_players": "Manage players"
   },
   "settings": {
     "title": "Settings",

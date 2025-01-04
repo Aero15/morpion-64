@@ -6,7 +6,17 @@
     "new_game": {
       "title": "Nouvelle partie",
       "legend": "Démarrer une nouvelle partie"
-    }
+    },
+    "replay": {
+      "title": "Rejouer",
+      "legend": "Relancer la dernière partie",
+      "select_opponents": "Sélectionnez vos adversaires"
+    },
+    "change_settings": {
+      "title": "Changer de configuration",
+      "legend": "Redimensionnez la grille de jeu"
+    },
+    "manage_players": "Gérer les joueurs"
   },
   "settings": {
     "title": "Réglages",

@@ -22,7 +22,7 @@
         iconSize?: number
     }
     let links: Link[] = $state([
-        {icon: 'user', label: 'Gérer les joueurs', path: '/players'},
+        {icon: 'user', label: $_('home.manage_players'), path: '/players'},
         {icon: 'podium', label: $_('ranking.title'), path: '/ranking'},
         {icon: 'config', label: $_('settings.title'), path: '/settings'},
         {icon: 'info', label: $_('about.title'), path: '/about'},
@@ -41,7 +41,7 @@
 
 {#snippet link(
     icon: string, label: string,
-    path: string, variant: string = "",
+    path: string, variant: string = "default",
     iconSize: number = 18
 )}
     <Button onclick={() => push(path)} {variant}>
@@ -96,8 +96,8 @@
                             <a href="#/new-game/recap" class="big-link">
                                 <div class="head">
                                     <div class="text">
-                                        <p class="title"><strong>Rejouer</strong></p>
-                                        <p class="legend">Relancer la dernière partie</p>
+                                        <p class="title"><strong>{ $_('home.replay.title') }</strong></p>
+                                        <p class="legend">{ $_('home.replay.legend') }</p>
                                     </div>
     
                                     <Icon icon="replay" size={['xl', '2xl'].includes(size) ? 80 : 46} />
@@ -155,18 +155,13 @@
                                     {@render small_link(
                                         'play', 28, '#/new-game/participants',
                                         $_('home.new_game.title'),
-                                        'Sélectionnez vos adversaires'
+                                        $_('home.replay.select_opponents')
                                     )}
                                 {/if}
-                                <!-- {#if listBots.length > 1}
-                                    {@render small_link(
-                                        'bot', 28, '#/new-game/bots', 'Combat entre bots',
-                                        'Lancer une partie entre bots'
-                                    )}
-                                {/if} -->
                                 {@render small_link(
-                                    'settings', 28, '#/new-game/grid', 'Nouvelle configuration',
-                                    'Redimensionnez la grille de jeu'
+                                    'settings', 28, '#/new-game/grid',
+                                    $_('home.change_settings.title'),
+                                    $_('home.change_settings.legend')
                                 )}
                             </div>
                         {/if}

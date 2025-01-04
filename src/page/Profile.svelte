@@ -194,19 +194,21 @@
 <div class="toolbar">
     {#if name.length > 0}
         <Button variant="primary" center shape="squared"
-            title={id > 0 ? 'Enregistrer les modifications' : 'Créer le joueur'}
+            title={id > 0 ? $_('common.save_changes') : 'Créer le joueur'}
             onclick={save}>
             <Icon icon="save" size={24} />
         </Button>
     {/if}
 
-    <Button center title="Annuler" shape="squared"
+    <Button center shape="squared"
+        title={ $_('common.cancel') }
         onclick={() => pop()}>
         <Icon icon="undo" size={24} />
     </Button>
 
     {#if id > 0}
-        <Button center variant="flat" title="Supprimer" shape="squared"
+        <Button center variant="flat" shape="squared"
+            title={ $_('common.delete') }
             onclick={deletePlayer}>
             <Icon icon="bin" size={24} />
         </Button>
@@ -221,7 +223,7 @@
     <div id="pg-profile">
         <div class="panel">
             <Panel>
-                <PanelSection title="Aperçu du profil" icon="info" open>
+                <PanelSection title={ $_('profile.preview') } icon="info" open>
                     {@render profileInfos(true)}
                 </PanelSection>
         
@@ -231,9 +233,9 @@
                             <Button variant="primary" center shape="squared"
                                 onclick={save}>
                                 {#if id > 0}
-                                    <Icon icon="save" size={24} /><p>Enregistrer</p>
+                                    <Icon icon="save" size={24} /><p>{ $_('common.save') }</p>
                                 {:else}
-                                    <Icon icon="plus" size={24} /><p>Créer</p>
+                                    <Icon icon="plus" size={24} /><p>{ $_('common.create') }</p>
                                 {/if}
                             </Button>
                         {/if}
@@ -241,14 +243,14 @@
                         <Button center shape="squared"
                             onclick={() => pop()}>
                             <Icon icon="undo" size={24} />
-                            <p>Annuler</p>
+                            <p>{ $_('common.cancel') }</p>
                         </Button>
                     
                         {#if id > 0}
                             <Button center variant="flat" shape="squared"
                                 onclick={deletePlayer}>
                                 <Icon icon="bin" size={24} />
-                                <p>Supprimer</p>
+                                <p>{ $_('common.delete') }</p>
                             </Button>
                         {/if}
                     </div>
@@ -258,7 +260,7 @@
                             <Button center variant="default"
                                 onclick={resetScore}>
                                 <Icon icon="numbers" size={18} />
-                                <p>Réinitialiser le score</p>
+                                <p>{ $_('profile.reset_score') }</p>
                             </Button>
                         </div>
                     {/if}
@@ -283,13 +285,13 @@
                 <div class="rename">
                     {#if id < 1}
                         <div class="edit-type">
-                            <p class="label"><strong>Type de joueur</strong></p>
+                            <p class="label"><strong>{ $_('profile.player_type') }</strong></p>
                             <SelectTypePlayer bind:value={type} />
                         </div>
                     {/if}
 
                     <div class="username">
-                        <p class="label"><strong>Pseudo</strong></p>
+                        <p class="label"><strong>{ $_('profile.username') }</strong></p>
                         <Input type="text" id="username"
                             placeholder="Pseudo du joueur"
                             bind:value={name} />

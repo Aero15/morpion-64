@@ -118,7 +118,12 @@
     "continue": "Continuer",
     "go_back": "Revenir en arrière",
     "preview": "Aperçu",
-    "menu": "Menu"
+    "menu": "Menu",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "create": "Créer",
+    "save_changes": "Enregistrer les modifications"
   },
   "assistant": {
     "grid_size": {
@@ -128,5 +133,11 @@
       "title": "Participants"
     },
     "play": "Jouer"
+  },
+  "profile": {
+    "preview": "Aperçu du profil",
+    "reset_score": "Réinitialiser le score",
+    "username": "Pseudo",
+    "player_type": "Type de joueur"
   }
 }

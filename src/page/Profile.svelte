@@ -315,7 +315,7 @@
                     </div>
 
                     <div class="contrast">
-                        <p class="label"><strong>Aperçu</strong></p>
+                        <p class="label"><strong>{ $_('common.preview') }</strong></p>
                         <AvatarContrastPreview {symbol} {color} />
                         <p class="legend">Adaptation de la couleur du symbole en fonction du contraste (mode sombre)</p>
                     </div>
@@ -330,7 +330,7 @@
                     </div>
 
                     <div class="contrast">
-                        <p class="label"><strong>Aperçu</strong></p>
+                        <p class="label"><strong>{ $_('common.preview') }</strong></p>
                         <AvatarContrastPreview {symbol} {color} />
                         <p class="legend">Adaptation de la couleur du symbole en fonction du contraste (mode sombre)</p>
                     </div>

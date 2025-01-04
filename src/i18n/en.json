@@ -96,6 +96,16 @@
     "informations": "Informations",
     "leave": "Leave",
     "continue": "Continue",
-    "go_back": "Go back"
+    "go_back": "Go back",
+    "preview": "Preview"
+  },
+  "assistant": {
+    "grid_size": {
+      "title": "Game grid"
+    },
+    "participants": {
+      "title": "Participants"
+    },
+    "play": "Play"
   }
 }

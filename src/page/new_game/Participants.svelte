@@ -110,7 +110,7 @@
             class:gradient-grid={outside}
         >
             <Pagination compact selectedIndex={pageIndex} />
-            <h1>Participants</h1>
+            <h1>{ $_('assistant.participants.title') }</h1>
             
             <div class="head-bar">
                 <div class="status">
@@ -243,9 +243,7 @@
                     {/if}
 
                     <div class="newPlayer">
-                        <Button
-                            onclick={() => push('/players/0')}
-                        >
+                        <Button onclick={() => push('/players/0')} >
                             <Icon icon="plus" size={28} />
                             <div class="text">
                                 <p class="title"><strong>{ $_('players.create_profile') }</strong></p>

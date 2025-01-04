@@ -4,6 +4,7 @@
     import Icon from "$lib/shared/Icon.svelte";
     import { rt_newGame } from "$core/routes";
     import { push } from "svelte-spa-router";
+    import { _ } from "svelte-i18n";
 
     interface Props {
         compact?: boolean,
@@ -18,9 +19,9 @@
     let nb = 0
     let pages: IPaginationItem[] = $state([
         //{ variant: 'number', title: 'Règles de jeu', number: ++nb, path: '/rules' },
-        { variant: 'number', title: 'Grille de jeu', number: ++nb, path: '/grid' },
-        { variant: 'number', title: 'Participants', number: ++nb, path: '/participants' },
-        { variant: 'icon', title: 'Jouer', icon: 'play', path: '/recap' },
+        { variant: 'number', title: $_('assistant.grid_size.title'), number: ++nb, path: '/grid' },
+        { variant: 'number', title: $_('assistant.participants.title'), number: ++nb, path: '/participants' },
+        { variant: 'icon', title: $_('assistant.play'), icon: 'play', path: '/recap' },
     ])
 </script>
 

@@ -18,7 +18,7 @@
     }
     let tabs = $state([
         { name: $_('settings.title'), icon: 'settings', id: Tabs.Settings },
-        { name: 'Aperçu', icon: 'search', id: Tabs.Preview },
+        { name: $_('common.preview'), icon: 'search', id: Tabs.Preview },
     ])
     let selectedId = $state(Tabs.Settings);
 </script>
@@ -32,7 +32,7 @@
             class:gradient-grid={outside}
         >
             <Pagination compact />
-            <h1>Grille de jeu</h1>
+            <h1>{ $_('assistant.grid_size.title') }</h1>
 
             {#if outside}
                 <div class="tabs">

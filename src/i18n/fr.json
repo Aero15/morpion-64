@@ -96,6 +96,16 @@
     "informations": "Informations",
     "leave": "Abandonner",
     "continue": "Continuer",
-    "go_back": "Revenir en arrière"
+    "go_back": "Revenir en arrière",
+    "preview": "Aperçu"
+  },
+  "assistant": {
+    "grid_size": {
+      "title": "Grille de jeu"
+    },
+    "participants": {
+      "title": "Participants"
+    },
+    "play": "Jouer"
   }
 }

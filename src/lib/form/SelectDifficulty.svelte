@@ -1,6 +1,7 @@
 <script lang="ts">
     import { Difficulty } from "$core/enums/Difficulty";
     import Icon from "$lib/shared/Icon.svelte";
+  import { _ } from "svelte-i18n";
 
     let { value = $bindable('') } = $props();
 
@@ -23,20 +24,20 @@
         }
     }
 
-    function getNameFor(item: Difficulty): string {
-        switch (item) {
+    function getNameFor(difficulty: Difficulty): string {
+        switch (difficulty) {
             case Difficulty.Peaceful:
-                return 'Paisible';
+                return $_('profile.difficulties.peaceful.name')
             case Difficulty.Easy:
-                return 'Facile';
+                return $_('profile.difficulties.easy.name')
             case Difficulty.Medium:
-                return 'Normale';
+                return $_('profile.difficulties.medium.name')
             case Difficulty.Hard:
-                return 'Difficile';
+                return $_('profile.difficulties.hard.name')
             case Difficulty.Impossible:
-                return 'Impossible';
+                return $_('profile.difficulties.impossible.name')
             default:
-                return '(Inconnue)';
+                return $_('common.unknown')
         }
     }
 

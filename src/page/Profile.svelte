@@ -150,6 +150,22 @@
             score = 0
         }
     }
+
+    // Get text for difficulty
+    function getDifficultyName(difficulty: Difficulty): string {
+        switch (difficulty) {
+            case Difficulty.Peaceful:
+                return $_('profile.difficulties.peaceful.name')
+            case Difficulty.Easy:
+                return $_('profile.difficulties.easy.name')
+            case Difficulty.Medium:
+                return $_('profile.difficulties.medium.name')
+            case Difficulty.Hard:
+                return $_('profile.difficulties.hard.name')
+            case Difficulty.Impossible:
+                return $_('profile.difficulties.impossible.name')
+        }
+    }
 </script>
 
 <Responsive bind:size />
@@ -170,7 +186,7 @@
             <div class="type">
                 {#if type == PlayerType.Bot}
                     <Icon icon="bot2" size={16} />
-                    <p>Bot</p>
+                    <p>{ $_('profile.type.bot') }</p>
                 {/if}
                 {#if type == PlayerType.Human}
                     <Icon icon="user" size={16} />
@@ -179,7 +195,7 @@
             </div>
 
             {#if type == PlayerType.Bot}
-                <p class="difficulty">{difficulty}</p>
+                <p class="difficulty">{ getDifficultyName(difficulty) }</p>
             {/if}
 
             {#if id > 0}

@@ -124,7 +124,8 @@
     "delete": "Delete",
     "save": "Save",
     "save_changes": "Save changes",
-    "unknown": "(Unknown)"
+    "unknown": "(Unknown)",
+    "random": "Random"
   },
   "assistant": {
     "grid_size": {
@@ -149,6 +150,23 @@
     "type": {
       "bot": "Bot",
       "human": "Human"
+    },
+    "difficulties": {
+      "easy": {
+        "name": "Easy"
+      },
+      "hard": {
+        "name": "Hard"
+      },
+      "medium": {
+        "name": "Medium"
+      },
+      "impossible": {
+        "name": "Impossible"
+      },
+      "peaceful": {
+        "name": "Peaceful"
+      }
     }
   }
 }

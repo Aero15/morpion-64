@@ -124,7 +124,8 @@
     "delete": "Supprimer",
     "create": "Créer",
     "save_changes": "Enregistrer les modifications",
-    "unknown": "(Inconnu)"
+    "unknown": "(Inconnu)",
+    "random": "Aléatoire"
   },
   "assistant": {
     "grid_size": {
@@ -149,6 +150,23 @@
     "type": {
       "bot": "Bot",
       "human": "Humain"
+    },
+    "difficulties": {
+      "peaceful": {
+        "name": "Paisible"
+      },
+      "easy": {
+        "name": "Facile"
+      },
+      "medium": {
+        "name": "Normale"
+      },
+      "hard": {
+        "name": "Difficile"
+      },
+      "impossible": {
+        "name": "Impossible"
+      }
     }
   }
 }

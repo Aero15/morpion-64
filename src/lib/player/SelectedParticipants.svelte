@@ -8,6 +8,7 @@
     import { selectedPlayers } from "$core/store/players.svelte";
     import Button from "$lib/form/Button.svelte";
     import Icon from "$lib/shared/Icon.svelte";
+    import { _ } from "svelte-i18n";
 
     let bots: Bot[] = $state([])
     let humans: Human[] = $state([])
@@ -27,6 +28,22 @@
             .filter(player => player instanceof Human)
             .sort(sorter)
     })
+
+    // Get text from difficulty
+    function getDifficultyName(difficulty: Difficulty): string {
+        switch (difficulty) {
+            case Difficulty.Peaceful:
+                return $_('profile.difficulties.peaceful.name')
+            case Difficulty.Easy:
+                return $_('profile.difficulties.easy.name')
+            case Difficulty.Medium:
+                return $_('profile.difficulties.medium.name')
+            case Difficulty.Hard:
+                return $_('profile.difficulties.hard.name')
+            case Difficulty.Impossible:
+                return $_('profile.difficulties.impossible.name')
+        }
+    }
 </script>
 
 {#snippet item(player: Bot | Human, ghost: boolean = false)}
@@ -40,9 +57,9 @@
     
             {#if player instanceof Bot}
                 {#if ghost}
-                    <p class="difficulty">Aléatoire</p>
+                    <p class="difficulty">{ $_('common.random') }</p>
                 {:else}
-                    <p class="difficulty">{player.difficulty}</p>
+                    <p class="difficulty">{ getDifficultyName((player as Bot).difficulty) }</p>
                 {/if}
             {/if}
         </div>

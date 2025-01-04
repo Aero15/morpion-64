@@ -2,6 +2,7 @@
     import { Difficulty } from "$core/enums/Difficulty";
     import { PlayerType } from "$core/enums/PlayerType";
     import AvatarPlayer from "./AvatarPlayer.svelte";
+    import { _ } from "svelte-i18n";
 
     interface Props {
         id?: number,
@@ -24,6 +25,22 @@
         difficulty = $bindable(),
         onclick = null,
     }: Props = $props();
+
+    // Get text from difficulty
+    function getDifficultyName(difficulty: Difficulty): string {
+        switch (difficulty) {
+            case Difficulty.Peaceful:
+                return $_('profile.difficulties.peaceful.name')
+            case Difficulty.Easy:
+                return $_('profile.difficulties.easy.name')
+            case Difficulty.Medium:
+                return $_('profile.difficulties.medium.name')
+            case Difficulty.Hard:
+                return $_('profile.difficulties.hard.name')
+            case Difficulty.Impossible:
+                return $_('profile.difficulties.impossible.name')
+        }
+    }
 </script>
 
 <button
@@ -33,7 +50,7 @@
     <AvatarPlayer tinted { name } { color } { symbol } { type } { compact } />
     <p class="name">{ name }</p>
     {#if type === PlayerType.Bot && difficulty}
-        <p class="difficulty">{ difficulty }</p>
+        <p class="difficulty">{ getDifficultyName(difficulty) }</p>
     {/if}
 </button>
 

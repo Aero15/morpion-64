@@ -5,6 +5,7 @@
     import { _ } from "svelte-i18n";
 </script>
 
+<p style:margin="0 0 .5rem"><strong>{ $_('settings.options') }</strong></p>
 <RadioGroup>
     <Radio bind:group={language.current}
         label={ $_('settings.language.auto.name') } value="auto"

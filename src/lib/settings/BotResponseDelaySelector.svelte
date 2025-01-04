@@ -14,24 +14,27 @@
     import RadioGroup from "$lib/form/RadioGroup.svelte";
 
     function speedToText(speed: Point): string {
-        return `Entre ${speed.x / 1000} et ${speed.y / 1000} secondes`;
+        return $_('settings.bot_response_time.delay_between', { values: {
+            min: speed.x / 1000,
+            max: speed.y / 1000
+        } });
     }
 </script>
 
 <main>
-    <p style:margin="0 0 .5rem"><strong>Delai de réponse des bots</strong></p>
+    <p style:margin="0 0 .5rem"><strong>{ $_('settings.options') }</strong></p>
 
     <RadioGroup>
         <Radio bind:group={$botSpeedDelay}
-            label="Lent" value={BotDelay.Slow}
+            label={ $_('settings.bot_response_time.slow') } value={BotDelay.Slow}
             description={ speedToText(slowBotSpeedDelay) } />
 
         <Radio bind:group={$botSpeedDelay}
-            label="Normal" value={BotDelay.Default}
+            label={ $_('settings.bot_response_time.normal') } value={BotDelay.Default}
             description={ speedToText(defaultBotSpeedDelay) } />
 
         <Radio bind:group={$botSpeedDelay}
-            label="Rapide" value={BotDelay.Fast}
+            label={ $_('settings.bot_response_time.fast') } value={BotDelay.Fast}
             description={ speedToText(fastBotSpeedDelay) } />
     </RadioGroup>
 </main>

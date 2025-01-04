@@ -30,7 +30,7 @@
 <div class="tabs">
     <TabBar variant="rounded" bind:selectedId tabs={[
         { name: $_('settings.game_board.title'), icon: 'layout', id: Tabs.GridSize },
-        { name: 'Temps de réponse', icon: 'clock', id: Tabs.ResponseTime },
+        { name: $_('settings.bot_response_time.title'), icon: 'clock', id: Tabs.ResponseTime },
         { name: $_('settings.language.title'), icon: 'i18n', id: Tabs.Language },
     ]} />
 </div>
@@ -49,7 +49,7 @@
         {#if selectedId == Tabs.ResponseTime}
             <div class="response-time">
                 <div>
-                    <Section title="Comportement des bots">
+                    <Section title={ $_('settings.bot_response_time.title') }>
                         <BotResponseDelaySelector />
                     </Section>
                 </div>

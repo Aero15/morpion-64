@@ -37,6 +37,13 @@
       }
     },
     "default": "Par défaut",
-    "options": "Options"
+    "options": "Options",
+    "bot_response_time": {
+      "title": "Delai de réponse des bots",
+      "slow": "Lent",
+      "fast": "Rapide",
+      "normal": "Normal",
+      "delay_between": "Entre {min} et {max} secondes"
+    }
   }
 }

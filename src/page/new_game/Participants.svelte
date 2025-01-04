@@ -103,56 +103,61 @@
 
 <Responsive bind:size />
 
-{#snippet headBar()}
-    <div class="head-bar">
-        <div class="status">
-            <ProgressNbPlayers />
-        </div>
-
-        <div class="actions">
-            <Button onclick={selectRandomHuman} center shape="squared"
-                title="Ajouter une joueur au hasard"
-                variant={remainingHumans.length < 1 ? 'flat' : 'primary'}
-                disabled={remainingHumans.length < 1}>
-                <Icon icon="user" size={20} />
-                <span class="expo">
-                    <Icon icon="plus" size={14} />
-                </span>
-            </Button>
-
-            <Button onclick={selectRandomBot} center shape="squared"
-                title="Ajouter un bot au hasard"
-                variant={remainingBots.length < 1 ? 'flat' : 'default'}
-                disabled={remainingBots.length < 1}>
-                <Icon icon="bot2" size={20} />
-                <span class="expo">
-                    <Icon icon="plus" size={14} />
-                </span>
-            </Button>
-            
-            <Button center shape="squared"
-                title="Vider la sélection"
-                variant={selectedPlayers.length < 1 ? 'flat' : 'primary-red'}
-                disabled={selectedPlayers.length < 1}
-                onclick={clearSelectedPlayers}>
-                <Icon icon="bin" size={20} />
-            </Button>
-        </div>
-    </div>
-{/snippet}
-
 <main id="pg-participants">
-    {#if ['sm', 'md'].includes(size)}
-        <div class="ng-head outside gradient-grid">
+    {#snippet head(outside: boolean = false)}
+        <div class="ng-head"
+            class:outside class:inside={!outside}
+            class:gradient-grid={outside}
+        >
             <Pagination compact selectedIndex={pageIndex} />
             <h1>Participants</h1>
+            
+            <div class="head-bar">
+                <div class="status">
+                    <ProgressNbPlayers />
+                </div>
 
-            {@render headBar()}
+                <div class="actions">
+                    <Button onclick={selectRandomHuman} center shape="squared"
+                        title="Ajouter une joueur au hasard"
+                        variant={remainingHumans.length < 1 ? 'flat' : 'primary'}
+                        disabled={remainingHumans.length < 1}>
+                        <Icon icon="user" size={20} />
+                        <span class="expo">
+                            <Icon icon="plus" size={14} />
+                        </span>
+                    </Button>
 
-            <div class="tabs">
-                <TabBar tabs={tabs} bind:selectedId />
+                    <Button onclick={selectRandomBot} center shape="squared"
+                        title="Ajouter un bot au hasard"
+                        variant={remainingBots.length < 1 ? 'flat' : 'default'}
+                        disabled={remainingBots.length < 1}>
+                        <Icon icon="bot2" size={20} />
+                        <span class="expo">
+                            <Icon icon="plus" size={14} />
+                        </span>
+                    </Button>
+                    
+                    <Button center shape="squared"
+                        title="Vider la sélection"
+                        variant={selectedPlayers.length < 1 ? 'flat' : 'primary-red'}
+                        disabled={selectedPlayers.length < 1}
+                        onclick={clearSelectedPlayers}>
+                        <Icon icon="bin" size={20} />
+                    </Button>
+                </div>
             </div>
+
+            {#if outside}
+                <div class="tabs">
+                    <TabBar tabs={tabs} bind:selectedId />
+                </div>
+            {/if}
         </div>
+    {/snippet}
+
+    {#if ['sm', 'md'].includes(size)}
+        {@render head(true)}
     {/if}
 
     {#snippet bxInfo(data: BoxInfo)}
@@ -171,11 +176,8 @@
         {#if selectedId == Tabs.Preview || !['sm', 'md'].includes(size)}
             <div class="preview ng-paneContent" in:fade={{duration: 250}}>
                 {#if !['sm', 'md'].includes(size)}
-                    <div class="ng-head inside">
-                        <Pagination selectedIndex={pageIndex} compact />
-                        <h1>Participants</h1>
-
-                        {@render headBar()}
+                    <div>
+                        {@render head(false)}
 
                         {#if selectedPlayers.length > 0}
                             <div in:slide

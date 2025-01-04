@@ -486,6 +486,10 @@
                     text-overflow: ellipsis;
                 }
             }
+
+            &:last-child {
+                padding-bottom:  1rem;
+            }
         }
 
         .page-content {

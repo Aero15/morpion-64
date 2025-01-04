@@ -26,25 +26,31 @@
 <Responsive bind:size />
 
 <main id="pg-gridSize">
-    {#if ['sm', 'md'].includes(size)}
-        <div class="ng-head outside gradient-grid">
+    {#snippet head(outside: boolean = false)}
+        <div class="ng-head"
+            class:outside class:inside={!outside}
+            class:gradient-grid={outside}
+        >
             <Pagination compact />
             <h1>Grille de jeu</h1>
 
-            <div class="tabs">
-                <TabBar tabs={tabs} bind:selectedId />
-            </div>
+            {#if outside}
+                <div class="tabs">
+                    <TabBar tabs={tabs} bind:selectedId />
+                </div>
+            {/if}
         </div>
+    {/snippet}
+
+    {#if ['sm', 'md'].includes(size)}
+        {@render head(true)}
     {/if}
 
     <PageWrap>
         {#if selectedId == Tabs.Preview || !['sm', 'md'].includes(size)}
             <div class="preview ng-paneContent" in:fade={{duration: 250}}>
                 {#if !['sm', 'md'].includes(size)}
-                    <div class="ng-head inside">
-                        <Pagination compact />
-                        <h1>Grille de jeu</h1>
-                    </div>
+                    {@render head(false)}
                 {/if}
 
                 <GridSizeStats large={!['sm', 'md'].includes(size)} />

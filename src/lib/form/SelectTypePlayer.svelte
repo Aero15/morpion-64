@@ -1,6 +1,7 @@
 <script lang="ts">
     import { PlayerType } from "$core/enums/PlayerType";
     import Icon from "$lib/shared/Icon.svelte";
+    import { _ } from "svelte-i18n";
 
     let { value = $bindable('') } = $props();
 
@@ -20,11 +21,11 @@
     function getTextFor(item: PlayerType): string {
         switch (item) {
             case PlayerType.Human:
-                return 'Humain';
+                return $_('profile.type.human');
             case PlayerType.Bot:
-                return 'Bot';
+                return $_('profile.type.bot');
             default:
-                return '(Inconnu)';
+                return $_('common.unknown');
         }
     }
 </script>

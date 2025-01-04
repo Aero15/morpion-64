@@ -123,7 +123,8 @@
     "create": "Create",
     "delete": "Delete",
     "save": "Save",
-    "save_changes": "Save changes"
+    "save_changes": "Save changes",
+    "unknown": "(Unknown)"
   },
   "assistant": {
     "grid_size": {
@@ -138,6 +139,16 @@
     "preview": "Profile preview",
     "reset_score": "Reset score",
     "username": "Username",
-    "player_type": "Player type"
+    "player_type": "Player type",
+    "appearance": "Appearance",
+    "color": "Color",
+    "difficulty": "Difficulty",
+    "identity": "Identity",
+    "symbol": "Symbol",
+    "title": "Profile",
+    "type": {
+      "bot": "Bot",
+      "human": "Human"
+    }
   }
 }

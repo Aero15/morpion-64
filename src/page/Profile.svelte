@@ -57,15 +57,15 @@
     }
     let selectedId = $state(Tabs.Rename)
     let tabsMobile = [
-        { name: 'Symbole', icon: 'compass', id: Tabs.Symbol },
-        { name: 'Couleur', icon: 'palette', id: Tabs.Color },
-        { name: 'Identité', icon: 'write', id: Tabs.Rename },
-        { name: 'Difficulté', icon: 'filters', id: Tabs.Difficulty },
+        { name: $_('profile.symbol'), icon: 'compass', id: Tabs.Symbol },
+        { name: $_('profile.color'), icon: 'palette', id: Tabs.Color },
+        { name: $_('profile.identity'), icon: 'write', id: Tabs.Rename },
+        { name: $_('profile.difficulty'), icon: 'filters', id: Tabs.Difficulty },
     ]
     let tabsPC = [
-        { name: 'Apparence', icon: 'palette', id: Tabs.Look },
-        { name: 'Identité', icon: 'write', id: Tabs.Rename },
-        { name: 'Difficulté', icon: 'filters', id: Tabs.Difficulty },
+        { name: $_('profile.appearance'), icon: 'palette', id: Tabs.Look },
+        { name: $_('profile.identity'), icon: 'write', id: Tabs.Rename },
+        { name: $_('profile.difficulty'), icon: 'filters', id: Tabs.Difficulty },
     ]
 
     let size: BreakpointSize = $state('sm')
@@ -155,7 +155,7 @@
 <Responsive bind:size />
 
 {#if size != 'sm'}
-    <Jumbo icon="profile" title="Profil" />
+    <Jumbo icon="profile" title={ $_('profile.title') } />
 {/if}
 
 {#snippet profileInfos(insidePanel = false)}
@@ -174,7 +174,7 @@
                 {/if}
                 {#if type == PlayerType.Human}
                     <Icon icon="user" size={16} />
-                    <p>Humain</p>
+                    <p>{ $_('profile.type.human') }</p>
                 {/if}
             </div>
 
@@ -312,7 +312,7 @@
             {#if selectedId == Tabs.Color}
                 <div class="colors">
                     <div class="editor">
-                        <p class="label"><strong>Couleur</strong></p>
+                        <p class="label"><strong>{ $_('profile.color') }</strong></p>
                         <SelectColor bind:value={color} />
                     </div>
 
@@ -327,7 +327,7 @@
             {#if selectedId == Tabs.Look}
                 <div class="colors">
                     <div class="editor">
-                        <p class="label"><strong>Couleur</strong></p>
+                        <p class="label"><strong>{ $_('profile.color') }</strong></p>
                         <SelectColor bind:value={color} />
                     </div>
 
@@ -338,7 +338,7 @@
                     </div>
 
                     <div class="symbols">
-                        <p class="label"><strong>Symbole</strong></p>
+                        <p class="label"><strong>{ $_('profile.symbol') }</strong></p>
                         <SelectSymbol bind:value={symbol} />
                     </div>
                 </div>
@@ -346,7 +346,7 @@
 
             {#if selectedId == Tabs.Symbol}
                 <div class="symbols">
-                    <p class="label"><strong>Symbole</strong></p>
+                    <p class="label"><strong>{ $_('profile.symbol') }</strong></p>
                     <SelectSymbol bind:value={symbol} />
                 </div>
             {/if}

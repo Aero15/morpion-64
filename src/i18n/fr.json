@@ -123,7 +123,8 @@
     "save": "Enregistrer",
     "delete": "Supprimer",
     "create": "Créer",
-    "save_changes": "Enregistrer les modifications"
+    "save_changes": "Enregistrer les modifications",
+    "unknown": "(Inconnu)"
   },
   "assistant": {
     "grid_size": {
@@ -138,6 +139,16 @@
     "preview": "Aperçu du profil",
     "reset_score": "Réinitialiser le score",
     "username": "Pseudo",
-    "player_type": "Type de joueur"
+    "player_type": "Type de joueur",
+    "symbol": "Symbole",
+    "color": "Couleur",
+    "identity": "Identité",
+    "difficulty": "Difficulté",
+    "appearance": "Apparence",
+    "title": "Profil",
+    "type": {
+      "bot": "Bot",
+      "human": "Humain"
+    }
   }
 }

@@ -224,13 +224,18 @@
       "remove_symbol": "Effacer un symbole dans la grille",
       "hint": "Astuce",
       "show_hint": "Afficher une astuce pour place mon symbole",
-      "erase": "Effacer"
+      "erase": "Effacer",
+      "name": "Outils"
     },
     "message": {
       "well_done": "Bravo 🏆",
       "player_won": "{name} a gagné !",
       "draw": "Match nul 😥",
-      "no_winner": "Pas de gagnant"
-    }
+      "no_winner": "Pas de gagnant",
+      "game_is_running": "Partie en cours",
+      "game_is_finished": "Partie terminée"
+    },
+    "result": "Résultat",
+    "running_order": "Ordre de passage"
   }
 }

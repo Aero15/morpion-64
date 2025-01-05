@@ -68,7 +68,7 @@
         <aside class="panel">
             <Panel>
                 <PanelSection icon="play" open
-                    title={game.endTime === undefined ? "Partie en cours" : "Partie terminée"} >
+                    title={game.endTime === undefined ? $_('game.message.game_is_running') : $_('game.message.game_is_finished') } >
                     <div class="pane-content">
                         <GameStatus bind:game />
                     </div>
@@ -87,7 +87,8 @@
             </Panel>
 
             <Panel>
-                <PanelSection title={game.endTime === undefined ? "Ordre de passage" : "Résultat"} icon="profile" open>
+                <PanelSection title={game.endTime === undefined ? $_('game.running_order') : $_('game.result') }
+                    icon="profile" open>
                     <div class="pane-content">
                         {#if game.endTime === undefined}
                             <PlayerTurn bind:game compact />
@@ -99,7 +100,7 @@
                 </PanelSection>
 
                 {#if game.endTime === undefined}
-                    <PanelSection title="Outils" icon="menu_dots" variant="transparent" open>
+                    <PanelSection title={ $_('game.tools.name') } icon="menu_dots" variant="transparent" open>
                         <div class="pane-content">
                             {#if !botIsPlaying}
                                 <ToolBox bind:game />

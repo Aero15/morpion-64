@@ -217,6 +217,14 @@
         "minutes": "m",
         "seconds": "s"
       }
+    },
+    "tools": {
+      "place_symbol": "Placer mon symbole",
+      "place": "Placer",
+      "remove_symbol": "Effacer un symbole dans la grille",
+      "hint": "Astuce",
+      "show_hint": "Afficher une astuce pour place mon symbole",
+      "erase": "Effacer"
     }
   }
 }

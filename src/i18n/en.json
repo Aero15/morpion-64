@@ -217,6 +217,14 @@
         "minutes": "m",
         "seconds": "s"
       }
+    },
+    "tools": {
+      "place_symbol": "Place my symbol",
+      "place": "Place",
+      "remove_symbol": "Remove a symbol in the grid",
+      "hint": "Hint",
+      "show_hint": "Show a tip to place my symbol",
+      "erase": "Erase"
     }
   }
 }

@@ -3,6 +3,7 @@
     import Button from "$lib/form/Button.svelte";
     import Icon from "$lib/shared/Icon.svelte";
     import { slide } from "svelte/transition";
+    import { _ } from "svelte-i18n";
 
     interface Props {
         game: GameEngine,
@@ -22,29 +23,29 @@
     transition:slide>
     <Button onclick={() => game.eraserEnabled = false} center shape="squared"
         variant={game.eraserEnabled ? 'default' : 'primary'}
-        title="Placer mon symbole">
+        title={ $_('game.tools.place_symbol') }>
         <Icon icon="gps_fix" size={iconSize} />
         {#if !compact}
-            <p>Placer</p>
+            <p>{ $_('game.tools.place') }</p>
         {/if}
         <div class="indicator" style:opacity={!game.eraserEnabled ? 1 : 0}></div>
     </Button>
 
     <Button onclick={() => game.eraserEnabled = true} center shape="squared"
         variant={game.eraserEnabled ? 'primary' : 'default'}
-        title="Effacer un symbole dans la grille">
+        title={ $_('game.tools.remove_symbol') }>
         <Icon icon="gps_slash" size={iconSize} />
         {#if !compact}
-            <p>Effacer</p>
+            <p>{ $_('game.tools.erase') }</p>
         {/if}
         <div class="indicator" style:opacity={game.eraserEnabled ? 1 : 0}></div>
     </Button>
 
     <Button center shape="squared" onclick={() => game.showHint()}
-        title="Afficher une astuce pour place mon symbole">
+        title={ $_('game.tools.show_hint') }>
         <Icon icon="info" size={iconSize} />
         {#if !compact}
-            <p>Astuce</p>
+            <p>{ $_('game.tools.hint') }</p>
         {/if}
     </Button>
 </div>

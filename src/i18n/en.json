@@ -92,7 +92,12 @@
     "reset_scores": "Reset scores",
     "show_players_without_score": "Show players without score",
     "hide_players_without_score": "Show players without score",
-    "confirm_reset_score": "Do you really want to reset the scores?"
+    "confirm_reset_score": "Do you really want to reset the scores?",
+    "points_abbreviation": "pts",
+    "leaderboard": {
+      "open": "View the rest of the ranking ({count})",
+      "close": "Hide ranking"
+    }
   },
   "players": {
     "sections": {
@@ -202,6 +207,9 @@
       "pause": "Pause game",
       "resume": "Resume game",
       "restart": "Restart the game"
+    },
+    "leaderboard": {
+      "score": "Score"
     }
   }
 }

@@ -52,7 +52,7 @@
 
                 <p class="score">
                     <strong>{formatScore(score)}</strong>
-                    <span>pts</span>
+                    <span>{ $_('ranking.points_abbreviation') }</span>
                 </p>
                 
                 {#if displayType}

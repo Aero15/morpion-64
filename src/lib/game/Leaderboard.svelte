@@ -3,6 +3,7 @@
     import { improveContrast } from "$core/helpers/Colors.svelte";
     import Button from "$lib/form/Button.svelte";
     import Icon from "$lib/shared/Icon.svelte";
+    import { _ } from "svelte-i18n";
 
     interface Props {
         game: GameEngine,
@@ -36,8 +37,8 @@
         <thead>
             <tr>
                 <th><strong>#</strong></th>
-                <th><strong>Nom</strong></th>
-                <th style:text-align="end"><strong>Score</strong></th>
+                <th><strong>{ $_('profile.username') }</strong></th>
+                <th style:text-align="end"><strong>{ $_('game.leaderboard.score') }</strong></th>
             </tr>
         </thead>
     
@@ -56,7 +57,7 @@
                     <td>
                         <p class="score">
                             <strong>{formatScore(temporaryScore)}</strong>
-                            <span>pts</span>
+                            <span>{ $_('ranking.points_abbreviation') }</span>
                         </p>
                     </td>
                 </tr>
@@ -66,18 +67,18 @@
     
     <div class="actions">
         {#if sorted.length > limit && limit > 0}
-            <Button center title="Ouvrir le classement"
+            <Button center title={ $_('ranking.leaderboard.open', { values: { count: sorted.length - limit } }) }
                 onclick={() => limit = sorted.length}>
                 <Icon icon="chevron_down" size={16} />
-                <span>Afficher le reste du classement ({sorted.length - limit})</span>
+                <span>{ $_('ranking.leaderboard.open', { values: { count: sorted.length - limit } }) }</span>
             </Button>
         {/if}
     
         {#if limit == sorted.length}
-            <Button center title="Ouvrir le classement"
+            <Button center title={ $_('ranking.leaderboard.close') }
                 onclick={() => limit = 3}>
                 <Icon icon="chevron_up" size={16} />
-                <span>Réduire le classement</span>
+                <span>{ $_('ranking.leaderboard.close') }</span>
             </Button>
         {/if}
     </div>

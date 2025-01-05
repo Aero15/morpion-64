@@ -92,7 +92,12 @@
     "reset_scores": "Réinitialiser les scores",
     "show_players_without_score": "Afficher les joueurs sans score",
     "hide_players_without_score": "Masquer les joueurs sans score",
-    "confirm_reset_score": "Voulez-vous vraiment réinitialiser les scores ?"
+    "confirm_reset_score": "Voulez-vous vraiment réinitialiser les scores ?",
+    "points_abbreviation": "pts",
+    "leaderboard": {
+      "open": "Afficher le reste du classement ({count})",
+      "close": "Réduire le classement"
+    }
   },
   "players": {
     "sections": {
@@ -202,6 +207,9 @@
       "pause": "Mettre en pause",
       "resume": "Reprendre la partie",
       "restart": "Relancer le jeu"
+    },
+    "leaderboard": {
+      "score": "Score"
     }
   }
 }

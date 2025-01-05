@@ -105,9 +105,18 @@
                             {#if !botIsPlaying}
                                 <ToolBox bind:game />
                             {:else}
+                                {@const message = $_('game.message.player_is_playing').split('{name}') }
                                 <div class="info" transition:slide style:color={game.players.getCurrentPlayer()?.color}>
                                     <Icon icon={game.players.getCurrentPlayer()?.symbol || 'bot2'} size={44} />
-                                    <p><strong>{game.players.getCurrentPlayer()?.name}</strong> est en train de jouer...</p>
+                                    <p>
+                                        {#each message as text}
+                                            {#if text.length > 0}
+                                                {text}
+                                            {:else}
+                                                <strong>{game.players.getCurrentPlayer()?.name}</strong>
+                                            {/if}
+                                        {/each}
+                                    </p>
                                 </div>
                             {/if}
                         </div>

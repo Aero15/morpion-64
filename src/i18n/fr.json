@@ -206,7 +206,8 @@
     "actions": {
       "pause": "Mettre en pause",
       "resume": "Reprendre la partie",
-      "restart": "Relancer le jeu"
+      "restart": "Relancer le jeu",
+      "open_ranking": "Afficher le classement"
     },
     "leaderboard": {
       "score": "Score"
@@ -233,7 +234,9 @@
       "draw": "Match nul 😥",
       "no_winner": "Pas de gagnant",
       "game_is_running": "Partie en cours",
-      "game_is_finished": "Partie terminée"
+      "game_is_finished": "Partie terminée",
+      "player_is_playing": "{name} est en train de jouer...",
+      "show_game": "Afficher la grille de jeu"
     },
     "result": "Résultat",
     "running_order": "Ordre de passage"

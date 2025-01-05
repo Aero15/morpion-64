@@ -8,6 +8,7 @@
     import Halo from "$lib/shared/Halo.svelte";
     import { slide } from "svelte/transition";
     import ToolBox from "./ToolBox.svelte";
+    import { _ } from "svelte-i18n";
 
     interface Props {
         game: GameEngine,
@@ -32,6 +33,7 @@
                     {#if !botIsPlaying}
                         <ToolBox bind:game compact />
                     {:else}
+                        {@const message = $_('game.message.player_is_playing').split('{name}') }
                         <div class="info botPlaying" transition:slide>
                             <AvatarPlayer
                                 name={ player!.name }
@@ -41,12 +43,21 @@
                                 shape="circular"
                                 compact tinted
                             />
-                            <p><strong>{game.players.getCurrentPlayer()?.name}</strong> est en train de jouer...</p>
+                            <p>
+                                {#each message as text}
+                                    {#if text.length > 0}
+                                        {text}
+                                    {:else}
+                                        <strong>{game.players.getCurrentPlayer()?.name}</strong>
+                                    {/if}
+                                {/each}
+                            </p>
                         </div>
                     {/if}
                 {:else}
                     {#if game.winnerInfo !== undefined && game.players.getCurrentPlayer() !== null}
                         {@const player = game.players.getCurrentPlayer()!}
+                        {@const message = $_('game.message.player_won').split('{name}') }
                         <div class="info winner" transition:slide>
                             <AvatarPlayer
                                 name={ player.name }
@@ -56,7 +67,15 @@
                                 shape="circular"
                                 compact tinted
                             />
-                            <p><strong>{ player.name }</strong> a remporté la partie !</p>
+                            <p>
+                                {#each message as text}
+                                    {#if text.length > 0}
+                                        {text}
+                                    {:else}
+                                        <strong>{game.players.getCurrentPlayer()?.name}</strong>
+                                    {/if}
+                                {/each}
+                            </p>
                         </div>
                     {/if}
 
@@ -65,7 +84,7 @@
                             <div style:padding=".25rem">
                                 <Icon icon="thumb_down" size={45} />
                             </div>
-                            <p><strong>Match nul ! 😩</strong> Pas de gagnant</p>
+                            <p><strong>{ $_('game.message.draw') }</strong> { $_('game.message.no_winner') }</p>
                         </div>
                     {/if}
                 {/if}
@@ -74,7 +93,7 @@
             <div class="end">
                 {#if currentView == GameView.Leaderboard}
                     <Button center variant="flat" shape="squared"
-                        title="Afficher la grille de jeu"
+                        title={ $_('game.message.show_game') }
                         onclick={() => currentView = GameView.Game}>
                         <Icon icon="podium" size={32} />
                     </Button>
@@ -82,7 +101,7 @@
 
                 {#if currentView == GameView.Game}
                     <Button center variant="flat" shape="squared"
-                        title="Afficher le classement"
+                        title={ $_('game.actions.open_ranking') }
                         onclick={() => currentView = GameView.Leaderboard}>
                         <Icon icon="dice" size={32} />
                     </Button>

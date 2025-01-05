@@ -206,7 +206,8 @@
     "actions": {
       "pause": "Pause game",
       "resume": "Resume game",
-      "restart": "Restart the game"
+      "restart": "Restart the game",
+      "open_ranking": "Display ranking"
     },
     "leaderboard": {
       "score": "Score"
@@ -233,7 +234,9 @@
       "draw": "Draw 😥",
       "no_winner": "No winner",
       "game_is_running": "Game is running",
-      "game_is_finished": "Game is finished"
+      "game_is_finished": "Game is finished",
+      "player_is_playing": "{name} is playing...",
+      "show_game": "Display the game"
     },
     "result": "Result",
     "running_order": "Running order"

@@ -4,7 +4,7 @@
         deletePlayerById, findPlayerById, updatePlayer
     } from "$core/helpers/Players.svelte";
     import { onMount } from "svelte";
-    import { fade } from "svelte/transition";
+    import { fade, slide } from "svelte/transition";
     import { pop } from "svelte-spa-router";
     import Icon from "$lib/shared/Icon.svelte";
     import Input from "$lib/form/Input.svelte";
@@ -181,7 +181,14 @@
         {/key}
 
         <div class="identity">
-            <p class="name"><strong>{name}</strong></p>
+            {#if name.length > 0}
+                <p class="name" transition:slide><strong>{name}</strong></p>
+            {:else}
+                <div class="warning" transition:slide>
+                    <Icon icon="warning" size={64} />
+                    <p>{ $_('profile.warning_no_name') }</p>
+                </div>
+            {/if}
 
             <div class="type">
                 {#if type == PlayerType.Bot}
@@ -388,6 +395,21 @@
             flex-flow: column;
             align-items: center;
             text-align: center;
+
+            .warning {
+                color: light-dark(#ca8a04, #facc15);
+                margin: -2.5rem 1rem 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: start;
+                text-align: start;
+                gap: .75rem;
+
+                p {
+                    margin: 0;
+                    font-size: .8em;
+                }
+            }
 
             .name {
                 margin: -2.5rem 0 0;

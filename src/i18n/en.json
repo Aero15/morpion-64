@@ -196,5 +196,12 @@
     "confirm_reset_score": "Do you really want to reset the score?",
     "legend_color_contrast": "Adaptation of the symbol color according to the contrast (dark mode)",
     "warning_no_name": "Please set a username (from the tab \"Identity\") to be able to save this profile."
+  },
+  "game": {
+    "actions": {
+      "pause": "Pause game",
+      "resume": "Resume game",
+      "restart": "Restart the game"
+    }
   }
 }

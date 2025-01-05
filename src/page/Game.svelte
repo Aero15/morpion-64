@@ -104,8 +104,8 @@
                             {#if !botIsPlaying}
                                 <ToolBox bind:game />
                             {:else}
-                                <div class="info" transition:slide>
-                                    <Icon icon="bot2" size={34} />
+                                <div class="info" transition:slide style:color={game.players.getCurrentPlayer()?.color}>
+                                    <Icon icon={game.players.getCurrentPlayer()?.symbol || 'bot2'} size={44} />
                                     <p><strong>{game.players.getCurrentPlayer()?.name}</strong> est en train de jouer...</p>
                                 </div>
                             {/if}
@@ -233,12 +233,11 @@
         .info {
             display: grid;
             align-items: center;
-            gap: .5rem;
             font-size: .78em;
             color: light-dark(var(--main_color), var(--main_color_bright));
             justify-content: center;
             place-items: center;
-            margin-top: -1rem;
+            margin-top: -1.5rem;
 
             p {margin: 0;}
             strong {color: light-dark(#ab00ce, #fff);}

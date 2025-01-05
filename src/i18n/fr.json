@@ -196,5 +196,12 @@
     "confirm_reset_score": "Voulez-vous vraiment réinitialiser votre score à 0 ?",
     "legend_color_contrast": "Adaptation de la couleur du symbole en fonction du contraste (mode sombre)",
     "warning_no_name": "Veuillez définir un pseudo (depuis l'onglet \"Identité\") pour pouvoir enregistrer ce profil"
+  },
+  "game": {
+    "actions": {
+      "pause": "Mettre en pause",
+      "resume": "Reprendre la partie",
+      "restart": "Relancer le jeu"
+    }
   }
 }

@@ -5,6 +5,7 @@
     import Icon from "$lib/shared/Icon.svelte";
     import { push } from "svelte-spa-router";
     import Timer from "./Timer.svelte";
+    import { _ } from "svelte-i18n";
 
     interface Props {
         game: GameEngine,
@@ -37,7 +38,7 @@
                 <Button center
                     variant="primary-green"
                     shape="rounded"
-                    title="Pause"
+                    title={ $_('game.actions.pause') }
                     onclick={() => game.timer.stop()}
                 >
                     <Icon icon="pause" size={18} />
@@ -46,7 +47,7 @@
                 <Button center
                     variant="primary"
                     shape="rounded"
-                    title="Reprendre"
+                    title={ $_('game.actions.resume') }
                     onclick={() => game.timer.resume()}
                 >
                     <Icon icon="play" size={18} />
@@ -57,7 +58,7 @@
         <Button center
             variant={game.endTime === undefined ? 'primary-yellow' : 'primary'}
             shape="rounded"
-            title="Recommencer"
+            title={ $_('game.actions.restart') }
             onclick={newGame}
         >
             <Icon icon="rotate" size={18} />
@@ -66,7 +67,7 @@
         <Button center
             variant="primary-red"
             shape="rounded"
-            title="Quitter"
+            title={ $_('common.leave') }
             onclick={() => push('/')}
         >
             <Icon icon="cross" size={18} />

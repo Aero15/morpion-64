@@ -153,20 +153,29 @@
     },
     "difficulties": {
       "easy": {
-        "name": "Easy"
+        "name": "Easy",
+        "legend": "The bot will use very little strategy"
       },
       "hard": {
-        "name": "Hard"
+        "name": "Hard",
+        "legend": "The bot will use several techniques to win the game"
       },
       "medium": {
-        "name": "Medium"
+        "name": "Medium",
+        "legend": "The bot will try to win but you can beat it"
       },
       "impossible": {
-        "name": "Impossible"
+        "name": "Impossible",
+        "legend": "The bot will not give you any chance to win"
       },
       "peaceful": {
-        "name": "Peaceful"
-      }
-    }
+        "name": "Peaceful",
+        "legend": "The bot will place itself randomly"
+      },
+      "name": "Difficulty levels"
+    },
+    "confirm_delete_profile": "Do you really want to delete this profile ?",
+    "confirm_reset_score": "Do you really want to reset the score?",
+    "legend_color_contrast": "Adaptation of the symbol color according to the contrast (dark mode)"
   }
 }

@@ -153,20 +153,29 @@
     },
     "difficulties": {
       "peaceful": {
-        "name": "Paisible"
+        "name": "Paisible",
+        "legend": "Le bot place se positionnera de manière aléatoire"
       },
       "easy": {
-        "name": "Facile"
+        "name": "Facile",
+        "legend": "Le bot utilisera très peu de stratégie"
       },
       "medium": {
-        "name": "Normale"
+        "name": "Normale",
+        "legend": "Le bot essaiera de gagner mais vous pourrez le battre"
       },
       "hard": {
-        "name": "Difficile"
+        "name": "Difficile",
+        "legend": "Le bot utilisera plusieurs techniques pour remporter la partie"
       },
       "impossible": {
-        "name": "Impossible"
-      }
-    }
+        "name": "Impossible",
+        "legend": "Le bot ne vous laissera aucune chance de gagner"
+      },
+      "name": "Niveaux de difficulté"
+    },
+    "confirm_delete_profile": "Voulez-vous vraiment supprimer ce joueur ?",
+    "confirm_reset_score": "Voulez-vous vraiment réinitialiser votre score à 0 ?",
+    "legend_color_contrast": "Adaptation de la couleur du symbole en fonction du contraste (mode sombre)"
   }
 }

@@ -44,17 +44,17 @@
     function getTextFor(item: Difficulty): string {
         switch (item) {
             case Difficulty.Peaceful:
-                return "Le bot place se positionnera de manière aléatoire";
+                return $_('profile.difficulties.peaceful.legend')
             case Difficulty.Easy:
-                return "Le bot utilisera très peu de stratégie";
+                return $_('profile.difficulties.easy.legend')
             case Difficulty.Medium:
-                return 'Le bot essaiera de gagner mais vous pourrez le battre';
+                return $_('profile.difficulties.medium.legend')
             case Difficulty.Hard:
-                return 'Le bot utilisera plusieurs techniques pour remporter la partie';
+                return $_('profile.difficulties.hard.legend')
             case Difficulty.Impossible:
-                return 'Le bot ne vous laissera aucune chance de gagner';
+                return $_('profile.difficulties.impossible.legend')
             default:
-                return '(Inconnue)';
+                return $_('common.unknown')
         }
     }
 </script>

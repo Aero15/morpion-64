@@ -225,6 +225,12 @@
       "hint": "Astuce",
       "show_hint": "Afficher une astuce pour place mon symbole",
       "erase": "Effacer"
+    },
+    "message": {
+      "well_done": "Bravo 🏆",
+      "player_won": "{name} a gagné !",
+      "draw": "Match nul 😥",
+      "no_winner": "Pas de gagnant"
     }
   }
 }

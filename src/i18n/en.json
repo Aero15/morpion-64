@@ -225,6 +225,12 @@
       "hint": "Hint",
       "show_hint": "Show a tip to place my symbol",
       "erase": "Erase"
+    },
+    "message": {
+      "well_done": "Hoora 🏆",
+      "player_won": "{name} won !",
+      "draw": "Draw 😥",
+      "no_winner": "No winner"
     }
   }
 }

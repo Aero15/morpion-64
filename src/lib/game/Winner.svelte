@@ -3,6 +3,7 @@
     import AvatarPlayer from "$lib/player/AvatarPlayer.svelte";
     import Icon from "$lib/shared/Icon.svelte";
     import { slide } from "svelte/transition";
+    import { _ } from "svelte-i18n";
 
     interface Props {
         game: GameEngine,
@@ -18,9 +19,10 @@
         {#if game.winnerInfo !== undefined && game.players.getCurrentPlayer() !== null}
             {@const player = game.players.getCurrentPlayer()!}
             <div class="winner" transition:slide>
-                <h3>🏆 Bravo !</h3>
+                <h3>{ $_('game.message.well_done') }</h3>
                 <div class="ident">
-                    <AvatarPlayer
+                    <AvatarPlayer tinted
+                        shape="circular"
                         name={ player.name }
                         color={ player.color }
                         symbol={ player.symbol }
@@ -28,17 +30,17 @@
                     />
                     <Icon icon="thumb_up" size={90} />
                 </div>
-                <p>{ player.name } a gagné !</p>
+                <p>{ $_('game.message.player_won', {values: {name: player.name}}) }</p>
             </div>
         {/if}
 
         {#if game.winnerInfo === undefined}
             <div class="winner" transition:slide>
-                <h3>😥 Match nul !</h3>
+                <h3>{ $_('game.message.draw') }</h3>
                 <div class="ident">
                     <Icon icon="thumb_down" size={90} />
                 </div>
-                <p>Pas de gagnant</p>
+                <p>{ $_('game.message.no_winner') }</p>
             </div>
         {/if}
     {/if}

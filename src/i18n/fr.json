@@ -125,14 +125,32 @@
     "create": "Créer",
     "save_changes": "Enregistrer les modifications",
     "unknown": "(Inconnu)",
-    "random": "Aléatoire"
+    "random": "Aléatoire",
+    "all": "Tout",
+    "clear_selection": "Vider la sélection"
   },
   "assistant": {
     "grid_size": {
       "title": "Grille de jeu"
     },
     "participants": {
-      "title": "Participants"
+      "title": "Participants",
+      "selected": "Sélectionnés",
+      "available": "Disponibles",
+      "select_random_bot": "Choisir un bot au hasard",
+      "select_random_player": "Choisir un joueur au hasard",
+      "empty_selection": {
+        "title": "Aucun joueur selectionné",
+        "legend": "Choisissez un ou plusieurs joueurs pour pouvoir lancer une partie"
+      },
+      "no_player_found": {
+        "title": "Aucun joueur trouvé",
+        "legend": "Votre recherche ne donne aucun résultat"
+      },
+      "no_player_available": {
+        "title": "Aucun joueur disponible",
+        "legend": "Vous pouvez créer des joueurs depuis la page des \"Joueurs\""
+      }
     },
     "play": "Jouer"
   },

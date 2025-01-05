@@ -153,11 +153,11 @@
         
         --color_gradient: linear-gradient(
             to right bottom,
-            light-dark(#b6fffb, #005457),
+            light-dark(#b6fffb, #006e72),
             light-dark(#e2e2e2, #0a1a25),
-            light-dark(#9ec6ff, #00275e),
+            light-dark(#9ec6ff, #003a8b),
             light-dark(#e2e2e2, #120727),
-            light-dark(#f8caf3, #5f0054)
+            light-dark(#f8caf3, #830074)
         );
 
         &.sm {

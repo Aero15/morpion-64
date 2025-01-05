@@ -125,14 +125,32 @@
     "save": "Save",
     "save_changes": "Save changes",
     "unknown": "(Unknown)",
-    "random": "Random"
+    "random": "Random",
+    "all": "All",
+    "clear_selection": "Clear selection"
   },
   "assistant": {
     "grid_size": {
       "title": "Game grid"
     },
     "participants": {
-      "title": "Participants"
+      "title": "Participants",
+      "selected": "Selected",
+      "available": "Available",
+      "select_random_bot": "Select a random bot",
+      "select_random_player": "Select a random player",
+      "empty_selection": {
+        "title": "No player selected",
+        "legend": "Please select one or more players to start a game"
+      },
+      "no_player_found": {
+        "title": "No player found",
+        "legend": "Your search returned no results"
+      },
+      "no_player_available": {
+        "title": "No player available",
+        "legend": "You can create new players from the \"Players\" page"
+      }
     },
     "play": "Play"
   },

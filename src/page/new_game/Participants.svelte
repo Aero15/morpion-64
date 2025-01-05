@@ -41,8 +41,8 @@
         Preview: 1,
     }
     let tabs = [
-        { name: 'Disponibles', icon: 'profile', id: Tabs.Available },
-        { name: 'Sélectionnes', icon: 'checkbox', id: Tabs.Preview },
+        { name: $_('assistant.participants.available'), icon: 'profile', id: Tabs.Available },
+        { name: $_('assistant.participants.selected'), icon: 'checkbox', id: Tabs.Preview },
     ]
     let selectedId = $state(Tabs.Available);
 
@@ -53,7 +53,7 @@
         Bots: 7
     }
     let filterTabs = [
-        { name: 'Tous', icon: 'asterisk', id: FilterTabs.All },
+        { name: $_('common.all'), icon: 'asterisk', id: FilterTabs.All },
         { name: $_('players.sections.humans'), icon: 'user', id: FilterTabs.Humans },
         { name: $_('players.sections.bots'), icon: 'bot2', id: FilterTabs.Bots },
     ]
@@ -119,7 +119,7 @@
 
                 <div class="actions">
                     <Button onclick={selectRandomHuman} center shape="squared"
-                        title="Ajouter une joueur au hasard"
+                        title={ $_('assistant.participants.select_random_player') }
                         variant={remainingHumans.length < 1 ? 'flat' : 'primary'}
                         disabled={remainingHumans.length < 1}>
                         <Icon icon="user" size={20} />
@@ -129,7 +129,7 @@
                     </Button>
 
                     <Button onclick={selectRandomBot} center shape="squared"
-                        title="Ajouter un bot au hasard"
+                        title={ $_('assistant.participants.select_random_bot') }
                         variant={remainingBots.length < 1 ? 'flat' : 'default'}
                         disabled={remainingBots.length < 1}>
                         <Icon icon="bot2" size={20} />
@@ -139,7 +139,7 @@
                     </Button>
                     
                     <Button center shape="squared"
-                        title="Vider la sélection"
+                        title={ $_('common.clear_selection') }
                         variant={selectedPlayers.length < 1 ? 'flat' : 'primary-red'}
                         disabled={selectedPlayers.length < 1}
                         onclick={clearSelectedPlayers}>
@@ -196,8 +196,8 @@
                 {#if selectedPlayers.length == 0}
                     {@render bxInfo({
                         variant: 'empty', icon: 'profile', iconSize: 100,
-                        title: 'Aucun joueur selectionné',
-                        description: 'Choisissez un ou plusieurs joueurs pour pouvoir lancer une partie.'
+                        title: $_('assistant.participants.empty_selection.title'),
+                        description: $_('assistant.participants.empty_selection.legend')
                     })}
                 {/if}
 
@@ -229,27 +229,24 @@
                         {#if isSearching}
                             {@render bxInfo({
                                 variant: 'emptyResult', icon: 'search', iconSize: 100,
-                                title: 'Aucun joueur trouvé',
-                                description: 'Votre recherche ne donne aucun résultat.'
+                                title: $_('assistant.participants.no_player_found.title'),
+                                description: $_('assistant.participants.no_player_found.legend')
                             })}
                         {/if}
 
                         {#if !isSearching}
                             {@render bxInfo({
                                 variant: 'emptyResult', icon: 'disable', iconSize: 100,
-                                title: 'Aucun joueur disponible',
-                                description: 'Vous pouvez créer des nouveaux joueurs depuis la page de gestion des "Joueurs".'
+                                title: $_('assistant.participants.no_player_available.title'),
+                                description: $_('assistant.participants.no_player_available.legend')
                             })}
                         {/if}
                     {/if}
 
                     <div class="newPlayer">
                         <Button onclick={() => push('/players/0')} >
-                            <Icon icon="plus" size={28} />
-                            <div class="text">
-                                <p class="title"><strong>{ $_('players.create_profile') }</strong></p>
-                                <p class="legend">Cliquez ici si vous ne figurez pas dans la liste</p>
-                            </div>
+                            <Icon icon="plus" size={20} />
+                            <p class="text">{ $_('players.create_profile') }</p>
                         </Button>
                     </div>
                 </div>
@@ -271,16 +268,15 @@
 
                 p {
                     margin: 0;
-
-                    &.title {font-size: .9em;}
-                    &.legend {font-size: .8em;}
+                    font-size: .9em;
                 }
 
                 :global(button) {
-                    gap: 1rem;
+                    gap: .5rem;
                     display: flex;
+                    justify-content: start;
                     align-items: center;
-                    padding: 1rem 1.5rem;
+                    padding: .8rem 1rem;
                     text-align: start;
                 }
             }
@@ -292,7 +288,7 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            max-width: 300px;
+            max-width: 16rem;
             padding: 2rem;
             margin: auto;
 
@@ -305,13 +301,6 @@
                     margin: .25rem 0;
                     font-size: .85em;
                 }
-            }
-
-            &.empty {
-                border: 3px dashed light-dark(#000, #fff);
-                border-radius: 2rem;
-                backdrop-filter: blur(10px);
-                aspect-ratio: 1;
             }
 
             &.emptyResult :global(.icon) {

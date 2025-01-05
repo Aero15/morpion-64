@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { _ } from "svelte-i18n";
+
     interface Props {
         secondsTotal: number
     }
@@ -23,20 +25,20 @@
     {#if hours > 0}
         <p class="hours">
             <strong>{ hours }</strong>
-            <span>h</span>
+            <span>{ $_('game.timer.abbreviations.hours') }</span>
         </p>
     {/if}
 
     {#if minutes > 0}
         <p class="minutes">
             <strong>{ minutes }</strong>
-            <span>m</span>
+            <span>{ $_('game.timer.abbreviations.minutes') }</span>
         </p>
     {/if}
 
     <p class="seconds">
         <strong>{ seconds }</strong>
-        <span>s</span>
+        <span>{ $_('game.timer.abbreviations.seconds') }</span>
     </p>
 </div>
 

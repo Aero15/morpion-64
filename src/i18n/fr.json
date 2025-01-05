@@ -210,6 +210,13 @@
     },
     "leaderboard": {
       "score": "Score"
+    },
+    "timer": {
+      "abbreviations": {
+        "hours": "h",
+        "minutes": "m",
+        "seconds": "s"
+      }
     }
   }
 }

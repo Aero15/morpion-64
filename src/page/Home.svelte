@@ -194,11 +194,11 @@
     #homeJumbo :global(.jumbo) {
         --color_gradient: linear-gradient(
             to right,
-            light-dark(#b6fffb, #005457),
-            light-dark(#e2e2e2, #474747),
-            light-dark(#9ec6ff, #00275e),
-            light-dark(#e2e2e2, #474747),
-            light-dark(#f8caf3, #5f0054)
+            light-dark(#b6fffb, #006e72),
+            light-dark(#e2e2e2, #0a1a25),
+            light-dark(#9ec6ff, #003b8f),
+            light-dark(#e2e2e2, #120727),
+            light-dark(#f8caf3, #810172)
         );
     }
 

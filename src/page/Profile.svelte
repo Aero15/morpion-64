@@ -135,7 +135,7 @@
 
     // Delete player
     function deletePlayer() {
-        const ok = confirm('Voulez-vous vraiment supprimer ce joueur ?')
+        const ok = confirm($_('profile.confirm_delete_profile'))
         if (ok) {
             deletePlayerById(id)
             pop()
@@ -144,7 +144,7 @@
 
     // Reset score
     function resetScore() {
-        const ok = confirm('Voulez-vous vraiment réinitialiser votre score à 0 ?')
+        const ok = confirm($_('profile.confirm_reset_score'))
 
         if (ok && id > 0) {
             score = 0
@@ -309,7 +309,6 @@
                     <div class="username">
                         <p class="label"><strong>{ $_('profile.username') }</strong></p>
                         <Input type="text" id="username"
-                            placeholder="Pseudo du joueur"
                             bind:value={name} />
                     </div>
                     
@@ -318,7 +317,7 @@
                             <Button center variant="default"
                                 onclick={resetScore}>
                                 <Icon icon="numbers" size={18} />
-                                <p>Réinitialiser le score</p>
+                                <p>{ $_('profile.reset_score') }</p>
                             </Button>
                         </div>
                     {/if}
@@ -335,7 +334,7 @@
                     <div class="contrast">
                         <p class="label"><strong>{ $_('common.preview') }</strong></p>
                         <AvatarContrastPreview {symbol} {color} />
-                        <p class="legend">Adaptation de la couleur du symbole en fonction du contraste (mode sombre)</p>
+                        <p class="legend">{ $_('profile.legend_color_contrast') }</p>
                     </div>
                 </div>
             {/if}
@@ -350,7 +349,7 @@
                     <div class="contrast">
                         <p class="label"><strong>{ $_('common.preview') }</strong></p>
                         <AvatarContrastPreview {symbol} {color} />
-                        <p class="legend">Adaptation de la couleur du symbole en fonction du contraste (mode sombre)</p>
+                        <p class="legend">{ $_('profile.legend_color_contrast') }</p>
                     </div>
 
                     <div class="symbols">
@@ -369,7 +368,7 @@
 
             {#if type == PlayerType.Bot && selectedId == Tabs.Difficulty}
                 <div class="difficulty">
-                    <p class="label"><strong>Niveaux de difficulté</strong></p>
+                    <p class="label"><strong>{ $_('profile.difficulties.name') }</strong></p>
                     <SelectDifficulty bind:value={difficulty} />
                 </div>
             {/if}

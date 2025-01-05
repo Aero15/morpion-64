@@ -271,7 +271,7 @@
                         {/if}
                     </div>
                     
-                    {#if id > 0}
+                    {#if id > 0 && score > 0}
                         <div class="actions list">
                             <Button center variant="default"
                                 onclick={resetScore}>
@@ -312,7 +312,7 @@
                             bind:value={name} />
                     </div>
                     
-                    {#if id > 0 && ['sm'].includes(size)}
+                    {#if id > 0 && ['sm'].includes(size) && score > 0}
                         <div class="actions list">
                             <Button center variant="default"
                                 onclick={resetScore}>

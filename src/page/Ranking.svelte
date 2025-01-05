@@ -128,7 +128,7 @@
                         {#snippet score(value: number, legend: string)}
                             <div class="score">
                                 <p>
-                                    <strong class="value">{value}</strong>
+                                    <strong class="value">{value.toFixed(0)}</strong>
                                     <span>pts</span>
                                 </p>
                                 <p class="legend"><strong>{legend}</strong></p>

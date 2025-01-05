@@ -118,13 +118,13 @@
             const player = findPlayerById(id)
             switch (type) {
                 case PlayerType.Bot:
-                    updatePlayer({ id, name, symbol, color, type, difficulty } as Bot)
                     const indexB = listBots.indexOf(player as Bot)
-                    listPlayers[indexB].score = score
+                    updatePlayer({ id, name, symbol, color, type, difficulty } as Bot)
+                    listBots[indexB].score = score
                     break;
                 case PlayerType.Human:
-                    updatePlayer({ id, name, symbol, color, type } as Player)
                     const indexH = listPlayers.indexOf(player as HumanPlayer)
+                    updatePlayer({ id, name, symbol, color, type } as Player)
                     listPlayers[indexH].score = score
                     break;
             }

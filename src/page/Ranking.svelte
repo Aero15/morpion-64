@@ -31,6 +31,7 @@
 
     let avgScore = $derived(players.reduce((acc, player) => acc + player.score, 0) / players.length)
     let maxScore = $derived(Math.max(...players.map(player => player.score)))
+    let playersWithoutScore = $derived(listPlayers.filter(player => player.score <= 0))
 
     let Categories = {
         General: 0,
@@ -68,18 +69,20 @@
 
 {#snippet actions()}
     {#if maxScore > 0}
-        {#if $displayPlayersWithoutScore}
-            <Button center variant="primary"
-                onclick={toggleDisplayPlayersWithoutScore}>
-                <Icon icon="hide" size={20} />
-                <p>{ $_('ranking.hide_players_without_score') }</p>
-            </Button>
-        {:else}
-            <Button center variant="primary"
-                onclick={toggleDisplayPlayersWithoutScore}>
-                <Icon icon="eye" size={20} />
-                <p>{ $_('ranking.show_players_without_score') }</p>
-            </Button>
+        {#if playersWithoutScore.length > 0}
+            {#if $displayPlayersWithoutScore}
+                <Button center variant="primary"
+                    onclick={toggleDisplayPlayersWithoutScore}>
+                    <Icon icon="hide" size={20} />
+                    <p>{ $_('ranking.hide_players_without_score') }</p>
+                </Button>
+            {:else}
+                <Button center variant="primary"
+                    onclick={toggleDisplayPlayersWithoutScore}>
+                    <Icon icon="eye" size={20} />
+                    <p>{ $_('ranking.show_players_without_score') }</p>
+                </Button>
+            {/if}
         {/if}
 
         <Button center

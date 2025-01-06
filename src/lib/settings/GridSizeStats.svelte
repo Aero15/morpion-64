@@ -89,7 +89,7 @@
         class:horizontal={gridOrientation === 'horizontal' || gridOrientation === 'squared'}
     >
         {#snippet number_block(data: NumberData, key: number, clazz: string = '')}
-            <li in:fade|global={{delay: 50 * key}} class={clazz}>
+            <li in:fade|global={{delay: 50 * key + 350}} class={clazz}>
                 <Icon icon={data.icon} size={22} />
                 <div class="text">
                     <p class="value">{data.value}</p>
@@ -105,6 +105,15 @@
 </main>
 
 <style>
+    @keyframes gridRotate {
+        0% { transform: rotateY(90deg); }
+        100% { transform: rotateY(0deg); }
+    }
+    @keyframes bgBlur {
+        0% { backdrop-filter: blur(0rem); }
+        100% { backdrop-filter: blur(1rem); }
+    }
+
     .bx-grid_stats {
         display: flex;
 
@@ -126,12 +135,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            perspective: 40rem;
         }
 
         .board {
             max-width: var(--max_size);
             max-height: var(--max_size);
             height: 100%;
+            transform: rotateY(90deg);
+            animation: .5s ease-out .25s 1 gridRotate forwards;
+            animation-timing-function: cubic-bezier(.5,.9,.2,1.2);
 
             &.vertical,
             &.squared {
@@ -157,10 +170,10 @@
                 border-radius: 25%;
                 background: light-dark(#00000033, #ffffff33);
                 border: 1px solid light-dark(#00000077, #ffffff77);
-                backdrop-filter: blur(10px);
                 font-size: 1em;
                 color: transparent;
                 position: relative;
+                animation: 1s ease-out 1s 1 bgBlur forwards;
 
                 p {
                     position: absolute;

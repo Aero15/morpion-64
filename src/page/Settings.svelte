@@ -5,7 +5,7 @@
     import Section from "$lib/shared/Section.svelte";
     import PageWrap from "$lib/global/PageWrap.svelte";
     import Responsive from "$lib/shared/Responsive.svelte";
-    import type Point from "$core/entity/board/Point.svelte";
+    import { gridSize } from "$core/store/settings.svelte";
     import GridSizeStats from "$lib/settings/GridSizeStats.svelte";
     import type { BreakpointSize } from "$core/enums/BreakpointSize";
     import LanguageSelector from "$lib/settings/LanguageSelector.svelte";
@@ -19,6 +19,7 @@
         Language: 2,
     }
     let selectedId = $state(Tabs.GridSize);
+    let strGridSize: string = $derived(gridSize.x + 'x' + gridSize.y);
 </script>
 
 <Responsive bind:size />
@@ -40,7 +41,9 @@
         {#if selectedId == Tabs.GridSize}
             <Section title={ $_('settings.game_board.title') }>
                 <div class="grid grid-size">
-                    <GridSizeStats large={['xl', '2xl'].includes(size)} />
+                    {#key strGridSize}
+                        <GridSizeStats large={['xl', '2xl'].includes(size)} />
+                    {/key}
                     <GridPresetSelector large />
                 </div>
             </Section>

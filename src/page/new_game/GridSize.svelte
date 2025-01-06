@@ -4,6 +4,7 @@
     import TabBar from "$lib/shared/TabBar.svelte";
     import PageWrap from "$lib/global/PageWrap.svelte";
     import Responsive from "$lib/shared/Responsive.svelte";
+    import { gridSize } from "$core/store/settings.svelte";
     import Pagination from "$lib/new-game/Pagination.svelte";
     import NavigButtons from "$lib/new-game/NavigButtons.svelte";
     import GridSizeStats from "$lib/settings/GridSizeStats.svelte";
@@ -21,6 +22,7 @@
         { name: $_('common.preview'), icon: 'search', id: Tabs.Preview },
     ])
     let selectedId = $state(Tabs.Settings);
+    let strGridSize: string = $derived(gridSize.x + 'x' + gridSize.y);
 </script>
 
 <Responsive bind:size />
@@ -53,7 +55,9 @@
                     {@render head(false)}
                 {/if}
 
-                <GridSizeStats large={!['sm', 'md'].includes(size)} />
+                {#key strGridSize}
+                    <GridSizeStats large={!['sm', 'md'].includes(size)} />
+                {/key}
 
                 {#if !['sm', 'md'].includes(size)}
                     <NavigButtons />

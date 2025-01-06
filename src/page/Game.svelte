@@ -55,7 +55,7 @@
 
 <main id="pg-game" class="gradient-grid"
     class:sm={size == 'sm'}
-    class:center={currentView == GameView.Game}
+    class:center={currentView == GameView.Game || size != 'sm'}
 >
     <div class="top-bar">
         <GameStatus bind:game
@@ -158,7 +158,6 @@
     #pg-game {
         min-height: 100vh;
         display: flex;
-        align-items: center;
         background-position: center center;
         
         --color_gradient: linear-gradient(
@@ -173,17 +172,25 @@
         &.sm {
             padding: 105px 0 76px;
             min-height: calc(100vh - (105px + 76px));
-            flex-direction: column;
-            justify-content: center;
 
             &.center {
-                display: flex;
                 align-items: center;
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            &:has(.page.leaderboard) {
+                flex: 1;
+                padding: 7.25rem 1rem 6rem;
+                min-height: calc(100vh - (7.25rem + 6rem));
+                display: grid;
             }
         }
 
-        &:not(.sm) {
+        &:not(.sm).center {
+            flex-direction: column;
             justify-content: center;
+            align-items: center;
         }
 
         .top-bar {

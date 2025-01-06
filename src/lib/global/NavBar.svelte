@@ -21,7 +21,7 @@
     <ul>
         {@render item($_('home.title'), '/', 'home')}
         {@render item($_('players.title'), '/players', 'user')}
-        {@render item($_('assistant.play'), '/new-game/grid', 'play')}
+        {@render item($_('assistant.play'), '/new-game/participants', 'play')}
         {@render item($_('ranking.title'), '/ranking', 'podium')}
         {@render item($_('common.menu'), '/menu', 'menu')}
     </ul>

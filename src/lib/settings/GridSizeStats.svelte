@@ -3,6 +3,7 @@
     import { gridSize } from "$core/store/settings.svelte";
     import Icon from "$lib/shared/Icon.svelte";
     import { _ } from "svelte-i18n";
+    import { fade } from "svelte/transition";
 
     interface Props {
         large?: boolean
@@ -21,6 +22,16 @@
         icon: string,
         name: string
     }
+
+    let nbAlignments = 3;
+    let symbols = [
+        'cross', 'circle', 'star', 'heart',
+        'headset', 'arobase', 'square', 'cloud',
+        'emoji', 'tennis_ball', 'planet', 'asterisk',
+        'bot2', 'hash_straight', 'compass', 'moon',
+        'circles', 'numbers', 'house', 'pin',
+        'photo', 'send', 'search', 'position',
+    ]
 
     let gridOrientation: 'horizontal' | 'vertical' | 'squared' = $derived.by(() => {
         if (gridSize.x === gridSize.y)
@@ -48,7 +59,25 @@
             {#each { length: gridSize.y }, rank}
                 <div class="row" style:grid-template-columns={`repeat(${gridSize.x}, 1fr)`}>
                     {#each { length: gridSize.x }, file}
-                        <div class="cell"></div>
+                        {@const counter = rank * gridSize.x + file + 1}
+                        {@const symbol = Math.floor((rank * gridSize.x + file) / nbAlignments)}
+                        <div class="cell">
+                            <p class="position">
+                                {#if rank == 0}
+                                    {file + 1}
+                                {:else if file == 0}
+                                    {rank + 1}
+                                {/if}
+                            </p>
+                            <p class="count">
+                                {counter}
+                            </p>
+                            <p class="symbol">
+                                {#if symbol < maxPlayers}
+                                    <Icon icon={symbols[symbol]} size={20} />
+                                {/if}
+                            </p>
+                        </div>
                     {/each}
                 </div>
             {/each}
@@ -59,8 +88,8 @@
         class:vertical={gridOrientation === 'vertical'}
         class:horizontal={gridOrientation === 'horizontal' || gridOrientation === 'squared'}
     >
-        {#snippet number_block(data: NumberData)}
-            <li>
+        {#snippet number_block(data: NumberData, key: number, clazz: string = '')}
+            <li in:fade|global={{delay: 50 * key}} class={clazz}>
                 <Icon icon={data.icon} size={22} />
                 <div class="text">
                     <p class="value">{data.value}</p>
@@ -69,9 +98,9 @@
             </li>
         {/snippet}
 
-        {@render number_block({value: strGridSize, icon: "expand_diagonal", name: $_('settings.game_board.size')})}
-        {@render number_block({value: countCells, icon: "squares", name: $_('settings.game_board.cells')})}
-        {@render number_block({value: maxPlayers, icon: "user", name: $_('settings.game_board.max_players')})}
+        {@render number_block({value: strGridSize, icon: "expand_diagonal", name: $_('settings.game_board.size')}, 0, 'size')}
+        {@render number_block({value: countCells, icon: "squares", name: $_('settings.game_board.cells')}, 1, 'cells')}
+        {@render number_block({value: maxPlayers, icon: "user", name: $_('settings.game_board.max_players')}, 2, 'players')}
     </ul>
 </main>
 
@@ -115,7 +144,6 @@
 
             &, .row {
                 display: grid;
-                font-size: 0;
                 gap: .25rem;
                 margin: 0;
             }
@@ -130,6 +158,19 @@
                 background: light-dark(#00000033, #ffffff33);
                 border: 1px solid light-dark(#00000077, #ffffff77);
                 backdrop-filter: blur(10px);
+                font-size: 1em;
+                color: transparent;
+                position: relative;
+
+                p {
+                    position: absolute;
+                    inset: 0;
+                    margin: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: color .2s;
+                }
             }
         }
 
@@ -138,6 +179,10 @@
             padding: 0;
             margin: 0;
             display: grid;
+
+            li {
+                cursor: help;
+            }
 
             &.horizontal {
                 margin: auto;
@@ -177,6 +222,9 @@
                 &:nth-child(1) { --tint: light-dark(#ff9ee2, #cf0091); }
                 &:nth-child(2) { --tint: light-dark(#b7e4ff, #288cff); }
                 &:nth-child(3) { --tint: light-dark(#8affa2, #00a576); }
+                &:nth-child(1):hover { --tint: light-dark(#ff5ecf, #ff33c2); }
+                &:nth-child(2):hover { --tint: light-dark(#6fb2ff, #6fb2ff); }
+                &:nth-child(3):hover { --tint: light-dark(#04d197, #04d197); }
             }
 
             :global(.icon) {
@@ -190,6 +238,7 @@
                 border: 1px solid light-dark(#00000077, #ffffff77);
                 backdrop-filter: blur(10px);
                 box-shadow: 0 2px 5px #00000044;
+                transition: background .15s;
             }
 
             p {
@@ -205,5 +254,9 @@
                 }
             }
         }
+
+        &:has(li.size:hover) .cell p.position { color: light-dark(#000, #fff); }
+        &:has(li.cells:hover) .cell p.count { color: light-dark(#000, #fff); }
+        &:has(li.players:hover) .cell p.symbol { color: light-dark(#000, #fff); }
     }
 </style>

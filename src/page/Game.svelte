@@ -257,7 +257,7 @@
             margin-top: -1.5rem;
 
             p {margin: 0;}
-            strong {color: light-dark(#ab00ce, #fff);}
+            strong {color: light-dark(#000, #fff);}
         }
     }
 

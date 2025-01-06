@@ -87,19 +87,21 @@ export function updatePlayer(p: Player | Bot) {
     if (!player)
         return
 
-    const { type, name, symbol, color } = p
+    const { type, name, symbol, color, score } = p
     let index = -1
     if (type === PlayerType.Human) {
         index = listPlayers.indexOf(player)
         listPlayers[index].name = name
         listPlayers[index].symbol = symbol
         listPlayers[index].color = color
+        listPlayers[index].score = score
     }
     if (type === PlayerType.Bot) {
         index = listBots.indexOf(player)
         listBots[index].name = name
         listBots[index].symbol = symbol
-        listBots[index].color = color as string
+        listBots[index].color = color
+        listBots[index].score = score;
         (listBots[index] as Bot).difficulty = (p as Bot).difficulty
     }
 }

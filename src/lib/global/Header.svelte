@@ -9,20 +9,6 @@
     import type { BreakpointSize } from '$core/enums/BreakpointSize';
     
     let size: BreakpointSize = $state('sm');
-
-    interface Page {
-        name: string,
-        path: string,
-        icon: string,
-    }
-
-    const pages: Page[] = $state([
-        {name: $_('assistant.play'), path: '/new-game/participants', icon: 'play'},
-        {name: $_('ranking.title'), path: '/ranking', icon: 'podium'},
-        {name: $_('players.title'), path: '/players', icon: 'user'},
-        {name: $_('settings.title'), path: '/settings', icon: 'config'},
-        {name: $_('about.title'), path: '/about', icon: 'info'},
-    ])
 </script>
 
 <Responsive bind:size />
@@ -54,16 +40,20 @@
     </div>
 
     {#if ['xl', '2xl'].includes(size)}
+        {#snippet page(name: string, path: string, icon: string)}
+            <li>
+                <a href={'#' + path} class:current={$location == path || $location.includes(path)}>
+                    <Icon {icon} size={20} />
+                    <p>{name}</p>
+                </a>
+            </li>
+        {/snippet}
+
         <nav in:fade>
             <ul>
-                {#each pages.slice(0, 3) as {name, path, icon}}
-                    <li>
-                        <a href={'#' + path} class:current={$location == path || $location.includes(path)}>
-                            <Icon {icon} size={20} />
-                            <p>{name}</p>
-                        </a>
-                    </li>
-                {/each}
+                {@render page($_('assistant.play'), '/new-game/participants', 'play')}
+                {@render page($_('ranking.title'), '/ranking', 'podium')}
+                {@render page($_('players.title'), '/players', 'user')}
             </ul>
         </nav>
     {/if}

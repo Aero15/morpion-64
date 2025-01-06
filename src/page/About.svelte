@@ -269,6 +269,7 @@
             --logo-size: 80px;
             background: light-dark(var(--bright-tint), var(--dark-tint));
             border-radius: 1rem;
+            transition: box-shadow .3s;
         }
 
         a {
@@ -298,6 +299,21 @@
             height: var(--logo-size);
             border-radius: .5rem;
             filter: drop-shadow(0 5px 10px rgba(0,0,0,.2));
+            transition: transform .3s;
+        }
+
+        li:hover {
+            box-shadow: 0 0 30px light-dark(#00000055, #ffffff55) inset;
+
+            p.name {
+                text-decoration: underline;
+                text-underline-offset: .25rem;
+                text-decoration-thickness: .1rem;
+            }
+
+            img {
+                transform: scale(1.2) rotate(5deg);
+            }
         }
     }
 </style>

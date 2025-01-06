@@ -6,9 +6,9 @@ export const app_version = readable("1.2.1")
 
 export const license_name = readable("MIT License")
 export const license_url = readable("https://opensource.org/license/MIT")
-export const project_status = readable(ProjectStatus.InProgress)
+export const project_status = readable(ProjectStatus.Completed)
 
-export const last_update = readable(new Date('2025-01-05'))
+export const last_update = readable(new Date('2025-01-06'))
 export const creation_date = readable(new Date('2024-10-31'))
 
 export const organisation_name = readable('Doocode.xyz')

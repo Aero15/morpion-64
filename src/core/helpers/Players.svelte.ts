@@ -104,6 +104,12 @@ export function updatePlayer(p: Player | Bot) {
         listBots[index].score = score;
         (listBots[index] as Bot).difficulty = (p as Bot).difficulty
     }
+
+    // Refresh the selected players
+    if (selectedPlayers.includes(player)) {
+        index = selectedPlayers.indexOf(player)
+        selectedPlayers[index] = p
+    }
 }
 
 // Return current bot speed delay

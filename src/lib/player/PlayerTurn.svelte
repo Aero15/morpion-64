@@ -39,10 +39,29 @@
     }
 </script>
 
-<div class="bx-player_turn" style:display="grid">
+<div class="bx-player_turn">
     <ListBubbles players={players} {compact} {limit} />
 
-    <p style:color={symbolColor} style:margin={0}>
+    <p style:--tint={symbolColor}>
         <strong>{ current.name }</strong>
     </p>
 </div>
+
+<style>
+    .bx-player_turn {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+
+        p {
+            background: var(--tint);
+            padding: .25rem .5rem;
+            border-radius: .5rem;
+            color: light-dark(#fff, #000);
+            margin: -.5rem 0 0;
+            position: relative;
+            z-index: 5;
+            box-shadow: 0 3px 5px #00000033;
+        }
+    }
+</style>

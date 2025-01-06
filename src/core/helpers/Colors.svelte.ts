@@ -75,57 +75,50 @@ function adjustColor(
 ): string {
     let { r, g, b } = hexToRgb(hex)!;
     let luminanceText = getLuminanceFromRGB(r, g, b);
-    
+
     // Function to adjust the color while checking the contrast
     function adjustForContrast(): { r: number, g: number, b: number } {
         // Minimum contrast targets
-        const targetBrightContrast = 3.5; // For white background
+        const targetBrightContrast = 2.5; // For white background
         const targetDarkContrast = 4.5; // For dark background
-    
+
         let adjustedR = r;
         let adjustedG = g;
         let adjustedB = b;
-    
+
         // Ajust color (lighten or darken based on background)
         let increment = isDarkBackground ? 50 : -50;
-        if (isDarkBackground) {
-            // For dark background, lighten the color
-            adjustedR = Math.min(255, adjustedR + increment);
-            adjustedG = Math.min(255, adjustedG + increment);
-            adjustedB = Math.min(255, adjustedB + increment);
-        } else {
-            // For light background, darken the color
-            adjustedR = Math.max(0, adjustedR + increment);
-            adjustedG = Math.max(0, adjustedG + increment);
-            adjustedB = Math.max(0, adjustedB + increment);
-        }
-    
-        // Get the luminance of the adjusted color
-        let adjustedLuminance = getLuminanceFromRGB(adjustedR, adjustedG, adjustedB);
-        let contrast = getContrastRatio(adjustedLuminance, backgroundLuminance);
-    
-        // Check if the contrast is sufficient
-        if (
-            (isDarkBackground && contrast >= targetDarkContrast) ||
-            (!isDarkBackground && contrast >= targetBrightContrast)
-        ) {
-            return { r: adjustedR, g: adjustedG, b: adjustedB };
-        }
-    
-        // If the contrast is not sufficient, adjust the color further
-        if (isDarkBackground) {
-            // For dark background, lighten the color
-            adjustedR = Math.min(255, adjustedR + increment);
-            adjustedG = Math.min(255, adjustedG + increment);
-            adjustedB = Math.min(255, adjustedB + increment);
-        } else {
-            // For light background, darken the color
-            adjustedR = Math.max(0, adjustedR + increment);
-            adjustedG = Math.max(0, adjustedG + increment);
-            adjustedB = Math.max(0, adjustedB + increment);
-        }
-    
-        return { r: adjustedR, g: adjustedG, b: adjustedB };
+        let contrast;
+
+        do {
+            if (isDarkBackground) {
+                // For dark background, lighten the color
+                adjustedR = Math.min(255, adjustedR + increment);
+                adjustedG = Math.min(255, adjustedG + increment);
+                adjustedB = Math.min(255, adjustedB + increment);
+            } else {
+                // For light background, darken the color
+                adjustedR = Math.max(0, adjustedR + increment);
+                adjustedG = Math.max(0, adjustedG + increment);
+                adjustedB = Math.max(0, adjustedB + increment);
+            }
+
+            // Get the luminance of the adjusted color
+            let adjustedLuminance = getLuminanceFromRGB(adjustedR, adjustedG, adjustedB);
+            contrast = getContrastRatio(adjustedLuminance, backgroundLuminance);
+
+            // Check if the contrast is sufficient
+        } while (
+            (isDarkBackground && contrast < targetDarkContrast) ||
+            (!isDarkBackground && contrast < targetBrightContrast)
+        )
+
+        // Return the adjusted color
+        return {
+            r: adjustedR,
+            g: adjustedG,
+            b: adjustedB
+        };
     }
     
     // Ajust color for contrast

@@ -108,7 +108,13 @@ export function updatePlayer(p: Player | Bot) {
     // Refresh the selected players
     if (selectedPlayers.includes(player)) {
         index = selectedPlayers.indexOf(player)
-        selectedPlayers[index] = p
+        selectedPlayers[index].name = name
+        selectedPlayers[index].symbol = symbol
+        selectedPlayers[index].color = color
+        selectedPlayers[index].score = score;
+        if (type === PlayerType.Bot) {
+            (selectedPlayers[index] as Bot).difficulty = (p as Bot).difficulty
+        }
     }
 }
 

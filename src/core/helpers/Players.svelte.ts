@@ -70,6 +70,7 @@ export function deletePlayerById(id: number) {
         listPlayers.splice(listPlayers.indexOf(player), 1)
     if (type === PlayerType.Bot)
         listBots.splice(listBots.indexOf(player), 1)
+    selectedPlayers.splice(selectedPlayers.indexOf(player), 1)
 }
 
 // Find a player by id

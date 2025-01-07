@@ -30,15 +30,13 @@
     import TabBar from "$lib/shared/TabBar.svelte";
     import Responsive from "$lib/shared/Responsive.svelte";
     import type { BreakpointSize } from "$core/enums/BreakpointSize";
-    import { listBots, listPlayers } from "$core/store/players.svelte";
-    import type HumanPlayer from "$core/entity/player/Human.svelte";
     import { _ } from "svelte-i18n";
 
     let { params }: { params: any } = $props();
 
     // Reactive values
     let id: number = $derived(params.id)
-    let name: string = $state('')
+    let name: string = $state('Bob')
     let type: PlayerType = $state(PlayerType.Human)
     let color: Color|string = $state(randomColor())
     let symbol: Symbol = $state(randomSymbol())
@@ -92,6 +90,9 @@
                     difficulty = bot.difficulty
                 }
             } 
+        } else {
+            name = ''
+            type = PlayerType.Human
         }
     })
 
@@ -400,16 +401,16 @@
 
             .warning {
                 color: light-dark(#ca8a04, #facc15);
-                margin: -2.5rem 1rem 1rem;
-                display: flex;
+                margin: -4.5rem 1rem 1rem;
+                display: grid;
                 align-items: center;
-                justify-content: start;
-                text-align: start;
-                gap: .75rem;
+                place-content: center;
+                text-align: center;
 
                 p {
                     margin: 0;
                     font-size: .8em;
+                    text-wrap: balance;
                 }
             }
 

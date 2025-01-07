@@ -27,6 +27,7 @@
     import type { BreakpointSize } from "$core/enums/BreakpointSize";
     import ProgressNbPlayers from "$lib/new-game/ProgressNbPlayers.svelte";
     import SelectedParticipants from "$lib/player/SelectedParticipants.svelte";
+    import { FilterPlayers, selectedFilterPlayers } from "$core/store/settings.svelte";
 
     let size: BreakpointSize = $state('sm');
 
@@ -47,28 +48,22 @@
     let selectedId = $state(Tabs.Available);
 
     // Filter tabs
-    let FilterTabs = {
-        All: 5,
-        Humans: 6,
-        Bots: 7
-    }
     let filterTabs = [
-        { name: $_('common.all'), icon: 'asterisk', id: FilterTabs.All },
-        { name: $_('players.sections.humans'), icon: 'user', id: FilterTabs.Humans },
-        { name: $_('players.sections.bots'), icon: 'bot2', id: FilterTabs.Bots },
+        { name: $_('common.all'), icon: 'asterisk', id: FilterPlayers.All },
+        { name: $_('players.sections.humans'), icon: 'user', id: FilterPlayers.Humans },
+        { name: $_('players.sections.bots'), icon: 'bot2', id: FilterPlayers.Bots },
     ]
-    let selectedFilterId = $state(FilterTabs.All);
 
     // List players
     let remainingBots: Player[] = $derived(listBots.filter(bot => !selectedPlayers.includes(bot)))
     let remainingHumans: Player[] = $derived(listPlayers.filter(player => !selectedPlayers.includes(player)))
     let availablePlayers: Player[] = $derived.by(() => {
-        switch (selectedFilterId) {
-            case FilterTabs.All:
+        switch ($selectedFilterPlayers) {
+            case FilterPlayers.All:
                 return [...remainingBots, ...remainingHumans]
-            case FilterTabs.Humans:
+            case FilterPlayers.Humans:
                 return remainingHumans
-            case FilterTabs.Bots:
+            case FilterPlayers.Bots:
                 return remainingBots
         }
         return []
@@ -212,7 +207,7 @@
                 <div class="tabs-filters">
                     <TabBar tabs={filterTabs}
                         variant="squared"
-                        bind:selectedId={selectedFilterId} />
+                        bind:selectedId={$selectedFilterPlayers} />
                 </div>
 
                 <SearchBar bind:value={searchValue}

@@ -15,3 +15,14 @@ export let language = $state({current: 'auto'})
 
 // Ranking
 export let displayPlayersWithoutScore = writable(false)
+
+
+
+// Selected tabs
+// - Assistant "new game" > participants
+export let FilterPlayers = {
+    All: 5,
+    Humans: 6,
+    Bots: 7
+}
+export let selectedFilterPlayers = writable(FilterPlayers.All);

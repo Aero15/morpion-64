@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { improveContrast } from "$core/helpers/Colors.svelte";
     import Point from "$core/entity/board/Point.svelte";
     import Icon from "$lib/shared/Icon.svelte";
     import { scale } from "svelte/transition";
@@ -31,6 +32,10 @@
         (!eraserEnabled && !isEmpty) || // eraser mode is not activated and the cell is not empty
         lock // is locked
     );
+    let symbolColor = $derived.by(() => {
+        let { light, dark } = improveContrast(color);
+        return `light-dark(${light}, ${dark})`;
+    })
 </script>
 
 <button
@@ -41,7 +46,7 @@
     {disabled}
 >
     {#if symbol}
-        <div transition:scale style:color={color}>
+        <div transition:scale style:color={symbolColor}>
             <Icon icon={symbol} size={compact ? 44 : 64} />
         </div>
     {/if}
@@ -88,7 +93,8 @@
         }
 
         &.highlighted {
-            background: light-dark(#000, #fff);
+            background: radial-gradient(transparent, light-dark(#00000055, #ffffff55));
+            border-color: light-dark(#00000088, #ffffff88);
         }
     }
 </style>

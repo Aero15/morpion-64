@@ -11,7 +11,7 @@
         symbol = $bindable(''),
         color = $bindable(''),
     }: Props = $props();
-    
+
     let symbolColor = $derived.by(() => {
         let { light, dark } = improveContrast(color);
         return `light-dark(${light}, ${dark})`;

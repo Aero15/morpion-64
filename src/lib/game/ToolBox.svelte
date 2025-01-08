@@ -42,6 +42,7 @@
     </Button>
 
     <Button center shape="squared" onclick={() => game.showHint()}
+        disabled={game.eraserEnabled}
         title={ $_('game.tools.show_hint') }>
         <Icon icon="info" size={iconSize} />
         {#if !compact}

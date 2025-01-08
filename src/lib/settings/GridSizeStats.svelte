@@ -55,6 +55,7 @@
             class:horizontal={gridOrientation === 'horizontal'}
             class:vertical={gridOrientation === 'vertical'}
             class:squared={gridOrientation === 'squared'}
+            class:large-text={gridSize.x < 6 && gridSize.y < 6}
         >
             {#each { length: gridSize.y }, rank}
                 <div class="row" style:grid-template-columns={`repeat(${gridSize.x}, 1fr)`}>
@@ -170,10 +171,9 @@
                 border-radius: 25%;
                 background: light-dark(#00000033, #ffffff33);
                 border: 1px solid light-dark(#00000077, #ffffff77);
-                font-size: 1em;
                 color: transparent;
                 position: relative;
-                animation: 1s ease-out 1s 1 bgBlur forwards;
+                animation: 5s ease-out 1.5s 1 bgBlur forwards;
 
                 p {
                     position: absolute;
@@ -184,6 +184,15 @@
                     justify-content: center;
                     transition: color .2s;
                 }
+            }
+
+            &.large-text {
+                .cell, :global(.icon::before) {
+                    font-size: 2em;
+                }
+            }
+            &:not(.large-text) .cell {
+                font-size: 1em;
             }
         }
 
